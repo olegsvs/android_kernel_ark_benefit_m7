@@ -1,1 +1,1 @@
-cmd_drivers/video/backlight/built-in.o :=  rm -f drivers/video/backlight/built-in.o; /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar rcsD drivers/video/backlight/built-in.o
+cmd_drivers/video/backlight/built-in.o :=  rm -f drivers/video/backlight/built-in.o; aarch64-ar rcsD drivers/video/backlight/built-in.o

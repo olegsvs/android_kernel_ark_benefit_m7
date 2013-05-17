@@ -1,4 +1,4 @@
-cmd_drivers/hid/hid-microsoft.o := /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-gcc -Wp,-MD,drivers/hid/.hid-microsoft.o.d  -nostdinc -isystem /home/olegsvs/Android/aarch64-linux-android-4.9/bin/../lib/gcc/aarch64-linux-android/4.9/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -O2 -mgeneral-regs-only -fno-pic -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -g -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(hid_microsoft)"  -D"KBUILD_MODNAME=KBUILD_STR(hid_microsoft)" -c -o drivers/hid/hid-microsoft.o drivers/hid/hid-microsoft.c
+cmd_drivers/hid/hid-microsoft.o := aarch64-gcc -Wp,-MD,drivers/hid/.hid-microsoft.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(hid_microsoft)"  -D"KBUILD_MODNAME=KBUILD_STR(hid_microsoft)" -c -o drivers/hid/hid-microsoft.o drivers/hid/hid-microsoft.c
 
 source_drivers/hid/hid-microsoft.o := drivers/hid/hid-microsoft.c
 
@@ -26,7 +26,7 @@ deps_drivers/hid/hid-microsoft.o := \
   include/linux/compiler-gcc.h \
     $(wildcard include/config/arch/supports/optimized/inlining.h) \
     $(wildcard include/config/optimize/inlining.h) \
-  include/linux/compiler-gcc4.h \
+  include/linux/compiler-gcc5.h \
     $(wildcard include/config/arch/use/builtin/bswap.h) \
   include/linux/types.h \
     $(wildcard include/config/uid16.h) \
@@ -88,7 +88,7 @@ deps_drivers/hid/hid-microsoft.o := \
     $(wildcard include/config/ring/buffer.h) \
     $(wildcard include/config/tracing.h) \
     $(wildcard include/config/ftrace/mcount/record.h) \
-  /home/olegsvs/Android/aarch64-linux-android-4.9/lib/gcc/aarch64-linux-android/4.9/include/stdarg.h \
+  /home/olegsvs/5/aarch64-linux-gnu-5.3/lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include/stdarg.h \
   include/linux/linkage.h \
   include/linux/stringify.h \
   include/linux/export.h \
@@ -132,6 +132,10 @@ deps_drivers/hid/hid-microsoft.o := \
     $(wildcard include/config/broken/rodata.h) \
   include/linux/kern_levels.h \
   include/linux/dynamic_debug.h \
+  include/linux/string.h \
+    $(wildcard include/config/binary/printf.h) \
+  include/uapi/linux/string.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/string.h \
   include/uapi/linux/kernel.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/linux/sysinfo.h \
   include/asm-generic/atomic-long.h \
@@ -166,10 +170,6 @@ deps_drivers/hid/hid-microsoft.o := \
   include/linux/rwlock_types.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/spinlock.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/processor.h \
-  include/linux/string.h \
-    $(wildcard include/config/binary/printf.h) \
-  include/uapi/linux/string.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/string.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/fpsimd.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/hw_breakpoint.h \
     $(wildcard include/config/have/hw/breakpoint.h) \

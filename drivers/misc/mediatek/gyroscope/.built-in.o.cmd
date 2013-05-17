@@ -1,1 +1,1 @@
-cmd_drivers/misc/mediatek/gyroscope/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/gyroscope/built-in.o drivers/misc/mediatek/gyroscope/gyroscope.o drivers/misc/mediatek/gyroscope/gyro_factory.o 
+cmd_drivers/misc/mediatek/gyroscope/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/gyroscope/built-in.o drivers/misc/mediatek/gyroscope/gyroscope.o drivers/misc/mediatek/gyroscope/gyro_factory.o 

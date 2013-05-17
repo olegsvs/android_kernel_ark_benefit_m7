@@ -1,1 +1,1 @@
-cmd_drivers/misc/mediatek/ccmni/eccmni.o := /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/ccmni/eccmni.o drivers/misc/mediatek/ccmni/ccmni.o 
+cmd_drivers/misc/mediatek/ccmni/eccmni.o := aarch64-ld -EL    -r -o drivers/misc/mediatek/ccmni/eccmni.o drivers/misc/mediatek/ccmni/ccmni.o 

@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/lcm/rm68200_6735_dsi_video/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/lcm/rm68200_6735_dsi_video/built-in.o drivers/misc/mediatek/lcm/rm68200_6735_dsi_video/rm68200_6735_dsi_video.o 

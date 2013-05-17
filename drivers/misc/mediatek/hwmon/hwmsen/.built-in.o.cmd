@@ -1,1 +1,1 @@
-cmd_drivers/misc/mediatek/hwmon/hwmsen/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/hwmon/hwmsen/built-in.o drivers/misc/mediatek/hwmon/hwmsen/hwmsen_helper.o drivers/misc/mediatek/hwmon/hwmsen/hwmsen_dev.o 
+cmd_drivers/misc/mediatek/hwmon/hwmsen/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/hwmon/hwmsen/built-in.o drivers/misc/mediatek/hwmon/hwmsen/hwmsen_helper.o drivers/misc/mediatek/hwmon/hwmsen/hwmsen_dev.o 

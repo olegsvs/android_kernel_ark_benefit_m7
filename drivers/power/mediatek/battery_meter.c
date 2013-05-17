@@ -2786,7 +2786,7 @@ void battery_meter_set_reset_soc(kal_bool bUSE_UI_SOC)
 kal_int32 battery_meter_get_battery_soc(void)
 {
 #if defined(SOC_BY_HW_FG)
-	return gFG_capacity_by_c;
+	return gFG_capacity_by_v;
 #else
 	return 50;
 #endif
@@ -2866,7 +2866,7 @@ kal_int32 battery_meter_get_battery_percentage(void)
 	} else {
 		fgauge_algo_run();
 		#if !defined(CUST_CAPACITY_OCV2CV_TRANSFORM)
-		return gFG_capacity_by_c;	/* hw fg, //return gfg_percent_check_point; // voltage mode */
+		return gFG_capacity_by_v;	/* hw fg, //return gfg_percent_check_point; // voltage mode */
 		#else
 		/* We keep gFG_capacity_by_c as capacity before compensation */
 		/* Compensated capacity is returned for UI SOC tracking */

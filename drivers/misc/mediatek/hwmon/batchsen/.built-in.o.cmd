@@ -1,1 +1,1 @@
-cmd_drivers/misc/mediatek/hwmon/batchsen/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/hwmon/batchsen/built-in.o drivers/misc/mediatek/hwmon/batchsen/batch.o 
+cmd_drivers/misc/mediatek/hwmon/batchsen/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/hwmon/batchsen/built-in.o drivers/misc/mediatek/hwmon/batchsen/batch.o 

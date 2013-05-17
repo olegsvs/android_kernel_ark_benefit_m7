@@ -1,1 +1,1 @@
-cmd_drivers/staging/zsmalloc/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/staging/zsmalloc/built-in.o drivers/staging/zsmalloc/zsmalloc.o 
+cmd_drivers/staging/zsmalloc/built-in.o :=  aarch64-ld -EL    -r -o drivers/staging/zsmalloc/built-in.o drivers/staging/zsmalloc/zsmalloc.o 

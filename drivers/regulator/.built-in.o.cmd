@@ -1,1 +1,1 @@
-cmd_drivers/regulator/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/regulator/built-in.o drivers/regulator/core.o drivers/regulator/dummy.o drivers/regulator/fixed-helper.o drivers/regulator/of_regulator.o 
+cmd_drivers/regulator/built-in.o :=  aarch64-ld -EL    -r -o drivers/regulator/built-in.o drivers/regulator/core.o drivers/regulator/dummy.o drivers/regulator/fixed-helper.o drivers/regulator/of_regulator.o 

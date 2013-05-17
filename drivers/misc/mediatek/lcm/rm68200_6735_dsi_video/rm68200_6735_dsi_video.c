@@ -1,4 +1,4 @@
-/* Copyright Statement:
+/* Cop/* Copyright Statement:
  *
  * This software/firmware and related documentation ("MediaTek Software") are
  * protected under relevant copyright laws. The information contained herein
@@ -69,29 +69,22 @@
 *****************************************************************************/
 
 
-#ifdef BUILD_LK
-#else
+#ifndef BUILD_LK
 #include <linux/string.h>
-#if defined(BUILD_UBOOT)
-#include <asm/arch/mt_gpio.h>
-#else
-#include <mach/mt_gpio.h>
-#endif
+#include <linux/kernel.h>
 #endif
 #include "lcm_drv.h"
 
-#if defined(BUILD_LK)
+#ifdef BUILD_LK
+	#include <platform/mt_gpio.h>
+	#include <string.h>
+#elif defined(BUILD_UBOOT)
+	#include <asm/arch/mt_gpio.h>
 #else
-
-#include <linux/proc_fs.h>   //proc file use 
+	#include <mach/mt_gpio.h>
 #endif
 
-#ifdef CONFIG_POCKETMOD
-#include <linux/pocket_mod.h>
-#endif
-#ifdef CONFIG_DOUBLETAP2WAKE
-#include <linux/input/doubletap2wake.h>
-#endif
+
 // ---------------------------------------------------------------------------
 //  Local Constants
 // ---------------------------------------------------------------------------
@@ -100,8 +93,8 @@
 #define FRAME_HEIGHT 										(1280)
 #define LCM_ID                       						(0x1284)
 
-#define REGFLAG_DELAY             							(0XFFFE)
-#define REGFLAG_END_OF_TABLE      							(0xF100)	// END OF REGISTERS MARKER
+#define REGFLAG_DELAY               (0XFEFE)
+#define REGFLAG_END_OF_TABLE        (0x100) // END OF REGISTERS MARKER
 
 
 #define LCM_DSI_CMD_MODE									0
@@ -148,18 +141,38 @@ static unsigned int lcm_esd_test = FALSE;      ///only for ESD test
 
 
 static struct LCM_setting_table lcm_initialization_setting[] = {
-	
+
+	/*
+Note :
+
+Data ID will depends on the following rule.
+
+count of parameters > 1      => Data ID = 0x39
+count of parameters = 1      => Data ID = 0x15
+count of parameters = 0      => Data ID = 0x05
+
+Struclcm_deep_sleep_mode_in_settingture Format :
+
+{DCS command, count of parameters, {parameter list}}
+{REGFLAG_DELAY, milliseconds of time, {}},
+
+...
+
+Setting ending by predefined flag
+
+{REGFLAG_END_OF_TABLE, 0x00, {}}
+*/
+
+/**************************************************
+IC Name: F056A4
+Panel Maker/Size: AUO546
+Panel Product No.: H546TAN01
+Version: V0
+Date: 20140618_PFM
+**************************************************/
 {0xFE, 1,{0x01}},
 
-{0x00, 1,{0x0A}},
-
-{0x03, 1,{0x1A}},
-
-{0x04, 1,{0x24}},
-
-{0x05, 1,{0x05}},
-
-{0x06, 1,{0x0C}},
+//{0x01, 1,{0x12}},
 
 {0x24, 1,{0xC0}},
 
@@ -175,76 +188,67 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0x16, 1,{0x52}},
 
-{0x27, 1,{0x0D}},
+{0x2F, 1,{0x5A}},
 
-{0x28, 1,{0x0D}},
-
-{0x29, 1,{0x0D}},
-
-{0x2A, 1,{0x0D}},
-
-{0x2F, 1,{0x55}},
-
-{0x34, 1,{0x55}},
+{0x34, 1,{0x57}},
 
 {0x1B, 1,{0x00}},
 
-{0x12, 1,{0x08}},
+{0x12, 1,{0x0B}},
 
 {0x1A, 1,{0x06}},
 
-{0x46, 1,{0x46}},
+{0x46, 1,{0x4C}},  //VCOM 4f //5A
 
-{0x52, 1,{0x8D}},
+{0x52, 1,{0x6C}},
 
 {0x53, 1,{0x00}},
 
-{0x54, 1,{0x8D}},
+{0x54, 1,{0x6C}},
 
 {0x55, 1,{0x00}},
-
 
 {0xFE, 1,{0x03}},
 
 {0x00, 1,{0x05}},
 
-{0x01, 1,{0x14}},
+{0x01, 1,{0x16}},
 
-{0x02, 1,{0x06}},
+{0x02, 1,{0x09}},
 
-{0x03, 1,{0x00}},
+{0x03, 1,{0x0D}},
 
 {0x04, 1,{0x00}},
 
 {0x05, 1,{0x00}},
 
-{0x06, 1,{0x00}},
+{0x06, 1,{0x50}},
 
 {0x07, 1,{0x05}},
 
-{0x08, 1,{0x14}},
+{0x08, 1,{0x16}},
 
-{0x09, 1,{0x06}},
+{0x09, 1,{0x0B}},
 
-{0x0A, 1,{0x00}},
+{0x0A, 1,{0x0F}},
 
 {0x0B, 1,{0x00}},
 
 {0x0C, 1,{0x00}},
 
-{0x0D, 1,{0x00}},
+{0x0D, 1,{0x50}},
 
-{0x0E, 1,{0x09}},
+{0x0E, 1,{0x03}},
 
-{0x0F, 1,{0x08}},
+{0x0F, 1,{0x04}},
 
-{0x10, 1,{0x0B}},
+{0x10, 1,{0x05}},
 
-{0x11, 1,{0x0A}},
+{0x11, 1,{0x06}},
 
 {0x12, 1,{0x00}},
 
-{0x13, 1,{0x00}},
+{0x13, 1,{0x54}},
 
 {0x14, 1,{0x00}},
 
@@ -252,17 +256,17 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0x16, 1,{0x08}},
 
-{0x17, 1,{0x0D}},
+{0x17, 1,{0x07}},
 
-{0x18, 1,{0x0C}},
+{0x18, 1,{0x08}},
 
-{0x19, 1,{0x0F}},
+{0x19, 1,{0x09}},
 
-{0x1A, 1,{0x0E}},
+{0x1A, 1,{0x0A}},
 
 {0x1B, 1,{0x00}},
 
-{0x1C, 1,{0x00}},
+{0x1C, 1,{0x54}},
 
 {0x1D, 1,{0x00}},
 
@@ -274,31 +278,27 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0x21, 1,{0x00}},
 
-{0x22, 1,{0x08}},
+{0x22, 1,{0x03}},
 
-{0x23, 1,{0x1D}},
+{0x23, 1,{0x1F}},
 
-{0x24, 1,{0x12}},
+{0x24, 1,{0x00}},
 
-{0x25, 1,{0x2D}},
+{0x25, 1,{0x28}},
 
 {0x26, 1,{0x00}},
 
-{0x27, 1,{0x1D}},
+{0x27, 1,{0x1F}},
 
-{0x28, 1,{0x16}},
+{0x28, 1,{0x00}},
 
-{0x29, 1,{0x2D}},
+{0x29, 1,{0x28}},
 
 {0x2A, 1,{0x00}},
 
 {0x2B, 1,{0x00}},
 
-{0x2C, 1,{0x00}},
-
 {0x2D, 1,{0x00}},
-
-{0x2E, 1,{0x00}},
 
 {0x2F, 1,{0x00}},
 
@@ -326,15 +326,13 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0x3B, 1,{0x00}},
 
-{0x3C, 1,{0x00}},
-
 {0x3D, 1,{0x00}},
-
-{0x3E, 1,{0x00}},
 
 {0x3F, 1,{0x00}},
 
 {0x40, 1,{0x00}},
+
+{0x3F, 1,{0x00}},
 
 {0x41, 1,{0x00}},
 
@@ -379,8 +377,6 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 {0x55, 1,{0x00}},
 
 {0x56, 1,{0x00}},
-
-{0x57, 1,{0x00}},
 
 {0x58, 1,{0x00}},
 
@@ -438,13 +434,13 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0x73, 1,{0x00}},
 
-{0x74, 1,{0x00}},
+{0x74, 1,{0x04}},
 
-{0x75, 1,{0x00}},
+{0x75, 1,{0x04}},
 
-{0x76, 1,{0x00}},
+{0x76, 1,{0x04}},
 
-{0x77, 1,{0x00}},
+{0x77, 1,{0x04}},
 
 {0x78, 1,{0x00}},
 
@@ -458,17 +454,17 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0x7D, 1,{0x00}},
 
-{0x7E, 1,{0x08}},
+{0x7E, 1,{0x86}},
 
-{0x7F, 1,{0x0A}},
+{0x7F, 1,{0x02}},
 
-{0x80, 1,{0x0C}},
+{0x80, 1,{0x0E}},
 
-{0x81, 1,{0x0E}},
+{0x81, 1,{0x0C}},
 
-{0x82, 1,{0x00}},
+{0x82, 1,{0x0A}},
 
-{0x83, 1,{0x02}},
+{0x83, 1,{0x08}},
 
 {0x84, 1,{0x3F}},
 
@@ -494,21 +490,21 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0x8F, 1,{0x3F}},
 
-{0x90, 1,{0x3F}},
+{0x90, 1,{0x00}},
 
-{0x91, 1,{0x3F}},
+{0x91, 1,{0x04}},
 
-{0x92, 1,{0x1D}},
+{0x92, 1,{0x3F}},
 
-{0x93, 1,{0x1C}},
+{0x93, 1,{0x3F}},
 
-{0x94, 1,{0x1C}},
+{0x94, 1,{0x3F}},
 
-{0x95, 1,{0x1D}},
+{0x95, 1,{0x3F}},
 
-{0x96, 1,{0x3F}},
+{0x96, 1,{0x05}},
 
-{0x97, 1,{0x3F}},
+{0x97, 1,{0x01}},
 
 {0x98, 1,{0x3F}},
 
@@ -534,29 +530,29 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0xA4, 1,{0x3F}},
 
-{0xA5, 1,{0x03}},
+{0xA5, 1,{0x09}},
 
-{0xA6, 1,{0x01}},
+{0xA6, 1,{0x0B}},
 
-{0xA7, 1,{0x0F}},
+{0xA7, 1,{0x0D}},
 
-{0xA9, 1,{0x0D}},
+{0xA9, 1,{0x0F}},
 
-{0xAA, 1,{0x0B}},
+{0xAA, 1,{0x03}},
 
-{0xAB, 1,{0x09}},
+{0xAB, 1,{0x07}},
 
-{0xAC, 1,{0x0F}},
+{0xAC, 1,{0x01}},
 
-{0xAD, 1,{0x0D}},
+{0xAD, 1,{0x05}},
 
-{0xAE, 1,{0x0B}},
+{0xAE, 1,{0x0D}},
 
-{0xAF, 1,{0x09}},
+{0xAF, 1,{0x0F}},
 
-{0xB0, 1,{0x03}},
+{0xB0, 1,{0x09}},
 
-{0xB1, 1,{0x01}},
+{0xB1, 1,{0x0B}},
 
 {0xB2, 1,{0x3F}},
 
@@ -582,21 +578,21 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0xBD, 1,{0x3F}},
 
-{0xBE, 1,{0x3F}},
+{0xBE, 1,{0x07}},
 
-{0xBF, 1,{0x00}},
+{0xBF, 1,{0x03}},
 
-{0xC0, 1,{0x1C}},
+{0xC0, 1,{0x3F}},
 
-{0xC1, 1,{0x1D}},
+{0xC1, 1,{0x3F}},
 
-{0xC2, 1,{0x1D}},
+{0xC2, 1,{0x3F}},
 
-{0xC3, 1,{0x1C}},
+{0xC3, 1,{0x3F}},
 
-{0xC4, 1,{0x01}},
+{0xC4, 1,{0x02}},
 
-{0xC5, 1,{0x3F}},
+{0xC5, 1,{0x06}},
 
 {0xC6, 1,{0x3F}},
 
@@ -622,22 +618,21 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0xD1, 1,{0x3F}},
 
-{0xD2, 1,{0x00}},
+{0xD2, 1,{0x0A}},
 
-{0xD3, 1,{0x02}},
+{0xD3, 1,{0x08}},
 
-{0xD4, 1,{0x08}},
+{0xD4, 1,{0x0E}},
 
-{0xD5, 1,{0x0A}},
+{0xD5, 1,{0x0C}},
 
-{0xD6, 1,{0x0C}},
+{0xD6, 1,{0x04}},
 
-{0xD7, 1,{0x0E}},
+{0xD7, 1,{0x00}},
 
 {0xDC, 1,{0x02}},
 
-{0xDE, 1,{0x13}},
-
+{0xDE, 1,{0x10}},
 
 {0xFE, 1,{0x0E}},
 
@@ -647,15 +642,15 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0x60, 1,{0x00}},
 
-{0x61, 1,{0x07}},
+{0x61, 1,{0x0A}},
 
-{0x62, 1,{0x0C}},
+{0x62, 1,{0x10}},
 
-{0x63, 1,{0x0D}},
+{0x63, 1,{0x0E}},
 
-{0x64, 1,{0x05}},
+{0x64, 1,{0x07}},
 
-{0x65, 1,{0x10}},
+{0x65, 1,{0x14}},
 
 {0x66, 1,{0x0F}},
 
@@ -665,29 +660,29 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0x69, 1,{0x0C}},
 
-{0x6A, 1,{0x12}},
+{0x6A, 1,{0x0F}},
 
-{0x6B, 1,{0x09}},
+{0x6B, 1,{0x08}},
 
-	{0x6C, 1,{0x0F}},
+{0x6C, 1,{0x0F}},
 
-	{0x6D, 1,{0x18}},
+{0x6D, 1,{0x0E}},
 
-	{0x6E, 1,{0x12}},
+{0x6E, 1,{0x09}},
 
 {0x6F, 1,{0x00}},
 
 {0x70, 1,{0x00}},
 
-{0x71, 1,{0x07}},
+{0x71, 1,{0x0A}},
 
-{0x72, 1,{0x0C}},
+{0x72, 1,{0x10}},
 
-{0x73, 1,{0x0D}},
+{0x73, 1,{0x0E}},
 
-{0x74, 1,{0x05}},
+{0x74, 1,{0x07}},
 
-{0x75, 1,{0x10}},
+{0x75, 1,{0x14}},
 
 {0x76, 1,{0x0F}},
 
@@ -697,39 +692,46 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {0x79, 1,{0x0C}},
 
-{0x7A, 1,{0x12}},
+{0x7A, 1,{0x0F}},
 
-{0x7B, 1,{0x09}},
+{0x7B, 1,{0x08}},
 
-	{0x7C, 1,{0x0F}},
+{0x7C, 1,{0x0F}},
 
-	{0x7D, 1,{0x18}},
+{0x7D, 1,{0x0E}},
 
-	{0x7E, 1,{0x12}},
+{0x7E, 1,{0x09}},
 
 {0x7F, 1,{0x00}},
 
-
-{0xFE, 1,{0x0B}},
-
-{0x21, 1,{0x50}},
-
-{0x22, 1,{0x50}},
-
-
 {0xFE, 1,{0x00}},
 
-	{0x58, 1,{0xAD}},
-{0x35, 0,{0x00}},
+{0x58, 1,{0xA9}},//CE ON
+    
+{0x35, 1, {0x00}},
 
-{0x11, 0,{0x00}},
-
+   
+{0x11, 1, {0x00}},
 {REGFLAG_DELAY, 120, {}},
 
-{0x29, 0,{0x00}},
+  // Display ON
+{0x29, 1, {0x00}},
+{REGFLAG_DELAY, 50, {}},
 
-{REGFLAG_DELAY, 100, {}},
 {REGFLAG_END_OF_TABLE, 0x00, {}}
+};
+
+
+static struct LCM_setting_table lcm_sleep_out_setting[] = {
+	// Sleep Out
+	{0x11, 1, {0x00}},
+	{REGFLAG_DELAY, 120, {}},
+
+	// Display ON
+	{0x29, 1, {0x00}},
+	{REGFLAG_DELAY, 10, {}},
+
+	{REGFLAG_END_OF_TABLE, 0x00, {}}
 };
 
 
@@ -748,8 +750,7 @@ static struct LCM_setting_table lcm_sleep_in_setting[] = {
 	{REGFLAG_END_OF_TABLE, 0x00, {}}
 };
 
-static void push_table(struct LCM_setting_table *table, unsigned int count,
-		unsigned char force_update)
+static void push_table(struct LCM_setting_table *table, unsigned int count,	unsigned char force_update)
 {
 	unsigned int i;
 
@@ -768,8 +769,7 @@ static void push_table(struct LCM_setting_table *table, unsigned int count,
 			break;
 
 		default:
-			dsi_set_cmdq_V2(cmd, table[i].count,
-					table[i].para_list, force_update);
+			dsi_set_cmdq_V2(cmd, table[i].count,	table[i].para_list, force_update);
 		}
 	}
 
@@ -790,7 +790,7 @@ static void lcm_get_params(LCM_PARAMS * params)
 {
 	memset(params, 0, sizeof(LCM_PARAMS));
 
-	params->type = LCM_TYPE_DSI;
+	/*params->type = LCM_TYPE_DSI;
 
 	params->width = FRAME_WIDTH;
 	params->height = FRAME_HEIGHT;
@@ -799,15 +799,11 @@ static void lcm_get_params(LCM_PARAMS * params)
 	params->dbi.te_mode = LCM_DBI_TE_MODE_DISABLED;
 	params->dbi.te_edge_polarity = LCM_POLARITY_RISING;
 
-#if (LCM_DSI_CMD_MODE)
-	params->dsi.mode = CMD_MODE;
-#else
-	params->dsi.mode   = SYNC_PULSE_VDO_MODE;//SYNC_EVENT_VDO_MODE;//BURST_VDO_MODE;////
-#endif
+    params->dsi.mode   = SYNC_EVENT_VDO_MODE;
 
 	// DSI
 	/* Command mode setting */
-		params->dsi.LANE_NUM				= LCM_FOUR_LANE;
+/*		params->dsi.LANE_NUM				= LCM_FOUR_LANE;
 	
 	//The following defined the fomat for data coming from LCD engine.
 	params->dsi.data_format.color_order = LCM_COLOR_ORDER_RGB;
@@ -816,31 +812,51 @@ static void lcm_get_params(LCM_PARAMS * params)
 	params->dsi.data_format.format      = LCM_DSI_FORMAT_RGB888;
 	
 	
-	params->dsi.PS=LCM_PACKED_PS_24BIT_RGB888;
-	
-#if (LCM_DSI_CMD_MODE)
-	params->dsi.intermediat_buffer_num = 0;//because DSI/DPI HW design change, this parameters should be 0 when video mode in MT658X; or memory leakage
-	params->dsi.word_count=FRAME_WIDTH*3;	//DSI CMD mode need set these two bellow params, different to 6577
-#else
-	params->dsi.intermediat_buffer_num = 0;	//because DSI/DPI HW design change, this parameters should be 0 when video mode in MT658X; or memory leakage
-#endif
+    params->dsi.packet_size=256;
+    // Video mode setting       
+    params->dsi.intermediat_buffer_num = 2;
+    params->dsi.PS=LCM_PACKED_PS_24BIT_RGB888;
+    params->dsi.vertical_sync_active                = 4;//2;//
+    params->dsi.vertical_backporch                  = 16;//38;//
+    params->dsi.vertical_frontporch                 = 20;//40;//
+    params->dsi.vertical_active_line                = FRAME_HEIGHT; 
+    params->dsi.horizontal_sync_active              = 10;//24;//
+    params->dsi.horizontal_backporch                =75;//75;//
+    params->dsi.horizontal_frontporch               = 64;//75;//
+    params->dsi.horizontal_blanking_pixel              = 60;
+    params->dsi.horizontal_active_pixel            = FRAME_WIDTH;
+    // Bit rate calculation
 
-	// Video mode setting
-	params->dsi.packet_size=256;
-
-	params->dsi.vertical_sync_active				=  2;//2
-	params->dsi.vertical_backporch					= 14;//50;
-	params->dsi.vertical_frontporch					= 16;//50;
-	params->dsi.vertical_active_line				= FRAME_HEIGHT; 
-
-	params->dsi.horizontal_sync_active				= 8;//10
-	params->dsi.horizontal_backporch				= 40;//34; 
-	params->dsi.horizontal_frontporch				= 40;//24;
-	params->dsi.horizontal_active_pixel				= FRAME_WIDTH;
-
-	// Bit rate calculation
-	//1 Every lane speed
-params->dsi.PLL_CLOCK=225;
+    params->dsi.PLL_CLOCK=220;//230
+   // params->dsi.ssc_disable=1; */
+  params->physical_width = 720;
+  params->dsi.data_format.color_order = 0;
+  params->dsi.data_format.trans_seq = 0;
+  params->dsi.data_format.padding = 0;
+  params->dsi.intermediat_buffer_num = 0;
+  params->dsi.packet_size = 256;
+  params->dsi.word_count = 2160;
+  params->dsi.PLL_CLOCK = 208;
+  params->dsi.lcm_esd_check_table[0].para_list[0] = -100;
+  params->type = 2;
+  params->dsi.data_format.format = 2;
+  params->dsi.PS = 2;
+  params->width = 720;
+  params->dsi.horizontal_active_pixel = 720;
+  params->height = 1280;
+  params->dsi.vertical_active_line = 1280;
+  params->dsi.mode = 1;
+  params->dsi.esd_check_enable = 1;
+  params->dsi.customization_esd_check_enable = 1;
+  params->dsi.lcm_esd_check_table[0].count = 1;
+  params->dsi.LANE_NUM = 4;
+  params->dsi.vertical_sync_active = 4;
+  params->dsi.vertical_backporch = 16;
+  params->dsi.vertical_frontporch = 16;
+  params->dsi.horizontal_sync_active = 10;
+  params->dsi.lcm_esd_check_table[0].cmd = 10;
+  params->dsi.horizontal_backporch = 50;
+  params->dsi.horizontal_frontporch = 50;
 }
 
 static void lcm_init(void)
@@ -861,12 +877,10 @@ static void lcm_suspend(void)
  
      push_table(lcm_sleep_in_setting,sizeof(lcm_sleep_in_setting) /sizeof(struct LCM_setting_table), 1);
 
-     SET_RESET_PIN(0);
+   SET_RESET_PIN(0);
      MDELAY(50);
 	 
-#ifdef CONFIG_POCKETMOD
-	is_screen_on = 0;
-	#endif 
+
 }
 
 
@@ -878,9 +892,7 @@ static void lcm_resume(void)
 	//lcm_compare_id();
 //	push_table(lcm_sleep_out_setting,sizeof(lcm_sleep_out_setting) /sizeof(struct LCM_setting_table), 1);
 	lcm_init();
-						#ifdef CONFIG_POCKETMOD
-	is_screen_on = 1;
-	#endif
+			
 /*array[0] = 0x00063902;// read id return two byte,version and id
 	array[1] = 0x52AA55F0;
 	array[2] = 0x00000108;
@@ -968,7 +980,6 @@ static unsigned int lcm_compare_id(void)
 		printk("rm68200a %s id1 = 0x%04x, id2 = 0x%04x\n", __func__, id1,id2);
 	#endif
 	return (0x6820 == id1)?1:0;
-
 }
 //no use
 static unsigned int lcm_esd_recover(void)
@@ -1032,6 +1043,26 @@ static unsigned int lcm_esd_check(void)
         }
 #endif
 }
+
+// ---------------------------------------------------------------------------
+//  Get LCM Driver Hooks
+// ---------------------------------------------------------------------------
+LCM_DRIVER hct_rm68200_dsi_vdo_hd_ivo = 
+{
+	.name			= "hct_rm68200_dsi_vdo_hd_ivo",
+	.set_util_funcs = lcm_set_util_funcs,
+	.get_params     = lcm_get_params,
+	.init           = lcm_init,
+	.suspend        = lcm_suspend,
+	.resume         = lcm_resume,	
+	.compare_id     = lcm_compare_id,	
+  //  .esd_check   	= lcm_esd_check,	
+   // .esd_recover   	= lcm_esd_recover,	
+#if (LCM_DSI_CMD_MODE)
+    .update         = lcm_update,
+#endif	//wqtao
+};
+
 
 // ---------------------------------------------------------------------------
 //  Get LCM Driver Hooks

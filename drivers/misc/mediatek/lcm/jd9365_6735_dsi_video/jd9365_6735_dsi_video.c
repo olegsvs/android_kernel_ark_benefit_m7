@@ -416,34 +416,29 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 {REGFLAG_END_OF_TABLE,0x00,{}}
 };
 
-
 static struct LCM_setting_table lcm_sleep_out_setting[] = {
-	// Sleep Out
-	{0x11, 1, {0x00}},
+    // Sleep Out
+    {0x11, 0, {0x00}},
+    {REGFLAG_DELAY, 120, {}},
+
+    // Display ON
+    {0x29, 0, {0x00}},
+    {REGFLAG_DELAY, 10, {}},
+    
+    //{REGFLAG_END_OF_TABLE, 0x00, {}}
+};
+
+static struct LCM_setting_table lcm_sleep_mode_in_setting[] = {
+    // Display off sequence
+    {0x28, 0, {0x00}},
+    {REGFLAG_DELAY, 10, {}},
+
+    // Sleep Mode On
+	{0x10, 0, {0x00}},
 	{REGFLAG_DELAY, 120, {}},
-
-	// Display ON
-	{0x29, 1, {0x00}},
-	{REGFLAG_DELAY, 10, {}},
-
-	{REGFLAG_END_OF_TABLE, 0x00, {}}
+	//{REGFLAG_END_OF_TABLE, 0x00, {}}
 };
 
-
-static struct LCM_setting_table lcm_sleep_in_setting[] = {
-	// Display off sequence
-	{0x01, 1, {0x00}},
-	{REGFLAG_DELAY, 50, {}},
-	
-	{0x28, 1, {0x00}},
-	{REGFLAG_DELAY, 50, {}},
-
-	// Sleep Mode On
-	{0x10, 1, {0x00}},
-	{REGFLAG_DELAY, 50, {}},
-
-	{REGFLAG_END_OF_TABLE, 0x00, {}}
-};
 
 static void push_table(struct LCM_setting_table *table, unsigned int count,
 		unsigned char force_update)
@@ -487,7 +482,7 @@ static void lcm_get_params(LCM_PARAMS * params)
 {
 	memset(params, 0, sizeof(LCM_PARAMS));
 
-	params->type = LCM_TYPE_DSI;
+	/*params->type = LCM_TYPE_DSI;
 
 	params->width = FRAME_WIDTH;
 	params->height = FRAME_HEIGHT;
@@ -504,7 +499,7 @@ static void lcm_get_params(LCM_PARAMS * params)
 
 	// DSI
 	/* Command mode setting */
-		params->dsi.LANE_NUM				= LCM_FOUR_LANE;
+	/*	params->dsi.LANE_NUM				= LCM_FOUR_LANE;
 	
 	//The following defined the fomat for data coming from LCD engine.
 	params->dsi.data_format.color_order = LCM_COLOR_ORDER_RGB;
@@ -547,7 +542,37 @@ static void lcm_get_params(LCM_PARAMS * params)
 		
 		params->dsi.cont_clock=1;
 */
-		params->dsi.PLL_CLOCK=215;
+		//params->dsi.PLL_CLOCK=215;
+ 
+  params->physical_width = 720;
+  params->dsi.packet_size = 256;
+  params->type = 2;
+  params->dsi.data_format.format = 2;
+  params->dsi.PS = 2;
+  params->dsi.word_count = 2160;
+  params->dsi.vertical_backporch = 15;
+  params->dsi.horizontal_frontporch = 30;
+  params->dsi.PLL_CLOCK = 195;
+  params->dsi.lcm_esd_check_table[0].cmd = 10;
+  params->dsi.lcm_esd_check_table[0].para_list[0] = -100;
+  params->width = 720;
+  params->dsi.horizontal_active_pixel = 720;
+  params->height = 1280;
+  params->dsi.vertical_active_line = 1280;
+  params->dsi.mode = 1;
+  params->dsi.esd_check_enable = 1;
+  params->dsi.customization_esd_check_enable = 1;
+  params->dsi.lcm_esd_check_table[0].count = 1;
+  params->dsi.LANE_NUM = 4;
+  params->dsi.vertical_sync_active = 4;
+  params->dsi.vertical_frontporch = 4;
+  params->dsi.data_format.color_order = 0;
+  params->dsi.data_format.trans_seq = 0;
+  params->dsi.data_format.padding = 0;
+  params->dsi.intermediat_buffer_num = 0;
+  params->dsi.horizontal_sync_active = 20;
+  params->dsi.horizontal_backporch = 20;
+
 }
 
 static void lcm_init(void)

@@ -1,1 +1,1 @@
-cmd_drivers/video/omap2/displays/built-in.o :=  rm -f drivers/video/omap2/displays/built-in.o; /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar rcsD drivers/video/omap2/displays/built-in.o
+cmd_drivers/video/omap2/displays/built-in.o :=  rm -f drivers/video/omap2/displays/built-in.o; aarch64-ar rcsD drivers/video/omap2/displays/built-in.o

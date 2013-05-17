@@ -1,1 +1,1 @@
-cmd_drivers/hid/hid.o := /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/hid/hid.o drivers/hid/hid-debug.o drivers/hid/hid-core.o drivers/hid/hid-input.o drivers/hid/hidraw.o 
+cmd_drivers/hid/hid.o := aarch64-ld -EL    -r -o drivers/hid/hid.o drivers/hid/hid-debug.o drivers/hid/hid-core.o drivers/hid/hid-input.o drivers/hid/hidraw.o 

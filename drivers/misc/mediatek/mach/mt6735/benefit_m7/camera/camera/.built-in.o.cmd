@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/mach/mt6735/benefit_m7/camera/camera/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/mach/mt6735/benefit_m7/camera/camera/built-in.o drivers/misc/mediatek/mach/mt6735/benefit_m7/camera/camera/dummyds.o drivers/misc/mediatek/mach/mt6735/benefit_m7/camera/camera/kd_camera_hw.o 

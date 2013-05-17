@@ -1,1 +1,1 @@
-cmd_sound/core/snd-timer.o := /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o sound/core/snd-timer.o sound/core/timer.o 
+cmd_sound/core/snd-timer.o := aarch64-ld -EL    -r -o sound/core/snd-timer.o sound/core/timer.o 

@@ -1,1 +1,1 @@
-cmd_drivers/staging/android/ion/mtk/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/staging/android/ion/mtk/built-in.o drivers/staging/android/ion/mtk/ion_drv.o drivers/staging/android/ion/mtk/ion_mm_heap.o drivers/staging/android/ion/mtk/ion_fb_heap.o 
+cmd_drivers/staging/android/ion/mtk/built-in.o :=  aarch64-ld -EL    -r -o drivers/staging/android/ion/mtk/built-in.o drivers/staging/android/ion/mtk/ion_drv.o drivers/staging/android/ion/mtk/ion_mm_heap.o drivers/staging/android/ion/mtk/ion_fb_heap.o 

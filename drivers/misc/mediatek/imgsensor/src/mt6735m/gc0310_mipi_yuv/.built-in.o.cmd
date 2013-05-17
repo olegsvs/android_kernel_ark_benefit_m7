@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/imgsensor/src/mt6735m/gc0310_mipi_yuv/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/imgsensor/src/mt6735m/gc0310_mipi_yuv/built-in.o drivers/misc/mediatek/imgsensor/src/mt6735m/gc0310_mipi_yuv/gc0310mipi_yuv_Sensor.o 

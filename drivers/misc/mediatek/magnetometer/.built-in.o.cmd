@@ -1,1 +1,1 @@
-cmd_drivers/misc/mediatek/magnetometer/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/magnetometer/built-in.o drivers/misc/mediatek/magnetometer/mag.o drivers/misc/mediatek/magnetometer/mag_factory.o drivers/misc/mediatek/magnetometer/akm09911-new/built-in.o 
+cmd_drivers/misc/mediatek/magnetometer/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/magnetometer/built-in.o drivers/misc/mediatek/magnetometer/mag.o drivers/misc/mediatek/magnetometer/mag_factory.o 

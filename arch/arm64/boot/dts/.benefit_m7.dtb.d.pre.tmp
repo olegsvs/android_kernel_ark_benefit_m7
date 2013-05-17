@@ -1,0 +1,1 @@
+benefit_m7.o: arch/arm64/boot/dts/benefit_m7.dts

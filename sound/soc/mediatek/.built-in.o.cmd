@@ -1,1 +1,1 @@
-cmd_sound/soc/mediatek/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o sound/soc/mediatek/built-in.o sound/soc/mediatek/common/built-in.o sound/soc/mediatek/mt_soc_audio_v3/built-in.o 
+cmd_sound/soc/mediatek/built-in.o :=  aarch64-ld -EL    -r -o sound/soc/mediatek/built-in.o sound/soc/mediatek/common/built-in.o sound/soc/mediatek/mt_soc_audio_v3/built-in.o 

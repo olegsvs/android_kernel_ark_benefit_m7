@@ -1,1 +1,1 @@
-cmd_drivers/power/mediatek/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/power/mediatek/built-in.o drivers/power/mediatek/battery_meter.o drivers/power/mediatek/battery_common.o drivers/power/mediatek/linear_charging.o 
+cmd_drivers/power/mediatek/built-in.o :=  aarch64-ld -EL    -r -o drivers/power/mediatek/built-in.o drivers/power/mediatek/battery_meter.o drivers/power/mediatek/battery_common.o drivers/power/mediatek/linear_charging.o 

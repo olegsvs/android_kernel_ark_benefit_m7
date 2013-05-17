@@ -1,4 +1,4 @@
-cmd_net/netfilter/nf_conntrack_expect.o := /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-gcc -Wp,-MD,net/netfilter/.nf_conntrack_expect.o.d  -nostdinc -isystem /home/olegsvs/Android/aarch64-linux-android-4.9/bin/../lib/gcc/aarch64-linux-android/4.9/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -O2 -mgeneral-regs-only -fno-pic -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -g -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(nf_conntrack_expect)"  -D"KBUILD_MODNAME=KBUILD_STR(nf_conntrack)" -c -o net/netfilter/nf_conntrack_expect.o net/netfilter/nf_conntrack_expect.c
+cmd_net/netfilter/nf_conntrack_expect.o := aarch64-gcc -Wp,-MD,net/netfilter/.nf_conntrack_expect.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(nf_conntrack_expect)"  -D"KBUILD_MODNAME=KBUILD_STR(nf_conntrack)" -c -o net/netfilter/nf_conntrack_expect.o net/netfilter/nf_conntrack_expect.c
 
 source_net/netfilter/nf_conntrack_expect.o := net/netfilter/nf_conntrack_expect.c
 
@@ -31,7 +31,7 @@ deps_net/netfilter/nf_conntrack_expect.o := \
   include/linux/compiler-gcc.h \
     $(wildcard include/config/arch/supports/optimized/inlining.h) \
     $(wildcard include/config/optimize/inlining.h) \
-  include/linux/compiler-gcc4.h \
+  include/linux/compiler-gcc5.h \
     $(wildcard include/config/arch/use/builtin/bswap.h) \
   arch/arm64/include/generated/asm/posix_types.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/asm-generic/posix_types.h \
@@ -61,7 +61,7 @@ deps_net/netfilter/nf_conntrack_expect.o := \
     $(wildcard include/config/ring/buffer.h) \
     $(wildcard include/config/tracing.h) \
     $(wildcard include/config/ftrace/mcount/record.h) \
-  /home/olegsvs/Android/aarch64-linux-android-4.9/lib/gcc/aarch64-linux-android/4.9/include/stdarg.h \
+  /home/olegsvs/5/aarch64-linux-gnu-5.3/lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include/stdarg.h \
   include/linux/linkage.h \
   include/linux/stringify.h \
   include/linux/export.h \
@@ -106,6 +106,15 @@ deps_net/netfilter/nf_conntrack_expect.o := \
     $(wildcard include/config/dynamic/debug.h) \
   include/linux/kern_levels.h \
   include/linux/dynamic_debug.h \
+  include/linux/string.h \
+    $(wildcard include/config/binary/printf.h) \
+  include/uapi/linux/string.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/string.h \
+  include/linux/errno.h \
+  include/uapi/linux/errno.h \
+  arch/arm64/include/generated/asm/errno.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/asm-generic/errno.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/asm-generic/errno-base.h \
   include/uapi/linux/kernel.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/linux/sysinfo.h \
   include/linux/kmemcheck.h \
@@ -178,10 +187,6 @@ deps_net/netfilter/nf_conntrack_expect.o := \
   include/linux/rwlock_types.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/spinlock.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/processor.h \
-  include/linux/string.h \
-    $(wildcard include/config/binary/printf.h) \
-  include/uapi/linux/string.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/string.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/fpsimd.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/hw_breakpoint.h \
     $(wildcard include/config/have/hw/breakpoint.h) \
@@ -243,11 +248,6 @@ deps_net/netfilter/nf_conntrack_expect.o := \
   include/linux/uprobes.h \
     $(wildcard include/config/arch/supports/uprobes.h) \
     $(wildcard include/config/uprobes.h) \
-  include/linux/errno.h \
-  include/uapi/linux/errno.h \
-  arch/arm64/include/generated/asm/errno.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/asm-generic/errno.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/asm-generic/errno-base.h \
   include/linux/page-flags-layout.h \
     $(wildcard include/config/cma.h) \
     $(wildcard include/config/mtk/svp.h) \

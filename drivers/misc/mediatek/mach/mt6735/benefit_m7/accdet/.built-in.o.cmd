@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/mach/mt6735/benefit_m7/accdet/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/mach/mt6735/benefit_m7/accdet/built-in.o drivers/misc/mediatek/mach/mt6735/benefit_m7/accdet/accdet_custom.o 

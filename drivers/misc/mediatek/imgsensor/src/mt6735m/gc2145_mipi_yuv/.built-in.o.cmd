@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/imgsensor/src/mt6735m/gc2145_mipi_yuv/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/imgsensor/src/mt6735m/gc2145_mipi_yuv/built-in.o drivers/misc/mediatek/imgsensor/src/mt6735m/gc2145_mipi_yuv/gc2145mipi_yuv_Sensor.o 

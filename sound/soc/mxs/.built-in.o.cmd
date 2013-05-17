@@ -1,1 +1,1 @@
-cmd_sound/soc/mxs/built-in.o :=  rm -f sound/soc/mxs/built-in.o; /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar rcsD sound/soc/mxs/built-in.o
+cmd_sound/soc/mxs/built-in.o :=  rm -f sound/soc/mxs/built-in.o; aarch64-ar rcsD sound/soc/mxs/built-in.o

@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/mach/mt6735/benefit_m7/leds/mt65xx/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/mach/mt6735/benefit_m7/leds/mt65xx/built-in.o drivers/misc/mediatek/mach/mt6735/benefit_m7/leds/mt65xx/cust_leds.o 
