@@ -564,18 +564,28 @@ static int netlink_mmap_sendmsg(struct sock *sk, struct msghdr *msg,
 	struct nl_mmap_hdr *hdr;
 	struct sk_buff *skb;
 	unsigned int maxlen;
+<<<<<<< HEAD
 	//bool excl = true;
 	int err = 0, len = 0;
 
 	
 
+=======
+	int err = 0, len = 0;
+
+>>>>>>> 3847ee2... netlink: Always copy on mmap TX.
 	mutex_lock(&nlk->pg_vec_lock);
 
 	ring   = &nlk->tx_ring;
 	maxlen = ring->frame_size - NL_MMAP_HDRLEN;
 
 	do {
+<<<<<<< HEAD
 unsigned int nm_len;
+=======
+		unsigned int nm_len;
+
+>>>>>>> 3847ee2... netlink: Always copy on mmap TX.
 		hdr = netlink_current_frame(ring, NL_MMAP_STATUS_VALID);
 		if (hdr == NULL) {
 			if (!(msg->msg_flags & MSG_DONTWAIT) &&
@@ -583,14 +593,20 @@ unsigned int nm_len;
 				schedule();
 			continue;
 		}
+<<<<<<< HEAD
 	//	if (hdr->nm_len > maxlen) {
 nm_len = ACCESS_ONCE(hdr->nm_len);
+=======
+
+		nm_len = ACCESS_ONCE(hdr->nm_len);
+>>>>>>> 3847ee2... netlink: Always copy on mmap TX.
 		if (nm_len > maxlen) {
 			err = -EINVAL;
 			goto out;
 		}
 
 		netlink_frame_flush_dcache(hdr, nm_len);
+<<<<<<< HEAD
 skb = alloc_skb(nm_len, GFP_KERNEL);
 		if (skb == NULL) {
 			err = -ENOBUFS;
@@ -600,6 +616,18 @@ skb = alloc_skb(nm_len, GFP_KERNEL);
 __skb_put(skb, nm_len);
 		memcpy(skb->data, (void *)hdr + NL_MMAP_HDRLEN, nm_len);
 		netlink_set_status(hdr, NL_MMAP_STATUS_UNUSED);
+=======
+
+		skb = alloc_skb(nm_len, GFP_KERNEL);
+		if (skb == NULL) {
+			err = -ENOBUFS;
+			goto out;
+		}
+		__skb_put(skb, nm_len);
+		memcpy(skb->data, (void *)hdr + NL_MMAP_HDRLEN, nm_len);
+		netlink_set_status(hdr, NL_MMAP_STATUS_UNUSED);
+
+>>>>>>> 3847ee2... netlink: Always copy on mmap TX.
 		netlink_increment_head(ring);
 
 		NETLINK_CB(skb).portid	  = nlk->portid;
