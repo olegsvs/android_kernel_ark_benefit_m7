@@ -565,11 +565,16 @@ static int netlink_mmap_sendmsg(struct sock *sk, struct msghdr *msg,
 	struct sk_buff *skb;
 	unsigned int maxlen;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	//bool excl = true;
 	int err = 0, len = 0;
 
 	
 
+=======
+	int err = 0, len = 0;
+
+>>>>>>> 3847ee2... netlink: Always copy on mmap TX.
 =======
 	int err = 0, len = 0;
 
@@ -581,7 +586,12 @@ static int netlink_mmap_sendmsg(struct sock *sk, struct msghdr *msg,
 
 	do {
 <<<<<<< HEAD
+<<<<<<< HEAD
 unsigned int nm_len;
+=======
+		unsigned int nm_len;
+
+>>>>>>> 3847ee2... netlink: Always copy on mmap TX.
 =======
 		unsigned int nm_len;
 
@@ -594,8 +604,13 @@ unsigned int nm_len;
 			continue;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	//	if (hdr->nm_len > maxlen) {
 nm_len = ACCESS_ONCE(hdr->nm_len);
+=======
+
+		nm_len = ACCESS_ONCE(hdr->nm_len);
+>>>>>>> 3847ee2... netlink: Always copy on mmap TX.
 =======
 
 		nm_len = ACCESS_ONCE(hdr->nm_len);
@@ -606,6 +621,7 @@ nm_len = ACCESS_ONCE(hdr->nm_len);
 		}
 
 		netlink_frame_flush_dcache(hdr, nm_len);
+<<<<<<< HEAD
 <<<<<<< HEAD
 skb = alloc_skb(nm_len, GFP_KERNEL);
 		if (skb == NULL) {
@@ -623,6 +639,14 @@ __skb_put(skb, nm_len);
 			err = -ENOBUFS;
 			goto out;
 		}
+=======
+
+		skb = alloc_skb(nm_len, GFP_KERNEL);
+		if (skb == NULL) {
+			err = -ENOBUFS;
+			goto out;
+		}
+>>>>>>> 3847ee2... netlink: Always copy on mmap TX.
 		__skb_put(skb, nm_len);
 		memcpy(skb->data, (void *)hdr + NL_MMAP_HDRLEN, nm_len);
 		netlink_set_status(hdr, NL_MMAP_STATUS_UNUSED);
