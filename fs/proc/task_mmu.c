@@ -1223,8 +1223,12 @@ out:
 
 static int pagemap_open(struct inode *inode, struct file *file)
 {
+<<<<<<< HEAD
 	/* do not disclose physical addresses to unprivileged
 	   userspace (closes a rowhammer attack vector) */
+=======
+	/* do not disclose physical addresses: attack vector */
+>>>>>>> d949246... BACKPORT: pagemap: do not leak physical addresses to non-privileged userspace
 	if (!capable(CAP_SYS_ADMIN))
 		return -EPERM;
 	return 0;
