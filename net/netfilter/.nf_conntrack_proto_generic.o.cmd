@@ -1,8 +1,12 @@
-cmd_net/netfilter/nf_conntrack_proto_generic.o := aarch64-gcc -Wp,-MD,net/netfilter/.nf_conntrack_proto_generic.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(nf_conntrack_proto_generic)"  -D"KBUILD_MODNAME=KBUILD_STR(nf_conntrack)" -c -o net/netfilter/nf_conntrack_proto_generic.o net/netfilter/nf_conntrack_proto_generic.c
+cmd_net/netfilter/nf_conntrack_proto_generic.o := aarch64-gcc -Wp,-MD,net/netfilter/.nf_conntrack_proto_generic.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -std=gnu89 -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(nf_conntrack_proto_generic)"  -D"KBUILD_MODNAME=KBUILD_STR(nf_conntrack)" -c -o net/netfilter/nf_conntrack_proto_generic.o net/netfilter/nf_conntrack_proto_generic.c
 
 source_net/netfilter/nf_conntrack_proto_generic.o := net/netfilter/nf_conntrack_proto_generic.c
 
 deps_net/netfilter/nf_conntrack_proto_generic.o := \
+    $(wildcard include/config/nf/ct/proto/sctp.h) \
+    $(wildcard include/config/nf/ct/proto/dccp.h) \
+    $(wildcard include/config/nf/ct/proto/gre.h) \
+    $(wildcard include/config/nf/ct/proto/udplite.h) \
     $(wildcard include/config/nf/ct/netlink/timeout.h) \
     $(wildcard include/config/sysctl.h) \
     $(wildcard include/config/nf/conntrack/proc/compat.h) \
@@ -211,7 +215,13 @@ deps_net/netfilter/nf_conntrack_proto_generic.o := \
     $(wildcard include/config/hz.h) \
   include/uapi/asm-generic/param.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/timex.h \
-  include/asm-generic/timex.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/arch_timer.h \
+  include/clocksource/arm_arch_timer.h \
+    $(wildcard include/config/arm/arch/timer.h) \
+  include/linux/clocksource.h \
+    $(wildcard include/config/arch/clocksource/data.h) \
+    $(wildcard include/config/clocksource/watchdog.h) \
+    $(wildcard include/config/clksrc/of.h) \
   include/linux/timer.h \
     $(wildcard include/config/timer/stats.h) \
     $(wildcard include/config/debug/objects/timers.h) \
@@ -220,36 +230,41 @@ deps_net/netfilter/nf_conntrack_proto_generic.o := \
   include/linux/debugobjects.h \
     $(wildcard include/config/debug/objects.h) \
     $(wildcard include/config/debug/objects/free.h) \
-  include/linux/netfilter.h \
-    $(wildcard include/config/netfilter.h) \
-    $(wildcard include/config/jump/label.h) \
-    $(wildcard include/config/nf/nat/needed.h) \
-    $(wildcard include/config/nf/conntrack.h) \
-  include/linux/skbuff.h \
-    $(wildcard include/config/bridge/netfilter.h) \
-    $(wildcard include/config/xfrm.h) \
-    $(wildcard include/config/net/sched.h) \
-    $(wildcard include/config/net/cls/act.h) \
-    $(wildcard include/config/ipv6/ndisc/nodetype.h) \
-    $(wildcard include/config/net/dma.h) \
-    $(wildcard include/config/network/secmark.h) \
-    $(wildcard include/config/network/phy/timestamping.h) \
-    $(wildcard include/config/netfilter/xt/target/trace.h) \
-  include/linux/kmemcheck.h \
-    $(wildcard include/config/kmemcheck.h) \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/io.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/proc-fns.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/page.h \
+    $(wildcard include/config/have/arch/pfn/valid.h) \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-3level-types.h \
+  include/asm-generic/pgtable-nopud.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/memory.h \
+  arch/arm64/include/generated/asm/sizes.h \
+  include/asm-generic/sizes.h \
+  include/linux/sizes.h \
+  include/asm-generic/memory_model.h \
+    $(wildcard include/config/flatmem.h) \
+    $(wildcard include/config/discontigmem.h) \
+    $(wildcard include/config/sparsemem/vmemmap.h) \
+    $(wildcard include/config/sparsemem.h) \
+  include/asm-generic/getorder.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-hwdef.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-3level-hwdef.h \
+  include/asm-generic/pgtable.h \
+    $(wildcard include/config/mmu.h) \
+    $(wildcard include/config/transparent/hugepage.h) \
+    $(wildcard include/config/numa/balancing.h) \
+    $(wildcard include/config/arch/uses/numa/prot/none.h) \
   include/linux/mm_types.h \
     $(wildcard include/config/split/ptlock/cpus.h) \
     $(wildcard include/config/have/cmpxchg/double.h) \
     $(wildcard include/config/have/aligned/struct/page.h) \
     $(wildcard include/config/want/page/debug/flags.h) \
-    $(wildcard include/config/mmu.h) \
+    $(wildcard include/config/kmemcheck.h) \
     $(wildcard include/config/numa.h) \
     $(wildcard include/config/aio.h) \
     $(wildcard include/config/mm/owner.h) \
     $(wildcard include/config/mmu/notifier.h) \
-    $(wildcard include/config/transparent/hugepage.h) \
     $(wildcard include/config/cpumask/offstack.h) \
-    $(wildcard include/config/numa/balancing.h) \
     $(wildcard include/config/compaction.h) \
   include/linux/auxvec.h \
   include/uapi/linux/auxvec.h \
@@ -281,25 +296,35 @@ deps_net/netfilter/nf_conntrack_proto_generic.o := \
   include/linux/page-flags-layout.h \
     $(wildcard include/config/cma.h) \
     $(wildcard include/config/mtk/svp.h) \
-    $(wildcard include/config/sparsemem.h) \
-    $(wildcard include/config/sparsemem/vmemmap.h) \
   include/linux/numa.h \
     $(wildcard include/config/nodes/shift.h) \
   include/generated/bounds.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/sparsemem.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/page.h \
-    $(wildcard include/config/have/arch/pfn/valid.h) \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-3level-types.h \
-  include/asm-generic/pgtable-nopud.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/memory.h \
-  arch/arm64/include/generated/asm/sizes.h \
-  include/asm-generic/sizes.h \
-  include/linux/sizes.h \
-  include/asm-generic/memory_model.h \
-    $(wildcard include/config/flatmem.h) \
-    $(wildcard include/config/discontigmem.h) \
-  include/asm-generic/getorder.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/mmu.h \
+  include/asm-generic/iomap.h \
+    $(wildcard include/config/has/ioport.h) \
+    $(wildcard include/config/pci.h) \
+    $(wildcard include/config/generic/iomap.h) \
+  include/asm-generic/pci_iomap.h \
+    $(wildcard include/config/no/generic/pci/ioport/map.h) \
+    $(wildcard include/config/generic/pci/iomap.h) \
+  include/asm-generic/timex.h \
+  include/linux/netfilter.h \
+    $(wildcard include/config/netfilter.h) \
+    $(wildcard include/config/jump/label.h) \
+    $(wildcard include/config/nf/nat/needed.h) \
+    $(wildcard include/config/nf/conntrack.h) \
+  include/linux/skbuff.h \
+    $(wildcard include/config/bridge/netfilter.h) \
+    $(wildcard include/config/xfrm.h) \
+    $(wildcard include/config/net/sched.h) \
+    $(wildcard include/config/net/cls/act.h) \
+    $(wildcard include/config/ipv6/ndisc/nodetype.h) \
+    $(wildcard include/config/net/dma.h) \
+    $(wildcard include/config/network/secmark.h) \
+    $(wildcard include/config/network/phy/timestamping.h) \
+    $(wildcard include/config/netfilter/xt/target/trace.h) \
+  include/linux/kmemcheck.h \
   include/linux/net.h \
   include/linux/random.h \
     $(wildcard include/config/arch/random.h) \
@@ -474,7 +499,6 @@ deps_net/netfilter/nf_conntrack_proto_generic.o := \
     $(wildcard include/config/stack/growsup.h) \
     $(wildcard include/config/ksm.h) \
     $(wildcard include/config/debug/vm/rb.h) \
-    $(wildcard include/config/arch/uses/numa/prot/none.h) \
     $(wildcard include/config/debug/pagealloc.h) \
     $(wildcard include/config/hibernation.h) \
     $(wildcard include/config/hugetlbfs.h) \
@@ -483,11 +507,6 @@ deps_net/netfilter/nf_conntrack_proto_generic.o := \
   include/linux/range.h \
   include/linux/bit_spinlock.h \
   include/linux/shrinker.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/proc-fns.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-hwdef.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-3level-hwdef.h \
-  include/asm-generic/pgtable.h \
   include/linux/page-flags.h \
     $(wildcard include/config/pageflags/extended.h) \
     $(wildcard include/config/arch/uses/pg/uncached.h) \
@@ -501,14 +520,6 @@ deps_net/netfilter/nf_conntrack_proto_generic.o := \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/scatterlist.h \
     $(wildcard include/config/arm/has/sg/chain.h) \
   include/asm-generic/scatterlist.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/io.h \
-  include/asm-generic/iomap.h \
-    $(wildcard include/config/has/ioport.h) \
-    $(wildcard include/config/pci.h) \
-    $(wildcard include/config/generic/iomap.h) \
-  include/asm-generic/pci_iomap.h \
-    $(wildcard include/config/no/generic/pci/ioport/map.h) \
-    $(wildcard include/config/generic/pci/iomap.h) \
   include/linux/hrtimer.h \
     $(wildcard include/config/high/res/timers.h) \
     $(wildcard include/config/timerfd.h) \

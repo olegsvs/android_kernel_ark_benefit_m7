@@ -1,6 +1,6 @@
 	.arch armv8-a+fp+simd
 	.file	"asm-offsets.c"
-// GNU C11 (GCC) version 5.3.x-sabermod 20160307 (experimental) (aarch64-linux-gnu)
+// GNU C89 (GCC) version 5.3.x-sabermod 20160307 (experimental) (aarch64-linux-gnu)
 //	compiled by GNU C version 4.8.4, GMP version 6.1.99, MPFR version 3.2.0-dev, MPC version 1.1dev
 // GGC heuristics: --param ggc-min-expand=30 --param ggc-min-heapsize=4096
 // options passed:  -nostdinc
@@ -23,14 +23,14 @@
 // -Werror=implicit-function-declaration -Wno-format-security
 // -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast
 // -Wframe-larger-than=1400 -Wno-unused-but-set-variable
-// -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-aliasing
-// -fno-common -fno-delete-null-pointer-checks -fno-pic -ffast-math
-// -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution
-// -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched
-// -fmodulo-sched-allow-regmoves -fno-inline-functions -fno-stack-protector
-// -fno-omit-frame-pointer -fno-optimize-sibling-calls
-// -fno-var-tracking-assignments -fno-strict-overflow -fconserve-stack
-// -fverbose-asm
+// -Wdeclaration-after-statement -Wno-pointer-sign -std=gnu90
+// -fno-strict-aliasing -fno-common -fno-delete-null-pointer-checks
+// -fno-pic -ffast-math -fsingle-precision-constant -fgraphite-identity
+// -ftree-loop-distribution -floop-interchange -floop-strip-mine
+// -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves
+// -fno-inline-functions -fno-stack-protector -fno-omit-frame-pointer
+// -fno-optimize-sibling-calls -fno-var-tracking-assignments
+// -fno-strict-overflow -fconserve-stack -fverbose-asm
 // options enabled:  -faggressive-loop-optimizations -falign-labels
 // -fassociative-math -fauto-inc-dec -fbranch-count-reg -fcaller-saves
 // -fchkp-check-incomplete-type -fchkp-check-read -fchkp-check-write

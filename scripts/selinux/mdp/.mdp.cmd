@@ -1,4 +1,4 @@
-cmd_scripts/selinux/mdp/mdp := gcc -Wp,-MD,scripts/selinux/mdp/.mdp.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer   -Isecurity/selinux/include  -o scripts/selinux/mdp/mdp scripts/selinux/mdp/mdp.c  
+cmd_scripts/selinux/mdp/mdp := gcc -Wp,-MD,scripts/selinux/mdp/.mdp.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89   -Isecurity/selinux/include  -o scripts/selinux/mdp/mdp scripts/selinux/mdp/mdp.c  
 
 source_scripts/selinux/mdp/mdp := scripts/selinux/mdp/mdp.c
 

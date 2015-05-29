@@ -1,4 +1,4 @@
-cmd_net/unix/garbage.o := aarch64-gcc -Wp,-MD,net/unix/.garbage.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(garbage)"  -D"KBUILD_MODNAME=KBUILD_STR(unix)" -c -o net/unix/garbage.o net/unix/garbage.c
+cmd_net/unix/garbage.o := aarch64-gcc -Wp,-MD,net/unix/.garbage.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -std=gnu89 -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(garbage)"  -D"KBUILD_MODNAME=KBUILD_STR(unix)" -c -o net/unix/garbage.o net/unix/garbage.c
 
 source_net/unix/garbage.o := net/unix/garbage.c
 
@@ -401,8 +401,34 @@ deps_net/unix/garbage.o := \
   include/uapi/linux/time.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/linux/param.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/timex.h \
-  include/asm-generic/timex.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/arch_timer.h \
+  include/clocksource/arm_arch_timer.h \
+    $(wildcard include/config/arm/arch/timer.h) \
+  include/linux/clocksource.h \
+    $(wildcard include/config/arch/clocksource/data.h) \
+    $(wildcard include/config/clocksource/watchdog.h) \
+    $(wildcard include/config/clksrc/of.h) \
+  include/linux/timer.h \
+    $(wildcard include/config/timer/stats.h) \
+    $(wildcard include/config/debug/objects/timers.h) \
+  include/linux/ktime.h \
+    $(wildcard include/config/ktime/scalar.h) \
   include/linux/jiffies.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/io.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/proc-fns.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-hwdef.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-3level-hwdef.h \
+  include/asm-generic/pgtable.h \
+    $(wildcard include/config/arch/uses/numa/prot/none.h) \
+  include/asm-generic/iomap.h \
+    $(wildcard include/config/has/ioport.h) \
+    $(wildcard include/config/pci.h) \
+    $(wildcard include/config/generic/iomap.h) \
+  include/asm-generic/pci_iomap.h \
+    $(wildcard include/config/no/generic/pci/ioport/map.h) \
+    $(wildcard include/config/generic/pci/iomap.h) \
+  include/asm-generic/timex.h \
   include/linux/nodemask.h \
     $(wildcard include/config/highmem.h) \
     $(wildcard include/config/movable/node.h) \
@@ -488,11 +514,6 @@ deps_net/unix/garbage.o := \
   include/linux/workqueue.h \
     $(wildcard include/config/debug/objects/work.h) \
     $(wildcard include/config/freezer.h) \
-  include/linux/timer.h \
-    $(wildcard include/config/timer/stats.h) \
-    $(wildcard include/config/debug/objects/timers.h) \
-  include/linux/ktime.h \
-    $(wildcard include/config/ktime/scalar.h) \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/topology.h \
     $(wildcard include/config/arm/cpu/topology.h) \
     $(wildcard include/config/arch/scale/invariant/cpu/capacity.h) \
@@ -556,7 +577,6 @@ deps_net/unix/garbage.o := \
     $(wildcard include/config/ia64.h) \
     $(wildcard include/config/ksm.h) \
     $(wildcard include/config/debug/vm/rb.h) \
-    $(wildcard include/config/arch/uses/numa/prot/none.h) \
     $(wildcard include/config/debug/pagealloc.h) \
     $(wildcard include/config/hibernation.h) \
     $(wildcard include/config/hugetlbfs.h) \
@@ -564,11 +584,6 @@ deps_net/unix/garbage.o := \
     $(wildcard include/config/debug/locking/api/selftests.h) \
   include/linux/range.h \
   include/linux/shrinker.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/proc-fns.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-hwdef.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-3level-hwdef.h \
-  include/asm-generic/pgtable.h \
   include/linux/page-flags.h \
     $(wildcard include/config/pageflags/extended.h) \
     $(wildcard include/config/arch/uses/pg/uncached.h) \
@@ -663,14 +678,6 @@ deps_net/unix/garbage.o := \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/scatterlist.h \
     $(wildcard include/config/arm/has/sg/chain.h) \
   include/asm-generic/scatterlist.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/io.h \
-  include/asm-generic/iomap.h \
-    $(wildcard include/config/has/ioport.h) \
-    $(wildcard include/config/pci.h) \
-    $(wildcard include/config/generic/iomap.h) \
-  include/asm-generic/pci_iomap.h \
-    $(wildcard include/config/no/generic/pci/ioport/map.h) \
-    $(wildcard include/config/generic/pci/iomap.h) \
   include/linux/dma-mapping.h \
     $(wildcard include/config/has/dma.h) \
     $(wildcard include/config/arch/has/dma/set/coherent/mask.h) \

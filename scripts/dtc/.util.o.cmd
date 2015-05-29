@@ -1,4 +1,4 @@
-cmd_scripts/dtc/util.o := gcc -Wp,-MD,scripts/dtc/.util.o.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer    -Iscripts/dtc -Iscripts/dtc/libfdt -c -o scripts/dtc/util.o scripts/dtc/util.c
+cmd_scripts/dtc/util.o := gcc -Wp,-MD,scripts/dtc/.util.o.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89    -Iscripts/dtc -Iscripts/dtc/libfdt -c -o scripts/dtc/util.o scripts/dtc/util.c
 
 source_scripts/dtc/util.o := scripts/dtc/util.c
 

@@ -1,4 +1,4 @@
-cmd_drivers/clocksource/clksrc-of.o := aarch64-gcc -Wp,-MD,drivers/clocksource/.clksrc-of.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(clksrc_of)"  -D"KBUILD_MODNAME=KBUILD_STR(clksrc_of)" -c -o drivers/clocksource/clksrc-of.o drivers/clocksource/clksrc-of.c
+cmd_drivers/clocksource/clksrc-of.o := aarch64-gcc -Wp,-MD,drivers/clocksource/.clksrc-of.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -std=gnu89 -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(clksrc_of)"  -D"KBUILD_MODNAME=KBUILD_STR(clksrc_of)" -c -o drivers/clocksource/clksrc-of.o drivers/clocksource/clksrc-of.c
 
 source_drivers/clocksource/clksrc-of.o := drivers/clocksource/clksrc-of.c
 
@@ -333,27 +333,9 @@ deps_drivers/clocksource/clksrc-of.o := \
     $(wildcard include/config/hz.h) \
   include/uapi/asm-generic/param.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/timex.h \
-  include/asm-generic/timex.h \
-  include/linux/smp.h \
-    $(wildcard include/config/use/generic/smp/helpers.h) \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/smp.h \
-  include/linux/percpu.h \
-    $(wildcard include/config/need/per/cpu/embed/first/chunk.h) \
-    $(wildcard include/config/need/per/cpu/page/first/chunk.h) \
-    $(wildcard include/config/have/setup/per/cpu/area.h) \
-  include/linux/pfn.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/percpu.h \
-  include/asm-generic/percpu.h \
-  include/linux/percpu-defs.h \
-    $(wildcard include/config/debug/force/weak/per/cpu.h) \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/topology.h \
-    $(wildcard include/config/arm/cpu/topology.h) \
-    $(wildcard include/config/arch/scale/invariant/cpu/capacity.h) \
-    $(wildcard include/config/disable/cpu/sched/domain/balance.h) \
-    $(wildcard include/config/hmp/pack/small/task.h) \
-    $(wildcard include/config/mtk/sched/cmp.h) \
-  include/asm-generic/topology.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/prom.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/arch_timer.h \
+  include/clocksource/arm_arch_timer.h \
+    $(wildcard include/config/arm/arch/timer.h) \
   include/linux/clocksource.h \
     $(wildcard include/config/arch/clocksource/data.h) \
     $(wildcard include/config/clocksource/watchdog.h) \
@@ -395,6 +377,27 @@ deps_drivers/clocksource/clksrc-of.o := \
   include/asm-generic/pci_iomap.h \
     $(wildcard include/config/no/generic/pci/ioport/map.h) \
     $(wildcard include/config/generic/pci/iomap.h) \
+  include/asm-generic/timex.h \
+  include/linux/smp.h \
+    $(wildcard include/config/use/generic/smp/helpers.h) \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/smp.h \
+  include/linux/percpu.h \
+    $(wildcard include/config/need/per/cpu/embed/first/chunk.h) \
+    $(wildcard include/config/need/per/cpu/page/first/chunk.h) \
+    $(wildcard include/config/have/setup/per/cpu/area.h) \
+  include/linux/pfn.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/percpu.h \
+  include/asm-generic/percpu.h \
+  include/linux/percpu-defs.h \
+    $(wildcard include/config/debug/force/weak/per/cpu.h) \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/topology.h \
+    $(wildcard include/config/arm/cpu/topology.h) \
+    $(wildcard include/config/arch/scale/invariant/cpu/capacity.h) \
+    $(wildcard include/config/disable/cpu/sched/domain/balance.h) \
+    $(wildcard include/config/hmp/pack/small/task.h) \
+    $(wildcard include/config/mtk/sched/cmp.h) \
+  include/asm-generic/topology.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/prom.h \
 
 drivers/clocksource/clksrc-of.o: $(deps_drivers/clocksource/clksrc-of.o)
 

@@ -1,6 +1,6 @@
 	.arch armv8-a+fp+simd
 	.file	"devicetable-offsets.c"
-// GNU C11 (GCC) version 5.3.x-sabermod 20160307 (experimental) (aarch64-linux-gnu)
+// GNU C89 (GCC) version 5.3.x-sabermod 20160307 (experimental) (aarch64-linux-gnu)
 //	compiled by GNU C version 4.8.4, GMP version 6.1.99, MPFR version 3.2.0-dev, MPC version 1.1dev
 // GGC heuristics: --param ggc-min-expand=30 --param ggc-min-heapsize=4096
 // options passed:  -nostdinc
@@ -24,7 +24,7 @@
 // -Wno-format-security -Werror=format -Werror=int-to-pointer-cast
 // -Werror=pointer-to-int-cast -Wframe-larger-than=1400
 // -Wno-unused-but-set-variable -Wdeclaration-after-statement
-// -Wno-pointer-sign -fno-strict-aliasing -fno-common
+// -Wno-pointer-sign -std=gnu90 -fno-strict-aliasing -fno-common
 // -fno-delete-null-pointer-checks -fno-pic -ffast-math
 // -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution
 // -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched

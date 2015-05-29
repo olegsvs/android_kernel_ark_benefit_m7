@@ -1,4 +1,4 @@
-cmd_scripts/dtc/treesource.o := gcc -Wp,-MD,scripts/dtc/.treesource.o.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer    -Iscripts/dtc -Iscripts/dtc/libfdt -c -o scripts/dtc/treesource.o scripts/dtc/treesource.c
+cmd_scripts/dtc/treesource.o := gcc -Wp,-MD,scripts/dtc/.treesource.o.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89    -Iscripts/dtc -Iscripts/dtc/libfdt -c -o scripts/dtc/treesource.o scripts/dtc/treesource.c
 
 source_scripts/dtc/treesource.o := scripts/dtc/treesource.c
 

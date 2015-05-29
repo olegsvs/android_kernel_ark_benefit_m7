@@ -1,4 +1,4 @@
-cmd_scripts/kallsyms := gcc -Wp,-MD,scripts/.kallsyms.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer   -I/home/olegsvs/5/Q37/alps/kernel-3.10/tools/include  -o scripts/kallsyms scripts/kallsyms.c  
+cmd_scripts/kallsyms := gcc -Wp,-MD,scripts/.kallsyms.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89   -I/home/olegsvs/5/Q37/alps/kernel-3.10/tools/include  -o scripts/kallsyms scripts/kallsyms.c  
 
 source_scripts/kallsyms := scripts/kallsyms.c
 

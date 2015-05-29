@@ -1,4 +1,4 @@
-cmd_scripts/dtc/flattree.o := gcc -Wp,-MD,scripts/dtc/.flattree.o.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer    -Iscripts/dtc -Iscripts/dtc/libfdt -c -o scripts/dtc/flattree.o scripts/dtc/flattree.c
+cmd_scripts/dtc/flattree.o := gcc -Wp,-MD,scripts/dtc/.flattree.o.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89    -Iscripts/dtc -Iscripts/dtc/libfdt -c -o scripts/dtc/flattree.o scripts/dtc/flattree.c
 
 source_scripts/dtc/flattree.o := scripts/dtc/flattree.c
 

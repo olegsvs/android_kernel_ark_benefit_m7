@@ -1,4 +1,4 @@
-cmd_drivers/usb/core/driver.o := aarch64-gcc -Wp,-MD,drivers/usb/core/.driver.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(driver)"  -D"KBUILD_MODNAME=KBUILD_STR(usbcore)" -c -o drivers/usb/core/driver.o drivers/usb/core/driver.c
+cmd_drivers/usb/core/driver.o := aarch64-gcc -Wp,-MD,drivers/usb/core/.driver.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -std=gnu89 -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(driver)"  -D"KBUILD_MODNAME=KBUILD_STR(usbcore)" -c -o drivers/usb/core/driver.o drivers/usb/core/driver.c
 
 source_drivers/usb/core/driver.o := drivers/usb/core/driver.c
 
@@ -251,20 +251,89 @@ deps_drivers/usb/core/driver.o := \
     $(wildcard include/config/hz.h) \
   include/uapi/asm-generic/param.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/timex.h \
-  include/asm-generic/timex.h \
-  include/linux/debugobjects.h \
-    $(wildcard include/config/debug/objects.h) \
-    $(wildcard include/config/debug/objects/free.h) \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/arch_timer.h \
+  include/clocksource/arm_arch_timer.h \
+    $(wildcard include/config/arm/arch/timer.h) \
+  include/linux/clocksource.h \
+    $(wildcard include/config/arch/clocksource/data.h) \
+    $(wildcard include/config/clocksource/watchdog.h) \
+    $(wildcard include/config/clksrc/of.h) \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/io.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/proc-fns.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/page.h \
+    $(wildcard include/config/have/arch/pfn/valid.h) \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-3level-types.h \
+  include/asm-generic/pgtable-nopud.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/memory.h \
+  arch/arm64/include/generated/asm/sizes.h \
+  include/asm-generic/sizes.h \
+  include/linux/sizes.h \
+  include/asm-generic/memory_model.h \
+    $(wildcard include/config/flatmem.h) \
+    $(wildcard include/config/discontigmem.h) \
+    $(wildcard include/config/sparsemem/vmemmap.h) \
+    $(wildcard include/config/sparsemem.h) \
+  include/asm-generic/getorder.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-hwdef.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-3level-hwdef.h \
+  include/asm-generic/pgtable.h \
+    $(wildcard include/config/mmu.h) \
+    $(wildcard include/config/transparent/hugepage.h) \
+    $(wildcard include/config/numa/balancing.h) \
+    $(wildcard include/config/arch/uses/numa/prot/none.h) \
+  include/linux/mm_types.h \
+    $(wildcard include/config/split/ptlock/cpus.h) \
+    $(wildcard include/config/have/cmpxchg/double.h) \
+    $(wildcard include/config/have/aligned/struct/page.h) \
+    $(wildcard include/config/want/page/debug/flags.h) \
+    $(wildcard include/config/kmemcheck.h) \
+    $(wildcard include/config/aio.h) \
+    $(wildcard include/config/mm/owner.h) \
+    $(wildcard include/config/mmu/notifier.h) \
+    $(wildcard include/config/cpumask/offstack.h) \
+    $(wildcard include/config/compaction.h) \
+  include/linux/auxvec.h \
+  include/uapi/linux/auxvec.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi/asm/auxvec.h \
   include/linux/threads.h \
     $(wildcard include/config/nr/cpus.h) \
     $(wildcard include/config/base/small.h) \
+  include/linux/rbtree.h \
+  include/linux/rwsem.h \
+    $(wildcard include/config/rwsem/generic/spinlock.h) \
+  include/linux/rwsem-spinlock.h \
+  include/linux/completion.h \
   include/linux/cpumask.h \
-    $(wildcard include/config/cpumask/offstack.h) \
     $(wildcard include/config/hotplug/cpu.h) \
     $(wildcard include/config/debug/per/cpu/maps.h) \
     $(wildcard include/config/disable/obsolete/cpumask/functions.h) \
   include/linux/bitmap.h \
-  include/linux/completion.h \
+  include/linux/page-debug-flags.h \
+    $(wildcard include/config/page/poisoning.h) \
+    $(wildcard include/config/page/guard.h) \
+    $(wildcard include/config/page/debug/something/else.h) \
+  include/linux/uprobes.h \
+    $(wildcard include/config/arch/supports/uprobes.h) \
+    $(wildcard include/config/uprobes.h) \
+  include/linux/page-flags-layout.h \
+    $(wildcard include/config/mtk/svp.h) \
+  include/linux/numa.h \
+    $(wildcard include/config/nodes/shift.h) \
+  include/generated/bounds.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/sparsemem.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/mmu.h \
+  include/asm-generic/iomap.h \
+    $(wildcard include/config/has/ioport.h) \
+    $(wildcard include/config/pci.h) \
+    $(wildcard include/config/generic/iomap.h) \
+  include/asm-generic/pci_iomap.h \
+    $(wildcard include/config/no/generic/pci/ioport/map.h) \
+    $(wildcard include/config/generic/pci/iomap.h) \
+  include/asm-generic/timex.h \
+  include/linux/debugobjects.h \
+    $(wildcard include/config/debug/objects.h) \
+    $(wildcard include/config/debug/objects/free.h) \
   include/linux/ratelimit.h \
   include/linux/uidgid.h \
     $(wildcard include/config/uidgid/strict/type/checks.h) \
@@ -274,7 +343,6 @@ deps_drivers/usb/core/driver.o := \
   include/linux/pm_wakeup.h \
   include/linux/slab.h \
     $(wildcard include/config/slab/debug.h) \
-    $(wildcard include/config/kmemcheck.h) \
     $(wildcard include/config/failslab.h) \
     $(wildcard include/config/slob.h) \
     $(wildcard include/config/slab.h) \
@@ -282,7 +350,6 @@ deps_drivers/usb/core/driver.o := \
     $(wildcard include/config/slub.h) \
     $(wildcard include/config/debug/slab.h) \
   include/linux/gfp.h \
-    $(wildcard include/config/mtk/svp.h) \
     $(wildcard include/config/highmem.h) \
     $(wildcard include/config/zone/dma32.h) \
   include/linux/mmzone.h \
@@ -290,52 +357,28 @@ deps_drivers/usb/core/driver.o := \
     $(wildcard include/config/mtkpasr.h) \
     $(wildcard include/config/memory/isolation.h) \
     $(wildcard include/config/memcg.h) \
-    $(wildcard include/config/compaction.h) \
     $(wildcard include/config/memory/hotplug.h) \
-    $(wildcard include/config/sparsemem.h) \
     $(wildcard include/config/have/memblock/node/map.h) \
-    $(wildcard include/config/discontigmem.h) \
     $(wildcard include/config/flat/node/mem/map.h) \
     $(wildcard include/config/no/bootmem.h) \
-    $(wildcard include/config/numa/balancing.h) \
     $(wildcard include/config/have/memory/present.h) \
     $(wildcard include/config/have/memoryless/nodes.h) \
     $(wildcard include/config/need/node/memmap/size.h) \
     $(wildcard include/config/need/multiple/nodes.h) \
     $(wildcard include/config/have/arch/early/pfn/to/nid.h) \
-    $(wildcard include/config/flatmem.h) \
     $(wildcard include/config/sparsemem/extreme.h) \
-    $(wildcard include/config/have/arch/pfn/valid.h) \
     $(wildcard include/config/nodes/span/other/nodes.h) \
     $(wildcard include/config/holes/in/zone.h) \
     $(wildcard include/config/arch/has/holes/memorymodel.h) \
-  include/linux/numa.h \
-    $(wildcard include/config/nodes/shift.h) \
   include/linux/nodemask.h \
     $(wildcard include/config/movable/node.h) \
   include/linux/pageblock-flags.h \
     $(wildcard include/config/hugetlb/page.h) \
     $(wildcard include/config/hugetlb/page/size/variable.h) \
-  include/linux/page-flags-layout.h \
-    $(wildcard include/config/sparsemem/vmemmap.h) \
-  include/generated/bounds.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/sparsemem.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/page.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-3level-types.h \
-  include/asm-generic/pgtable-nopud.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/memory.h \
-  arch/arm64/include/generated/asm/sizes.h \
-  include/asm-generic/sizes.h \
-  include/linux/sizes.h \
-  include/asm-generic/memory_model.h \
-  include/asm-generic/getorder.h \
   include/linux/memory_hotplug.h \
     $(wildcard include/config/have/arch/nodedata/extension.h) \
     $(wildcard include/config/have/bootmem/info/node.h) \
   include/linux/notifier.h \
-  include/linux/rwsem.h \
-    $(wildcard include/config/rwsem/generic/spinlock.h) \
-  include/linux/rwsem-spinlock.h \
   include/linux/srcu.h \
   include/linux/rcupdate.h \
     $(wildcard include/config/rcu/torture/test.h) \
@@ -425,7 +468,6 @@ deps_drivers/usb/core/driver.o := \
   include/linux/hrtimer.h \
     $(wildcard include/config/high/res/timers.h) \
     $(wildcard include/config/timerfd.h) \
-  include/linux/rbtree.h \
   include/linux/timerqueue.h \
   include/linux/fs.h \
     $(wildcard include/config/fs/posix/acl.h) \
@@ -457,7 +499,6 @@ deps_drivers/usb/core/driver.o := \
     $(wildcard include/config/sched/debug.h) \
     $(wildcard include/config/no/hz/common.h) \
     $(wildcard include/config/lockup/detector.h) \
-    $(wildcard include/config/mmu.h) \
     $(wildcard include/config/core/dump/default/elf/headers.h) \
     $(wildcard include/config/sched/autogroup.h) \
     $(wildcard include/config/bsd/process/acct.h) \
@@ -496,36 +537,16 @@ deps_drivers/usb/core/driver.o := \
     $(wildcard include/config/fault/injection.h) \
     $(wildcard include/config/latencytop.h) \
     $(wildcard include/config/function/graph/tracer.h) \
-    $(wildcard include/config/uprobes.h) \
     $(wildcard include/config/bcache.h) \
     $(wildcard include/config/have/unstable/sched/clock.h) \
     $(wildcard include/config/no/hz/full.h) \
     $(wildcard include/config/mt/prio/tracer.h) \
     $(wildcard include/config/stack/growsup.h) \
-    $(wildcard include/config/mm/owner.h) \
     $(wildcard include/config/mtk/sched/rqavg/us.h) \
     $(wildcard include/config/mtk/sched/rqavg/ks.h) \
   include/uapi/linux/sched.h \
   include/linux/capability.h \
   include/uapi/linux/capability.h \
-  include/linux/mm_types.h \
-    $(wildcard include/config/split/ptlock/cpus.h) \
-    $(wildcard include/config/have/cmpxchg/double.h) \
-    $(wildcard include/config/have/aligned/struct/page.h) \
-    $(wildcard include/config/want/page/debug/flags.h) \
-    $(wildcard include/config/aio.h) \
-    $(wildcard include/config/mmu/notifier.h) \
-    $(wildcard include/config/transparent/hugepage.h) \
-  include/linux/auxvec.h \
-  include/uapi/linux/auxvec.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi/asm/auxvec.h \
-  include/linux/page-debug-flags.h \
-    $(wildcard include/config/page/poisoning.h) \
-    $(wildcard include/config/page/guard.h) \
-    $(wildcard include/config/page/debug/something/else.h) \
-  include/linux/uprobes.h \
-    $(wildcard include/config/arch/supports/uprobes.h) \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/mmu.h \
   arch/arm64/include/generated/asm/cputime.h \
   include/asm-generic/cputime.h \
   include/asm-generic/cputime_jiffies.h \
@@ -598,7 +619,6 @@ deps_drivers/usb/core/driver.o := \
     $(wildcard include/config/ia64.h) \
     $(wildcard include/config/ksm.h) \
     $(wildcard include/config/debug/vm/rb.h) \
-    $(wildcard include/config/arch/uses/numa/prot/none.h) \
     $(wildcard include/config/debug/pagealloc.h) \
     $(wildcard include/config/hibernation.h) \
     $(wildcard include/config/hugetlbfs.h) \
@@ -606,11 +626,6 @@ deps_drivers/usb/core/driver.o := \
     $(wildcard include/config/debug/locking/api/selftests.h) \
   include/linux/range.h \
   include/linux/shrinker.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/proc-fns.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-hwdef.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-3level-hwdef.h \
-  include/asm-generic/pgtable.h \
   include/linux/page-flags.h \
     $(wildcard include/config/pageflags/extended.h) \
     $(wildcard include/config/arch/uses/pg/uncached.h) \
@@ -654,7 +669,6 @@ deps_drivers/usb/core/driver.o := \
   include/linux/usb/quirks.h \
     $(wildcard include/config/intf/strings.h) \
   include/linux/usb/hcd.h \
-    $(wildcard include/config/pci.h) \
   /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/linux/usb/ch11.h \
     $(wildcard include/config/error.h) \
   drivers/usb/core/usb.h \

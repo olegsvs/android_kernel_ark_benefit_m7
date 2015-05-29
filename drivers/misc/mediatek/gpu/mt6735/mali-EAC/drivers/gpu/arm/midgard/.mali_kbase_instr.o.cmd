@@ -1,4 +1,4 @@
-cmd_drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbase_instr.o := aarch64-gcc -Wp,-MD,drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/.mali_kbase_instr.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/include -DMALI_CUSTOMER_RELEASE=1 -DMALI_KERNEL_TEST_API=0 -DMALI_UNIT_TEST=0 -DMALI_ERROR_INJECT_ON=0 -DMALI_MOCK_TEST=0 -DMALI_COVERAGE=0 -DMALI_INSTRUMENTATION_LEVEL=0 -DMALI_RELEASE_NAME=\""r5p0-06rel0"\" -DMALI_GCC_WORKAROUND_MIDCOM_4598=0 -DMALI_KBASE_THIRDPARTY_PATH=../../drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/platform/vexpress -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/staging/android -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/platform_dummy -I -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/../../../base -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/linux -DCONFIG_MALI_PLATFORM_FAKE -DCONFIG_MALI_MIDGARD_DVFS -I-I/home/olegsvs/5/Q37/alps/kernel-3.10/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/staging/android -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/include -DCONFIG_DEBUG_FS -DCONFIG_PROC_FS -DCONFIG_MALI_DEBUG -DMALI_CUSTOMER_RELEASE=1 -DMALI_KERNEL_TEST_API=0 -DMALI_UNIT_TEST=0 -DMALI_ERROR_INJECT_ON=0 -DMALI_MOCK_TEST=0 -DMALI_COVERAGE=0 -DMALI_INSTRUMENTATION_LEVEL=0 -DMALI_RELEASE_NAME=\""r5p0-06rel0"\" -DMALI_GCC_WORKAROUND_MIDCOM_4598=0 -DMALI_KBASE_THIRDPARTY_PATH=../../drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/platform/vexpress -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/staging/android -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/platform_dummy -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/../../../base -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/linux -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/platform/vexpress    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(mali_kbase_instr)"  -D"KBUILD_MODNAME=KBUILD_STR(mali_kbase)" -c -o drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbase_instr.o drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbase_instr.c
+cmd_drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbase_instr.o := aarch64-gcc -Wp,-MD,drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/.mali_kbase_instr.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -std=gnu89 -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/include -DMALI_CUSTOMER_RELEASE=1 -DMALI_KERNEL_TEST_API=0 -DMALI_UNIT_TEST=0 -DMALI_ERROR_INJECT_ON=0 -DMALI_MOCK_TEST=0 -DMALI_COVERAGE=0 -DMALI_INSTRUMENTATION_LEVEL=0 -DMALI_RELEASE_NAME=\""r5p0-06rel0"\" -DMALI_GCC_WORKAROUND_MIDCOM_4598=0 -DMALI_KBASE_THIRDPARTY_PATH=../../drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/platform/vexpress -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/staging/android -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/platform_dummy -I -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/../../../base -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/linux -DCONFIG_MALI_PLATFORM_FAKE -DCONFIG_MALI_MIDGARD_DVFS -I-I/home/olegsvs/5/Q37/alps/kernel-3.10/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/staging/android -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/include -DCONFIG_DEBUG_FS -DCONFIG_PROC_FS -DCONFIG_MALI_DEBUG -DMALI_CUSTOMER_RELEASE=1 -DMALI_KERNEL_TEST_API=0 -DMALI_UNIT_TEST=0 -DMALI_ERROR_INJECT_ON=0 -DMALI_MOCK_TEST=0 -DMALI_COVERAGE=0 -DMALI_INSTRUMENTATION_LEVEL=0 -DMALI_RELEASE_NAME=\""r5p0-06rel0"\" -DMALI_GCC_WORKAROUND_MIDCOM_4598=0 -DMALI_KBASE_THIRDPARTY_PATH=../../drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/platform/vexpress -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/staging/android -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/platform_dummy -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/../../../base -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/linux -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard -Idrivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/platform/vexpress    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(mali_kbase_instr)"  -D"KBUILD_MODNAME=KBUILD_STR(mali_kbase)" -c -o drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbase_instr.o drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbase_instr.c
 
 source_drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbase_instr.o := drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbase_instr.c
 
@@ -363,13 +363,27 @@ deps_drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbas
   include/uapi/linux/time.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/linux/param.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/timex.h \
-  include/asm-generic/timex.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/arch_timer.h \
+  include/clocksource/arm_arch_timer.h \
+    $(wildcard include/config/arm/arch/timer.h) \
+  include/linux/clocksource.h \
+    $(wildcard include/config/arch/clocksource/data.h) \
+    $(wildcard include/config/clocksource/watchdog.h) \
+    $(wildcard include/config/clksrc/of.h) \
+  include/linux/timer.h \
+    $(wildcard include/config/timer/stats.h) \
+    $(wildcard include/config/debug/objects/timers.h) \
+  include/linux/ktime.h \
+    $(wildcard include/config/ktime/scalar.h) \
   include/linux/jiffies.h \
-  include/linux/rbtree.h \
-  include/linux/nodemask.h \
-    $(wildcard include/config/movable/node.h) \
-  include/linux/numa.h \
-    $(wildcard include/config/nodes/shift.h) \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/io.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/proc-fns.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-hwdef.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-3level-hwdef.h \
+  include/asm-generic/pgtable.h \
+    $(wildcard include/config/transparent/hugepage.h) \
+    $(wildcard include/config/arch/uses/numa/prot/none.h) \
   include/linux/mm_types.h \
     $(wildcard include/config/split/ptlock/cpus.h) \
     $(wildcard include/config/have/cmpxchg/double.h) \
@@ -378,11 +392,11 @@ deps_drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbas
     $(wildcard include/config/kmemcheck.h) \
     $(wildcard include/config/aio.h) \
     $(wildcard include/config/mmu/notifier.h) \
-    $(wildcard include/config/transparent/hugepage.h) \
     $(wildcard include/config/compaction.h) \
   include/linux/auxvec.h \
   include/uapi/linux/auxvec.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi/asm/auxvec.h \
+  include/linux/rbtree.h \
   include/linux/rwsem.h \
     $(wildcard include/config/rwsem/generic/spinlock.h) \
   include/linux/rwsem-spinlock.h \
@@ -395,9 +409,21 @@ deps_drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbas
   include/linux/page-flags-layout.h \
     $(wildcard include/config/cma.h) \
     $(wildcard include/config/mtk/svp.h) \
+  include/linux/numa.h \
+    $(wildcard include/config/nodes/shift.h) \
   include/generated/bounds.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/sparsemem.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/mmu.h \
+  include/asm-generic/iomap.h \
+    $(wildcard include/config/has/ioport.h) \
+    $(wildcard include/config/pci.h) \
+    $(wildcard include/config/generic/iomap.h) \
+  include/asm-generic/pci_iomap.h \
+    $(wildcard include/config/no/generic/pci/ioport/map.h) \
+    $(wildcard include/config/generic/pci/iomap.h) \
+  include/asm-generic/timex.h \
+  include/linux/nodemask.h \
+    $(wildcard include/config/movable/node.h) \
   arch/arm64/include/generated/asm/cputime.h \
   include/asm-generic/cputime.h \
     $(wildcard include/config/virt/cpu/accounting.h) \
@@ -480,11 +506,6 @@ deps_drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbas
   include/linux/workqueue.h \
     $(wildcard include/config/debug/objects/work.h) \
     $(wildcard include/config/freezer.h) \
-  include/linux/timer.h \
-    $(wildcard include/config/timer/stats.h) \
-    $(wildcard include/config/debug/objects/timers.h) \
-  include/linux/ktime.h \
-    $(wildcard include/config/ktime/scalar.h) \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/topology.h \
     $(wildcard include/config/arm/cpu/topology.h) \
     $(wildcard include/config/arch/scale/invariant/cpu/capacity.h) \
@@ -548,7 +569,6 @@ deps_drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbas
     $(wildcard include/config/ia64.h) \
     $(wildcard include/config/ksm.h) \
     $(wildcard include/config/debug/vm/rb.h) \
-    $(wildcard include/config/arch/uses/numa/prot/none.h) \
     $(wildcard include/config/debug/pagealloc.h) \
     $(wildcard include/config/hibernation.h) \
     $(wildcard include/config/hugetlbfs.h) \
@@ -556,11 +576,6 @@ deps_drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbas
     $(wildcard include/config/debug/locking/api/selftests.h) \
   include/linux/range.h \
   include/linux/shrinker.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/proc-fns.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-hwdef.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/pgtable-3level-hwdef.h \
-  include/asm-generic/pgtable.h \
   include/linux/page-flags.h \
     $(wildcard include/config/pageflags/extended.h) \
     $(wildcard include/config/arch/uses/pg/uncached.h) \
@@ -746,14 +761,6 @@ deps_drivers/misc/mediatek/gpu/mt6735/mali-EAC/drivers/gpu/arm/midgard/mali_kbas
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/scatterlist.h \
     $(wildcard include/config/arm/has/sg/chain.h) \
   include/asm-generic/scatterlist.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/io.h \
-  include/asm-generic/iomap.h \
-    $(wildcard include/config/has/ioport.h) \
-    $(wildcard include/config/pci.h) \
-    $(wildcard include/config/generic/iomap.h) \
-  include/asm-generic/pci_iomap.h \
-    $(wildcard include/config/no/generic/pci/ioport/map.h) \
-    $(wildcard include/config/generic/pci/iomap.h) \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/dma-mapping.h \
   include/asm-generic/dma-coherent.h \
     $(wildcard include/config/have/generic/dma/coherent.h) \

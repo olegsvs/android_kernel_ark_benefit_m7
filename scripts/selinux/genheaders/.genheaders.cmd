@@ -1,4 +1,4 @@
-cmd_scripts/selinux/genheaders/genheaders := gcc -Wp,-MD,scripts/selinux/genheaders/.genheaders.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer   -Isecurity/selinux/include  -o scripts/selinux/genheaders/genheaders scripts/selinux/genheaders/genheaders.c  
+cmd_scripts/selinux/genheaders/genheaders := gcc -Wp,-MD,scripts/selinux/genheaders/.genheaders.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89   -Isecurity/selinux/include  -o scripts/selinux/genheaders/genheaders scripts/selinux/genheaders/genheaders.c  
 
 source_scripts/selinux/genheaders/genheaders := scripts/selinux/genheaders/genheaders.c
 

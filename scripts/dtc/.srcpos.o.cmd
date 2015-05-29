@@ -1,4 +1,4 @@
-cmd_scripts/dtc/srcpos.o := gcc -Wp,-MD,scripts/dtc/.srcpos.o.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer    -Iscripts/dtc -Iscripts/dtc/libfdt -c -o scripts/dtc/srcpos.o scripts/dtc/srcpos.c
+cmd_scripts/dtc/srcpos.o := gcc -Wp,-MD,scripts/dtc/.srcpos.o.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89    -Iscripts/dtc -Iscripts/dtc/libfdt -c -o scripts/dtc/srcpos.o scripts/dtc/srcpos.c
 
 source_scripts/dtc/srcpos.o := scripts/dtc/srcpos.c
 

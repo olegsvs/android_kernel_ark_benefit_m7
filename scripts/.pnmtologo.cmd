@@ -1,4 +1,4 @@
-cmd_scripts/pnmtologo := gcc -Wp,-MD,scripts/.pnmtologo.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer   -I/home/olegsvs/5/Q37/alps/kernel-3.10/tools/include  -o scripts/pnmtologo scripts/pnmtologo.c  
+cmd_scripts/pnmtologo := gcc -Wp,-MD,scripts/.pnmtologo.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89   -I/home/olegsvs/5/Q37/alps/kernel-3.10/tools/include  -o scripts/pnmtologo scripts/pnmtologo.c  
 
 source_scripts/pnmtologo := scripts/pnmtologo.c
 

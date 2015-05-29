@@ -1,4 +1,4 @@
-cmd_drivers/misc/mediatek/mach/mt6735/ca53_timer.o := aarch64-gcc -Wp,-MD,drivers/misc/mediatek/mach/mt6735/.ca53_timer.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO -DMT_CPUIDLE -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/include/mach -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/accdet -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/core -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/camera/camera -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/common -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/dct/dct -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/hdmi -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/imgsensor/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/keypad -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/leds/mt65xx -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/power -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/rtc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/sound/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/touchpanel/ft5406_82 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/vibrator -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/nand -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/dct/dct/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/accdet/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/accelerometer/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/alsps/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/hdmi/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/barometer/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/auxadc/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/cam_cal/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/camera/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/cmdq/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/devinfo/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/dispsys/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/dual_ccci/mt6735/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/dual_ccci/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/flashlight/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/gyroscope/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/step_counter -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/pedometer -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/activity_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/in_pocket_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/face_down_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/pick_up_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/shake_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/heart_rate_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/tilt_detector_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/wake_gesture_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/glance_gesture_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/i2c/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/imgsensor/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/eeprom/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/leds/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/lens/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/magnetometer/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/met/platform/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/met/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/sensorHub/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/smi/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/ssw/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/sync -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/uart/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/vibrator/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/video/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/video -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/wdk -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mjc/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/lcm -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/lcm/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/multibridge/mt6735/mt8193/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/dum-char/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/lens/mt6735/inc -DCONSTANT_FLASHLIGHT -DJD9367_6735_DSI_VIDEO -DJD9365_6735_DSI_VIDEO -DRM68200_6735_DSI_VIDEO -DIMX219_MIPI_RAW -DGC2355_MIPI_RAW -DGC2145_MIPI_YUV -DGC0310_MIPI_YUV -I/home/olegsvs/5/Q37/alps/kernel-3.10/PTGEN/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/ptgen/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/m4u/mt6735/mt6735m/ -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/cmdq/mt6735/mt6735m/ -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/pmic_wrap/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/cmdq -I/home/olegsvs/5/Q37/alps/kernel-3.10/sound/soc/mediatek/mt_soc_audio_v3    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(ca53_timer)"  -D"KBUILD_MODNAME=KBUILD_STR(ca53_timer)" -c -o drivers/misc/mediatek/mach/mt6735/ca53_timer.o drivers/misc/mediatek/mach/mt6735/ca53_timer.c
+cmd_drivers/misc/mediatek/mach/mt6735/ca53_timer.o := aarch64-gcc -Wp,-MD,drivers/misc/mediatek/mach/mt6735/.ca53_timer.o.d  -nostdinc -isystem /home/olegsvs/5/aarch64-linux-gnu-5.3/bin/../lib/gcc/aarch64-linux-gnu/5.3.x-sabermod/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include -Iarch/arm64/include/generated  -Iinclude -I/home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi -Iarch/arm64/include/generated/uapi -I/home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi -Iinclude/generated/uapi -include /home/olegsvs/5/Q37/alps/kernel-3.10/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -std=gnu89 -O2 -mgeneral-regs-only -fno-pic -mtune=cortex-a53 -march=armv8-a -O3 -ffast-math -fsingle-precision-constant -fgraphite-identity -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-inline-functions -Wframe-larger-than=1400 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO -DMT_CPUIDLE -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/include/mach -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/accdet -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/core -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/camera/camera -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/common -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/dct/dct -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/hdmi -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/imgsensor/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/keypad -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/leds/mt65xx -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/power -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/rtc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/sound/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/touchpanel/ft5406_82 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/vibrator -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/nand -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/benefit_m7/dct/dct/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/accdet/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/accelerometer/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/alsps/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/hdmi/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/barometer/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/auxadc/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/cam_cal/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/camera/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/cmdq/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/devinfo/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/dispsys/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/dual_ccci/mt6735/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/dual_ccci/include -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/flashlight/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/gyroscope/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/step_counter -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/pedometer -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/activity_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/in_pocket_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/face_down_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/pick_up_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/shake_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/heart_rate_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/tilt_detector_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/wake_gesture_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/glance_gesture_sensor -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/i2c/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/imgsensor/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/eeprom/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/leds/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/lens/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/magnetometer/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/met/platform/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/met/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/sensorHub/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/smi/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/ssw/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/sync -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/uart/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/vibrator/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/video/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/video -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/wdk -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mjc/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/lcm -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/lcm/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/multibridge/mt6735/mt8193/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/dum-char/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/lens/mt6735/inc -DCONSTANT_FLASHLIGHT -DJD9367_6735_DSI_VIDEO -DJD9365_6735_DSI_VIDEO -DRM68200_6735_DSI_VIDEO -DIMX219_MIPI_RAW -DGC2355_MIPI_RAW -DGC2145_MIPI_YUV -DGC0310_MIPI_YUV -I/home/olegsvs/5/Q37/alps/kernel-3.10/PTGEN/inc -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/ptgen/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/m4u/mt6735/mt6735m/ -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/cmdq/mt6735/mt6735m/ -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/pmic_wrap/mt6735 -I/home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/cmdq -I/home/olegsvs/5/Q37/alps/kernel-3.10/sound/soc/mediatek/mt_soc_audio_v3    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(ca53_timer)"  -D"KBUILD_MODNAME=KBUILD_STR(ca53_timer)" -c -o drivers/misc/mediatek/mach/mt6735/ca53_timer.o drivers/misc/mediatek/mach/mt6735/ca53_timer.c
 
 source_drivers/misc/mediatek/mach/mt6735/ca53_timer.o := drivers/misc/mediatek/mach/mt6735/ca53_timer.c
 
@@ -249,43 +249,9 @@ deps_drivers/misc/mediatek/mach/mt6735/ca53_timer.o := \
     $(wildcard include/config/hz.h) \
   include/uapi/asm-generic/param.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/timex.h \
-  include/asm-generic/timex.h \
-  include/linux/debugobjects.h \
-    $(wildcard include/config/debug/objects.h) \
-    $(wildcard include/config/debug/objects/free.h) \
-  include/linux/threads.h \
-    $(wildcard include/config/nr/cpus.h) \
-    $(wildcard include/config/base/small.h) \
-  include/linux/cpumask.h \
-    $(wildcard include/config/cpumask/offstack.h) \
-    $(wildcard include/config/hotplug/cpu.h) \
-    $(wildcard include/config/debug/per/cpu/maps.h) \
-    $(wildcard include/config/disable/obsolete/cpumask/functions.h) \
-  include/linux/bitmap.h \
-  include/linux/completion.h \
-  include/linux/ratelimit.h \
-  include/linux/uidgid.h \
-    $(wildcard include/config/uidgid/strict/type/checks.h) \
-    $(wildcard include/config/user/ns.h) \
-  include/linux/highuid.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/device.h \
-  include/linux/pm_wakeup.h \
-  include/linux/smp.h \
-    $(wildcard include/config/use/generic/smp/helpers.h) \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/smp.h \
-  include/linux/cpu.h \
-    $(wildcard include/config/arch/has/cpu/autoprobe.h) \
-    $(wildcard include/config/arch/cpu/probe/release.h) \
-    $(wildcard include/config/pm/sleep/smp.h) \
-  include/linux/node.h \
-    $(wildcard include/config/memory/hotplug/sparse.h) \
-    $(wildcard include/config/hugetlbfs.h) \
-  include/linux/clockchips.h \
-    $(wildcard include/config/generic/clockevents/build.h) \
-    $(wildcard include/config/generic/clockevents/broadcast.h) \
-    $(wildcard include/config/arch/has/tick/broadcast.h) \
-    $(wildcard include/config/tick/oneshot.h) \
-    $(wildcard include/config/generic/clockevents.h) \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/arch_timer.h \
+  include/clocksource/arm_arch_timer.h \
+    $(wildcard include/config/arm/arch/timer.h) \
   include/linux/clocksource.h \
     $(wildcard include/config/arch/clocksource/data.h) \
     $(wildcard include/config/clocksource/watchdog.h) \
@@ -323,14 +289,24 @@ deps_drivers/misc/mediatek/mach/mt6735/ca53_timer.o := \
     $(wildcard include/config/aio.h) \
     $(wildcard include/config/mm/owner.h) \
     $(wildcard include/config/mmu/notifier.h) \
+    $(wildcard include/config/cpumask/offstack.h) \
     $(wildcard include/config/compaction.h) \
   include/linux/auxvec.h \
   include/uapi/linux/auxvec.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/uapi/asm/auxvec.h \
+  include/linux/threads.h \
+    $(wildcard include/config/nr/cpus.h) \
+    $(wildcard include/config/base/small.h) \
   include/linux/rbtree.h \
   include/linux/rwsem.h \
     $(wildcard include/config/rwsem/generic/spinlock.h) \
   include/linux/rwsem-spinlock.h \
+  include/linux/completion.h \
+  include/linux/cpumask.h \
+    $(wildcard include/config/hotplug/cpu.h) \
+    $(wildcard include/config/debug/per/cpu/maps.h) \
+    $(wildcard include/config/disable/obsolete/cpumask/functions.h) \
+  include/linux/bitmap.h \
   include/linux/page-debug-flags.h \
     $(wildcard include/config/page/poisoning.h) \
     $(wildcard include/config/page/guard.h) \
@@ -352,6 +328,33 @@ deps_drivers/misc/mediatek/mach/mt6735/ca53_timer.o := \
   include/asm-generic/pci_iomap.h \
     $(wildcard include/config/no/generic/pci/ioport/map.h) \
     $(wildcard include/config/generic/pci/iomap.h) \
+  include/asm-generic/timex.h \
+  include/linux/debugobjects.h \
+    $(wildcard include/config/debug/objects.h) \
+    $(wildcard include/config/debug/objects/free.h) \
+  include/linux/ratelimit.h \
+  include/linux/uidgid.h \
+    $(wildcard include/config/uidgid/strict/type/checks.h) \
+    $(wildcard include/config/user/ns.h) \
+  include/linux/highuid.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/device.h \
+  include/linux/pm_wakeup.h \
+  include/linux/smp.h \
+    $(wildcard include/config/use/generic/smp/helpers.h) \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/smp.h \
+  include/linux/cpu.h \
+    $(wildcard include/config/arch/has/cpu/autoprobe.h) \
+    $(wildcard include/config/arch/cpu/probe/release.h) \
+    $(wildcard include/config/pm/sleep/smp.h) \
+  include/linux/node.h \
+    $(wildcard include/config/memory/hotplug/sparse.h) \
+    $(wildcard include/config/hugetlbfs.h) \
+  include/linux/clockchips.h \
+    $(wildcard include/config/generic/clockevents/build.h) \
+    $(wildcard include/config/generic/clockevents/broadcast.h) \
+    $(wildcard include/config/arch/has/tick/broadcast.h) \
+    $(wildcard include/config/tick/oneshot.h) \
+    $(wildcard include/config/generic/clockevents.h) \
   include/linux/notifier.h \
   include/linux/srcu.h \
   include/linux/rcupdate.h \
@@ -387,6 +390,9 @@ deps_drivers/misc/mediatek/mach/mt6735/ca53_timer.o := \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/irq.h \
   include/asm-generic/irq.h \
   include/linux/irq_cpustat.h \
+  include/linux/hrtimer.h \
+    $(wildcard include/config/high/res/timers.h) \
+    $(wildcard include/config/timerfd.h) \
   include/linux/percpu.h \
     $(wildcard include/config/need/per/cpu/embed/first/chunk.h) \
     $(wildcard include/config/need/per/cpu/page/first/chunk.h) \
@@ -396,9 +402,6 @@ deps_drivers/misc/mediatek/mach/mt6735/ca53_timer.o := \
   include/asm-generic/percpu.h \
   include/linux/percpu-defs.h \
     $(wildcard include/config/debug/force/weak/per/cpu.h) \
-  include/linux/hrtimer.h \
-    $(wildcard include/config/high/res/timers.h) \
-    $(wildcard include/config/timerfd.h) \
   include/linux/timerqueue.h \
   include/linux/of_irq.h \
     $(wildcard include/config/of.h) \
@@ -480,9 +483,6 @@ deps_drivers/misc/mediatek/mach/mt6735/ca53_timer.o := \
   include/uapi/linux/uuid.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/prom.h \
   include/linux/io.h \
-  /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/arch_timer.h \
-  include/clocksource/arm_arch_timer.h \
-    $(wildcard include/config/arm/arch/timer.h) \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/virt.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/cacheflush.h \
   include/linux/mm.h \

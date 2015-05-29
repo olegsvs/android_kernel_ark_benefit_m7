@@ -1,4 +1,4 @@
-cmd_scripts/dtc/checks.o := gcc -Wp,-MD,scripts/dtc/.checks.o.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer    -Iscripts/dtc -Iscripts/dtc/libfdt -c -o scripts/dtc/checks.o scripts/dtc/checks.c
+cmd_scripts/dtc/checks.o := gcc -Wp,-MD,scripts/dtc/.checks.o.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89    -Iscripts/dtc -Iscripts/dtc/libfdt -c -o scripts/dtc/checks.o scripts/dtc/checks.c
 
 source_scripts/dtc/checks.o := scripts/dtc/checks.c
 
