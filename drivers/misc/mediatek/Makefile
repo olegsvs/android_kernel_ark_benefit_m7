@@ -258,7 +258,10 @@ obj-y	+= selinux_warning/
 # MTK PASR SW flow
 obj-$(CONFIG_MTKPASR)	+= mtkpasr/
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ad43ce2... make it possible to mrproper
 obj-$(CONFIG_MTK_SWITCH_TX_POWER) += sw_tx_power/
 
 #charge pump
