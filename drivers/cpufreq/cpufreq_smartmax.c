@@ -52,7 +52,11 @@
  * lowering the frequency towards the ideal frequency is faster than below it.
  */
 
+<<<<<<< HEAD
 #define GOV_IDLE_FREQ 1026000
+=======
+#define GOV_IDLE_FREQ 820000
+>>>>>>> b85d253... smartmax governor changes
 
 #define DEFAULT_SUSPEND_IDEAL_FREQ GOV_IDLE_FREQ
 static unsigned int suspend_ideal_freq;
@@ -110,7 +114,11 @@ static unsigned int sampling_rate;
 #define DEFAULT_INPUT_BOOST_DURATION 50000000
 static unsigned int input_boost_duration;
 
+<<<<<<< HEAD
 static unsigned int touch_poke_freq = 702000;
+=======
+static unsigned int touch_poke_freq = 820000;
+>>>>>>> b85d253... smartmax governor changes
 static bool touch_poke = true;
 
 /*
@@ -122,7 +130,11 @@ static bool ramp_up_during_boost = true;
  * external boost interface - boost if duration is written
  * to sysfs for boost_duration
  */
+<<<<<<< HEAD
 static unsigned int boost_freq = 702000;
+=======
+static unsigned int boost_freq = 820000;
+>>>>>>> b85d253... smartmax governor changes
 static bool boost = true;
 
 /* in nsecs */
@@ -1038,6 +1050,19 @@ static void dbs_input_event(struct input_handle *handle, unsigned int type,
 static int input_dev_filter(const char* input_dev_name) {
 	int ret = 0;
 	if (strstr(input_dev_name, "touchscreen")
+<<<<<<< HEAD
+=======
+			/* Add all touch panel drivers for touch boost */
+			|| strstr(input_dev_name, "gt9xx")
+			|| strstr(input_dev_name, "synaptics_s3203")
+			|| strstr(input_dev_name, "FT5406")
+			|| strstr(input_dev_name, "synaptics_tpd_s3508")
+			|| strstr(input_dev_name, "MSG2133")
+			|| strstr(input_dev_name, "FT6x06")
+			|| strstr(input_dev_name, "mtk-tpd")
+			|| strstr(input_dev_name, "touch_dev")
+			|| strstr(input_dev_name, "sec-touchscreen")
+>>>>>>> b85d253... smartmax governor changes
 			|| strstr(input_dev_name, "-keypad")
 			|| strstr(input_dev_name, "-nav")
 			|| strstr(input_dev_name, "-oj")) {
