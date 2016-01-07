@@ -400,6 +400,10 @@ int enter_state(suspend_state_t state)
 
 	if (state == PM_SUSPEND_FREEZE)
 		freeze_begin();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7e69c4e... power: make sync on suspend optional
 #ifdef CONFIG_PM_SYNC_BEFORE_SUSPEND
 	printk(KERN_INFO "PM: Syncing filesystems ... ");
 #if MTK_SOLUTION
@@ -413,6 +417,10 @@ int enter_state(suspend_state_t state)
 #endif
 	printk("done.\n");
 #endif
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7e69c4e... power: make sync on suspend optional
 	pr_debug("PM: Preparing system for %s sleep\n", pm_states[state].label);
 	error = suspend_prepare(state);
 	if (error)

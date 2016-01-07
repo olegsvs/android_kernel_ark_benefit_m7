@@ -605,7 +605,11 @@ config SUSPEND_TIME
 	  keeps statistics on the time spent in suspend in
 	  /sys/kernel/debug/suspend_time
 
+<<<<<<< HEAD
  config PM_SYNC_BEFORE_SUSPEND
+=======
+config PM_SYNC_BEFORE_SUSPEND
+>>>>>>> 7e69c4e... power: make sync on suspend optional
 	bool "Sync file systems before suspend"
 	depends on PM
 	default y
