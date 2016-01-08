@@ -53,10 +53,14 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define GOV_IDLE_FREQ 1026000
 =======
 #define GOV_IDLE_FREQ 820000
 >>>>>>> b85d253... smartmax governor changes
+=======
+#define GOV_IDLE_FREQ 819000
+>>>>>>> 04ef100... cpufreq: use correct preset cpu frequency in governors
 
 #define DEFAULT_SUSPEND_IDEAL_FREQ GOV_IDLE_FREQ
 static unsigned int suspend_ideal_freq;
@@ -115,10 +119,14 @@ static unsigned int sampling_rate;
 static unsigned int input_boost_duration;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned int touch_poke_freq = 702000;
 =======
 static unsigned int touch_poke_freq = 820000;
 >>>>>>> b85d253... smartmax governor changes
+=======
+static unsigned int touch_poke_freq = 819000;
+>>>>>>> 04ef100... cpufreq: use correct preset cpu frequency in governors
 static bool touch_poke = true;
 
 /*
@@ -131,10 +139,14 @@ static bool ramp_up_during_boost = true;
  * to sysfs for boost_duration
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned int boost_freq = 702000;
 =======
 static unsigned int boost_freq = 820000;
 >>>>>>> b85d253... smartmax governor changes
+=======
+static unsigned int boost_freq = 819000;
+>>>>>>> 04ef100... cpufreq: use correct preset cpu frequency in governors
 static bool boost = true;
 
 /* in nsecs */
