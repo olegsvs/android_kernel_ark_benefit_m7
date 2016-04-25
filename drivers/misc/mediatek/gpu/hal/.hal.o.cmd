@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/gpu/hal/hal.o := /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/gpu/hal/hal.o drivers/misc/mediatek/gpu/hal/mtk_gpu_utility.o 

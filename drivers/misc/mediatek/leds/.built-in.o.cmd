@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/leds/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/leds/built-in.o drivers/misc/mediatek/leds/leds_drv.o drivers/misc/mediatek/leds/mt6735/built-in.o 

@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/wdk/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/wdk/built-in.o drivers/misc/mediatek/wdk/wd_common_drv.o drivers/misc/mediatek/wdk/wd_api.o 

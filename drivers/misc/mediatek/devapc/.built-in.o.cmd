@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/devapc/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/devapc/built-in.o drivers/misc/mediatek/devapc/mt6735/built-in.o 

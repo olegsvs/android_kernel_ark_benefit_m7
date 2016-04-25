@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/gpio/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/gpio/built-in.o drivers/misc/mediatek/gpio/mt_gpio_core.o drivers/misc/mediatek/gpio/mt6735/built-in.o 

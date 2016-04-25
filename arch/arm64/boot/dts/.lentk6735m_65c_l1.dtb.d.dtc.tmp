@@ -1,0 +1,1 @@
+arch/arm64/boot/dts/lentk6735m_65c_l1.dtb: arch/arm64/boot/dts/.lentk6735m_65c_l1.dtb.dts.tmp arch/arm64/boot/dts/mt6735m.dtsi /home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/lentk6735m_65c_l1/dct/dct/cust_eint.dtsi

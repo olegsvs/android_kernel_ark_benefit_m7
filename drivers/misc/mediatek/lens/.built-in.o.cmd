@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/lens/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/lens/built-in.o drivers/misc/mediatek/lens/mt6735/ad5823/built-in.o drivers/misc/mediatek/lens/mt6735/fm50af/built-in.o 

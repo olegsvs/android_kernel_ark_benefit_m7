@@ -1,0 +1,18 @@
+include $(srctree)/drivers/misc/mediatek/Makefile.custom
+
+# Linux driver folder
+ccflags-y += -I$(srctree)/drivers/misc/mediatek/mach/$(MTK_PLATFORM)/$(ARCH_MTK_PROJECT)/touchpanel/focaltech_hd/
+ccflags-y += -I$(srctree)/arch/arm/mach-$(MTK_PLATFORM)/$(ARCH_MTK_PROJECT)/touchpanel/focaltech_hd/
+ccflags-y += -I$(srctree)/drivers/input/touchscreen/mediatek/focaltech_hd/
+ccflags-y += -I$(srctree)/drivers/input/touchscreen/mediatek/
+
+#obj-y += ft_gesture_lib.o
+#$(obj)/ft_gesture_lib.o: $(srctree)/../$(obj)/touchpanel/ft_gesture_lib.o
+#	cp $(srctree)/../$(obj)/touchpanel/ft_gesture_lib.o $(obj)/ft_gesture_lib.o
+
+obj-y	+=  focaltech_ctl.o
+obj-y	+=  focaltech_driver.o
+obj-y	+=  focaltech_ex_fun.o
+obj-y	+=  ft_gesture_lib.a
+#obj-y	+=  gt1x_update.o
+

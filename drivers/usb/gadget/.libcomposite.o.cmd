@@ -1,0 +1,1 @@
+cmd_drivers/usb/gadget/libcomposite.o := /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/usb/gadget/libcomposite.o drivers/usb/gadget/usbstring.o drivers/usb/gadget/config.o drivers/usb/gadget/epautoconf.o drivers/usb/gadget/composite.o drivers/usb/gadget/functions.o drivers/usb/gadget/configfs.o 

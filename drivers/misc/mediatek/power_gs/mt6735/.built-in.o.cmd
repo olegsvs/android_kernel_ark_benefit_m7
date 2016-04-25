@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/power_gs/mt6735/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/power_gs/mt6735/built-in.o drivers/misc/mediatek/power_gs/mt6735/mt_power_gs.o drivers/misc/mediatek/power_gs/mt6735/mt_power_gs_6328_array.o drivers/misc/mediatek/power_gs/mt6735/mt_power_gs_suspend.o 

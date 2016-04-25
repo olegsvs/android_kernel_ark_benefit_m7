@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/mach/mt6735/lentk6735m_65c_l1/accelerometer/mc3xxx_auto/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/mach/mt6735/lentk6735m_65c_l1/accelerometer/mc3xxx_auto/built-in.o drivers/misc/mediatek/mach/mt6735/lentk6735m_65c_l1/accelerometer/mc3xxx_auto/mc3xxx_cust_acc.o 

@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/imgsensor/src/mt6735m/ov5648_mipi_raw/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/imgsensor/src/mt6735m/ov5648_mipi_raw/built-in.o drivers/misc/mediatek/imgsensor/src/mt6735m/ov5648_mipi_raw/ov5648mipi_Sensor.o 

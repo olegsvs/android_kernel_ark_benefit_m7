@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/lcm/jd9367_6735_dsi_video/built-in.o :=  /home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/lcm/jd9367_6735_dsi_video/built-in.o drivers/misc/mediatek/lcm/jd9367_6735_dsi_video/jd9367_6735_dsi_video.o 
