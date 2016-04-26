@@ -3,6 +3,9 @@ cmd_drivers/input/touchscreen/mediatek/mtk_tpd.o := /home/olegsvs/Android/aarch6
 source_drivers/input/touchscreen/mediatek/mtk_tpd.o := drivers/input/touchscreen/mediatek/mtk_tpd.c
 
 deps_drivers/input/touchscreen/mediatek/mtk_tpd.o := \
+    $(wildcard include/config/touchscreen/prevent/sleep.h) \
+    $(wildcard include/config/touchscreen/sweep2wake.h) \
+    $(wildcard include/config/touchscreen/doubletap2wake.h) \
     $(wildcard include/config/compat.h) \
     $(wildcard include/config/mtk/s3320.h) \
     $(wildcard include/config/mtk/s3320/50.h) \
@@ -741,6 +744,8 @@ deps_drivers/input/touchscreen/mediatek/mtk_tpd.o := \
   /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/linux/major.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/uaccess.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/arch/arm64/include/asm/compiler.h \
+  include/linux/input/sweep2wake.h \
+  include/linux/input/doubletap2wake.h \
   include/linux/compat.h \
     $(wildcard include/config/compat/old/sigaction.h) \
     $(wildcard include/config/odd/rt/sigaction.h) \
@@ -756,6 +761,7 @@ deps_drivers/input/touchscreen/mediatek/mtk_tpd.o := \
   /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/linux/if.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/linux/hdlc/ioctl.h \
   /home/olegsvs/5/Q37/alps/kernel-3.10/include/uapi/linux/aio_abi.h \
+  /home/olegsvs/5/Q37/alps/kernel-3.10/drivers/misc/mediatek/mach/mt6735/lentk6735m_65c_l1/dct/dct/cust_eint.h \
 
 drivers/input/touchscreen/mediatek/mtk_tpd.o: $(deps_drivers/input/touchscreen/mediatek/mtk_tpd.o)
 

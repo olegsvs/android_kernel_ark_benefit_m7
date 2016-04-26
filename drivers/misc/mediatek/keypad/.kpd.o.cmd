@@ -4,6 +4,9 @@ source_drivers/misc/mediatek/keypad/kpd.o := drivers/misc/mediatek/keypad/kpd.c
 
 deps_drivers/misc/mediatek/keypad/kpd.o := \
     $(wildcard include/config/of.h) \
+    $(wildcard include/config/touchscreen/prevent/sleep.h) \
+    $(wildcard include/config/touchscreen/sweep2wake.h) \
+    $(wildcard include/config/touchscreen/doubletap2wake.h) \
     $(wildcard include/config/mtk/smartbook/support.h) \
     $(wildcard include/config/has/sbsuspend.h) \
   include/linux/workqueue.h \
@@ -755,6 +758,8 @@ deps_drivers/misc/mediatek/keypad/kpd.o := \
   include/asm-generic/hw_irq.h \
   include/linux/irqdomain.h \
     $(wildcard include/config/irq/domain.h) \
+  include/linux/input/sweep2wake.h \
+  include/linux/input/doubletap2wake.h \
 
 drivers/misc/mediatek/keypad/kpd.o: $(deps_drivers/misc/mediatek/keypad/kpd.o)
 
