@@ -46,6 +46,14 @@ config AD525X_DPOT_I2C
 	  To compile this driver as a module, choose M here: the
 	  module will be called ad525x_dpot-i2c.
 
+config POCKETMOD
+	bool "PocketMod for device wake modifications"
+	default y
+	help
+		Say Y here to enable PocketMod. Users can always
+		toggle this on/off from sysfs later (should they
+		want it)  
+
 config AD525X_DPOT_SPI
 	tristate "support SPI bus connection"
 	depends on AD525X_DPOT && SPI_MASTER
@@ -65,6 +73,12 @@ config ATMEL_PWM
 	  on certain Atmel processors.  Pulse Width Modulation is used for
 	  purposes including software controlled power-efficient backlights
 	  on LCD displays, motor control, and waveform generation.
+
+config THUNDERQUAKE_ENGINE_GPL
+   tristate "Vibrator Intensity Controller for MTK Vibrator"
+   default y
+   help
+   Vibrator Intensity Controller for MTK Vibrator v1.0
 
 config ATMEL_TCLIB
 	bool "Atmel AT32/AT91 Timer/Counter Library"

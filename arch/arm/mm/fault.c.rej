@@ -1,0 +1,11 @@
+--- arch/arm/mm/fault.c
++++ arch/arm/mm/fault.c
+@@ -277,7 +277,7 @@
+ 	 * If we're in an interrupt or have no user
+ 	 * context, we must not take the fault..
+ 	 */
+-	if (!mm || pagefault_disabled())
++	if (in_atomic() || !mm)
+ 		goto no_context;
+ 
+ 	if (user_mode(regs))

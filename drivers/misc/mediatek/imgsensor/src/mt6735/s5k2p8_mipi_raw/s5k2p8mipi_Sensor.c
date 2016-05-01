@@ -200,7 +200,7 @@ static imgsensor_info_struct imgsensor_info = {
 	.sensor_mode_num = 5,	  //support sensor mode num
 
 	.cap_delay_frame = 3,
-	.pre_delay_frame = 4,
+	.pre_delay_frame = 3,
 	.video_delay_frame = 2,
 	.hs_video_delay_frame = 2,
 	.slim_video_delay_frame = 2,

@@ -647,50 +647,16 @@ int fgauge_get_saddles_r_table(void)
 
 BATTERY_PROFILE_STRUC_P fgauge_get_profile(kal_uint32 temperature)
 {
-	switch (temperature) {
-	case TEMPERATURE_T0:
-		return &battery_profile_t0[g_fg_battery_id][0];
-		break;
-	case TEMPERATURE_T1:
-		return &battery_profile_t1[g_fg_battery_id][0];
-		break;
-	case TEMPERATURE_T2:
 		return &battery_profile_t2[g_fg_battery_id][0];
-		break;
-	case TEMPERATURE_T3:
-		return &battery_profile_t3[g_fg_battery_id][0];
-		break;
-	case TEMPERATURE_T:
-		return &battery_profile_temperature[0];
-		break;
-	default:
-		return NULL;
-		break;
-	}
+	
 }
 
 R_PROFILE_STRUC_P fgauge_get_profile_r_table(kal_uint32 temperature)
 {
-	switch (temperature) {
-	case TEMPERATURE_T0:
-		return &r_profile_t0[g_fg_battery_id][0];
-		break;
-	case TEMPERATURE_T1:
-		return &r_profile_t1[g_fg_battery_id][0];
-		break;
-	case TEMPERATURE_T2:
+
 		return &r_profile_t2[g_fg_battery_id][0];
-		break;
-	case TEMPERATURE_T3:
-		return &r_profile_t3[g_fg_battery_id][0];
-		break;
-	case TEMPERATURE_T:
-		return &r_profile_temperature[0];
-		break;
-	default:
-		return NULL;
-		break;
-	}
+	
+
 }
 #else
 int fgauge_get_saddles(void)
@@ -705,50 +671,18 @@ int fgauge_get_saddles_r_table(void)
 
 BATTERY_PROFILE_STRUC_P fgauge_get_profile(kal_uint32 temperature)
 {
-	switch (temperature) {
-	case TEMPERATURE_T0:
-		return &battery_profile_t0[0];
-		break;
-	case TEMPERATURE_T1:
-		return &battery_profile_t1[0];
-		break;
-	case TEMPERATURE_T2:
+
 		return &battery_profile_t2[0];
-		break;
-	case TEMPERATURE_T3:
-		return &battery_profile_t3[0];
-		break;
-	case TEMPERATURE_T:
-		return &battery_profile_temperature[0];
-		break;
-	default:
-		return NULL;
-		break;
-	}
+	
+	
 }
 
 R_PROFILE_STRUC_P fgauge_get_profile_r_table(kal_uint32 temperature)
 {
-	switch (temperature) {
-	case TEMPERATURE_T0:
-		return &r_profile_t0[0];
-		break;
-	case TEMPERATURE_T1:
-		return &r_profile_t1[0];
-		break;
-	case TEMPERATURE_T2:
+	
+
 		return &r_profile_t2[0];
-		break;
-	case TEMPERATURE_T3:
-		return &r_profile_t3[0];
-		break;
-	case TEMPERATURE_T:
-		return &r_profile_temperature[0];
-		break;
-	default:
-		return NULL;
-		break;
-	}
+		
 }
 #endif
 
@@ -1075,6 +1009,8 @@ void fgauge_construct_battery_profile(kal_int32 temperature, BATTERY_PROFILE_STR
 
 void fgauge_construct_r_table_profile(kal_int32 temperature, R_PROFILE_STRUC_P temp_profile_p)
 {
+dump_stack();
+
 	R_PROFILE_STRUC_P low_profile_p, high_profile_p;
 	kal_int32 low_temperature, high_temperature;
 	int i, saddles;
@@ -1378,15 +1314,17 @@ void dodprint(void)
 
 void dod_init(void)
 {
+
 #if defined(SOC_BY_SW_FG)
 	kal_int32 gFG_capacity_by_sw_ocv = gFG_capacity_by_v;	
 #endif//by zhu
-#if defined(SOC_BY_HW_FG)
-	int ret = 0;
 
 #if defined(IS_BATTERY_REMOVE_BY_PMIC)
 	kal_int32 gFG_capacity_by_sw_ocv = gFG_capacity_by_v;	
-#endif //#if defined(IS_BATTERY_REMOVE_BY_PMIC)
+#endif
+#if defined(SOC_BY_HW_FG)
+	int ret = 0;
+
 
 	/* use get_hw_ocv----------------------------------------------------------------- */
 	ret = battery_meter_ctrl(BATTERY_METER_CMD_GET_HW_OCV, &gFG_voltage);

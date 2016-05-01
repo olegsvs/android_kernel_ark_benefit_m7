@@ -158,8 +158,9 @@ extern LCM_DRIVER cm_otc3108bhv161_dsi_vdo_lcm_drv;
 extern LCM_DRIVER auo_b079xat02_dsi_vdo_lcm_drv;
 extern LCM_DRIVER hx8389b_qhd_dsi_vdo_tianma055xdhp_lcm_drv;
 extern LCM_DRIVER cpt_claa101fp01_dsi_vdo_lcm_drv;
-extern LCM_DRIVER jd9367_6735_dsi_video_lcm_drv;
-
+extern LCM_DRIVER  jd9367_6735_dsi_video_lcm_drv;  
+extern LCM_DRIVER rm68200_6735_dsi_video_lcm_drv; 
+extern LCM_DRIVER  jd9365_6735_dsi_video_lcm_drv; 
 extern LCM_DRIVER cpt_claa101fp01_dsi_vdo_8163_lcm_drv;
 extern LCM_DRIVER h070d_18dm_lcm_drv;
 extern LCM_DRIVER hx8394a_hd720_dsi_vdo_tianma_lcm_drv;
@@ -1037,8 +1038,16 @@ LCM_DRIVER* lcm_driver_list[] =
     &otm1906a_fhd_dsi_cmd_auto_lcm_drv,
 #endif
 
+#if defined(RM68200_6735_DSI_VIDEO)
+	&rm68200_6735_dsi_video_lcm_drv,
+#endif
+
 #if defined(JD9367_6735_DSI_VIDEO)
 	&jd9367_6735_dsi_video_lcm_drv,
+#endif
+
+#if defined(JD9365_6735_DSI_VIDEO)
+	&jd9365_6735_dsi_video_lcm_drv,
 #endif
 
 #if defined(NT35532_FHD_DSI_VDO_SHARP)

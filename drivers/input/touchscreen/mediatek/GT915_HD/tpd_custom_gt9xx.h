@@ -87,12 +87,12 @@
 
 /* Pre-defined definition */
 #define TPD_KEY_COUNT   3
-#define key_1           100,1500              //auto define  
-#define key_2           250,1500
-#define key_3           400,1500
+#define key_1           120,1500 //1320              //auto define  
+#define key_2           360,1500 //1320
+#define key_3           600,1500 //1320
 
-#define TPD_KEYS        {KEY_MENU, KEY_HOME, KEY_BACK}
-#define TPD_KEYS_DIM    {{key_1,50,30},{key_2,50,30},{key_3,50,30}}
+#define TPD_KEYS        {KEY_MENU, KEY_HOMEPAGE, KEY_BACK}
+#define TPD_KEYS_DIM    {{key_1,60,40},{key_2,60,30},{key_3,60,40}}
 extern u16 show_len;
 extern u16 total_len;
 extern u8 gtp_rawdiff_mode;
@@ -135,7 +135,7 @@ extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf
 #define GTP_GESTURE_WAKEUP    0 
 
 #define TPD_PROXIMITY
-//#define TPD_HAVE_BUTTON             // report key as coordinate,Vibration feedback
+//#define TPD_HAVE_BUTTON       1      // report key as coordinate,Vibration feedback
 //#define TPD_WARP_X                  // mirrored x coordinate
 //#define TPD_WARP_Y                  // mirrored y coordinate
 #define GTP_DEBUG_ON          1
@@ -185,7 +185,7 @@ extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf
 //add clj q33
 
 #define CTP_CFG_GROUP1 {\
-    0x45,0xD0,0x02,0x00,0x05,0x05,0x35,0x41,0x01,0x08,\
+ 0x45,0xD0,0x02,0x00,0x05,0x05,0x35,0x41,0x01,0x08,\
 0x28,0x0D,0x50,0x3C,0x03,0x00,0x00,0x00,0xFF,0x7F,\
 0x02,0x22,0x05,0x15,0x17,0x1C,0x14,0x8B,0x0A,0x0C,\
 0x30,0x2E,0xF4,0x0A,0x03,0x00,0x00,0x82,0x33,0x11,\
@@ -203,7 +203,7 @@ extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf
 0x1F,0x1E,0x02,0x13,0x04,0x12,0x06,0x10,0x08,0x0F,\
 0x0A,0x0C,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0x00,\
 0x00,0xFA,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,\
-0xFF,0xFF,0xFF,0xFF,0x8A,0x01\
+0xAF,0xEE,0xFF,0xFF,0x94,0x00 \
     }
 #endif 
 
@@ -276,7 +276,7 @@ extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf
 
 //STEP_4(optional):If this project have touch key,Set touch key config.                                    
 #if GTP_HAVE_TOUCH_KEY
-    #define GTP_KEY_TAB  {KEY_FINGER, KEY_HOME, KEY_BACK, KEY_SEND}
+    #define GTP_KEY_TAB  {KEY_MENU, KEY_HOMEPAGE, KEY_BACK,}
 #endif
 
 //***************************PART3:OTHER define*********************************

@@ -115,6 +115,13 @@ static inline void mutex_destroy(struct mutex *lock) {}
 #define __MUTEX_NAME_INITIALIZER(lockname)
 #endif
 
+#ifdef CONFIG_DEBUG_LOCK_ALLOC
+# define __DEP_MAP_MUTEX_INITIALIZER(lockname) \
+		, .dep_map = { .name = #lockname }
+#else
+# define __DEP_MAP_MUTEX_INITIALIZER(lockname)
+#endif
+
 #define __MUTEX_INITIALIZER(lockname) \
 		{ .count = ATOMIC_INIT(1) \
 		, .wait_lock = __SPIN_LOCK_UNLOCKED(lockname.wait_lock) \

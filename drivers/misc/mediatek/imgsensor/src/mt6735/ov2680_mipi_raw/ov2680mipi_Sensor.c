@@ -49,7 +49,7 @@ static DEFINE_SPINLOCK(imgsensor_drv_lock);
 static imgsensor_info_struct imgsensor_info = { 
 	.sensor_id = 0x2680, //OV2680MIPI_SENSOR_ID,  /*sensor_id = 0x2680*/ //record sensor id defined in Kd_imgsensor.h
 	
-	.checksum_value = 0x64d5ee2e, //checksum value for Camera Auto Test
+	.checksum_value = 0x92dcaca1, //checksum value for Camera Auto Test, 0x64d5ee2e
 	
 	.pre = {
 		.pclk = 66000000,				//record different mode's pclk
@@ -143,7 +143,7 @@ static imgsensor_info_struct imgsensor_info = {
 	.sensor_output_dataformat = SENSOR_OUTPUT_FORMAT_RAW_B,//sensor output first pixel color
 	.mclk = 24,//mclk value, suggest 24 or 26 for 24Mhz or 26Mhz
 	.mipi_lane_num = SENSOR_MIPI_1_LANE,//mipi lane num
-	.i2c_addr_table = {0x6c,0x20, 0xff},//record sensor support all write id addr, only supprt 4must end with 0xff
+	.i2c_addr_table = {0x6c, 0xff},//record sensor support all write id addr, only supprt 4must end with 0xff
 };
 
 
@@ -508,7 +508,7 @@ static void preview_setting(void)
 	write_cmos_sensor(0x4009, 0x09);
 	write_cmos_sensor(0x4837, 0x18);
 	write_cmos_sensor(0x0100, 0x01);
-	mdelay(60);
+	mdelay(5);
 }
 	/*	preview_setting  */
 
@@ -523,7 +523,7 @@ static void sensor_init(void)
    
 	/* Reset */
 	write_cmos_sensor(0x0103, 0x01);
-	mdelay(50);
+	mdelay(5);
 	write_cmos_sensor(0x3002, 0x00);
 	write_cmos_sensor(0x3016, 0x1c);
 	write_cmos_sensor(0x3018, 0x44);
@@ -601,7 +601,7 @@ static void sensor_init(void)
 	
 	write_cmos_sensor(0x0100, 0x01);
 
-	mdelay(40);
+	mdelay(5);
 	//preview_setting();
 	
 }	/*	sensor_init  */
@@ -666,7 +666,7 @@ static void hs_video_setting()
 	write_cmos_sensor(0x4009, 0x09);
 	write_cmos_sensor(0x4837, 0x18);
 	write_cmos_sensor(0x0100, 0x01);
-	mdelay(60);
+	mdelay(5);
 }
 
 static void slim_video_setting()
@@ -893,7 +893,7 @@ static kal_uint32 capture(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
     }
 	spin_unlock(&imgsensor_drv_lock);
 	capture_setting(imgsensor.current_fps);
-	mdelay(100);
+	mdelay(10);
 	return ERROR_NONE;
 }	/* capture() */
 static kal_uint32 normal_video(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,

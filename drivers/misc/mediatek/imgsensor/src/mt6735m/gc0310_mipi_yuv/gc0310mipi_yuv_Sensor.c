@@ -326,7 +326,7 @@ void GC0310_set_brightness(UINT16 para)
 {
 
 	SENSORDB("[GC0310]CONTROLFLOW enter GC0310_set_brightness function:\n ");
-#if 1
+#if 0
 	//return;
     switch (para)
     {
@@ -982,7 +982,7 @@ void GC0310_Sensor_Init(void)
 	GC0310_write_cmos_sensor(0x10,0x84);
                                         
 	GC0310_write_cmos_sensor(0x01,0x03);             
-	GC0310_write_cmos_sensor(0x02,0x00);             
+	GC0310_write_cmos_sensor(0x02,0x11);  ///00           
 	GC0310_write_cmos_sensor(0x03,0x94);             
 	GC0310_write_cmos_sensor(0x04,0x01);            
 	GC0310_write_cmos_sensor(0x05,0x40);  // 40      20     

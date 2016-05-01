@@ -16,18 +16,22 @@
 
 #include <linux/workqueue.h>
 #include <linux/timer.h>
-
 /*kpd.h file path: ALPS/mediatek/kernel/include/linux */
 #include <linux/kpd.h>
+#ifdef CONFIG_MTK_TC1_FM_AT_SUSPEND
+#include <linux/wakelock.h>
+#endif
 #ifdef CONFIG_OF
 #include <linux/of.h>
 #include <linux/of_address.h>
 #include <linux/of_irq.h>
 #endif
-
-#define KPD_NAME	"mtk-kpd"
-#define MTK_KP_WAKESOURCE	/* this is for auto set wake up source */
- #ifdef CONFIG_TOUCHSCREEN_PREVENT_SLEEP
+#define FORCE_POWERKEY
+#define FORCE_POWERKEY_SECONDS   8
+struct timer_list timer;
+//extern void arch_reset(char mode, const char *cmd);
+extern void mt_power_off(void);
+#ifdef CONFIG_TOUCHSCREEN_PREVENT_SLEEP
 #ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
 #include <linux/input/sweep2wake.h>
 #endif
@@ -35,23 +39,21 @@
 #include <linux/input/doubletap2wake.h>
 #endif
 #endif
+#define KPD_NAME	"mtk-kpd"
+#define MTK_KP_WAKESOURCE	/* this is for auto set wake up source */
 
 #ifdef CONFIG_OF
 void __iomem *kp_base;
 static unsigned int kp_irqnr;
 #endif	
-
-#define FORCE_POWERKEY
-#define FORCE_POWERKEY_SECONDS   8
-struct timer_list timer;
-//extern void arch_reset(char mode, const char *cmd);
-extern void mt_power_off(void);
-
 struct input_dev *kpd_input_dev;
 static bool kpd_suspend = false;
 static int kpd_show_hw_keycode = 1;
 static int kpd_show_register = 1;
 static volatile int call_status = 0;
+#ifdef CONFIG_MTK_TC1_FM_AT_SUSPEND
+struct wake_lock kpd_suspend_lock; /* For suspend usage */
+#endif
 
 /*for kpd_memory_setting() function*/
 static u16 kpd_keymap[KPD_NUM_KEYS];
@@ -108,7 +110,6 @@ static struct platform_driver kpd_pdrv = {
 #endif
 	},
 };
-
 static void timer_exit() 
 { 
     del_timer(&timer); 
@@ -138,6 +139,7 @@ static void kpd_memory_setting(void)
 	kpd_init_keymap_state(kpd_keymap_state);
 	return;
 }
+
 
 
 /*****************for kpd auto set wake up source*************************/
@@ -233,7 +235,7 @@ static const u16 kpd_auto_keymap[] = {
 #define AEE_VOLUMEDOWN_BIT	1
 #define AEE_DELAY_TIME		15
 /* enable volup + voldown was pressed 5~15 s Trigger aee manual dump */
-#define AEE_ENABLE_5_15		0
+#define AEE_ENABLE_5_15		1
 static struct hrtimer aee_timer;
 static unsigned long aee_pressed_keys;
 static bool aee_timer_started;
@@ -385,7 +387,6 @@ static void kpd_pwrkey_eint_handler(void)
 }
 #endif
 /*********************************************************************/
-
 /*********************************************************************/
 #if KPD_PWRKEY_USE_PMIC
 void kpd_pwrkey_pmic_handler(unsigned long pressed)
@@ -435,6 +436,10 @@ static void kpd_keymap_handler(unsigned long data)
 	u16 new_state[KPD_NUM_MEMS], change, mask;
 	u16 hw_keycode, linux_keycode;
 	kpd_get_keymap_state(new_state);
+
+#ifdef CONFIG_MTK_TC1_FM_AT_SUSPEND
+	wake_lock_timeout(&kpd_suspend_lock, HZ / 2);
+#endif
 
 	for (i = 0; i < KPD_NUM_MEMS; i++) {
 		change = new_state[i] ^ kpd_keymap_state[i];
@@ -879,7 +884,7 @@ static int kpd_pdrv_probe(struct platform_device *pdev)
 	__set_bit(KPD_PMIC_RSTKEY_MAP, kpd_input_dev->keybit);
 #endif
 
- 
+
 #ifdef CONFIG_TOUCHSCREEN_PREVENT_SLEEP
 #ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
 	sweep2wake_setdev(kpd_input_dev);
@@ -909,6 +914,10 @@ static int kpd_pdrv_probe(struct platform_device *pdev)
 		input_unregister_device(kpd_input_dev);
 		return r;
 	}
+
+#ifdef CONFIG_MTK_TC1_FM_AT_SUSPEND
+	wake_lock_init(&kpd_suspend_lock, WAKE_LOCK_SUSPEND, "kpd wakelock");
+#endif
 
 	/* register IRQ and EINT */
 	kpd_set_debounce(KPD_KEY_DEBOUNCE);
@@ -955,11 +964,11 @@ static int kpd_pdrv_remove(struct platform_device *pdev)
 static int kpd_pdrv_suspend(struct platform_device *pdev, pm_message_t state)
 {
 	kpd_suspend = true;
-#ifdef MTK_KP_WAKESOURCE
+#if 1//def MTK_KP_WAKESOURCE//by zhu
 	if (call_status == 2) {
 		kpd_print("kpd_early_suspend wake up source enable!! (%d)\n", kpd_suspend);
 	} else {
-		kpd_wakeup_src_setting(0);
+		kpd_wakeup_src_setting(1);//kpd_wakeup_src_setting(0);
 		kpd_print("kpd_early_suspend wake up source disable!! (%d)\n", kpd_suspend);
 	}
 #endif

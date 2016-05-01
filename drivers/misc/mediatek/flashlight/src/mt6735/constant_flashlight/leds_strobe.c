@@ -93,280 +93,49 @@ static DEFINE_MUTEX(g_strobeSem);
 static DECLARE_MUTEX(g_strobeSem);
 #endif
 
-
-#define STROBE_DEVICE_ID 0xC6
-
-
 static struct work_struct workTimeOut;
-
-#define FLASH_GPIO_ENF GPIO43
-//#define FLASH_GPIO_ENT GPIO13
-
-static int g_bLtVersion=0;
 
 /*****************************************************************************
 Functions
 *****************************************************************************/
-extern int iWriteRegI2C(u8 *a_pSendData , u16 a_sizeSendData, u16 i2cId);
-extern int iReadRegI2C(u8 *a_pSendData , u16 a_sizeSendData, u8 * a_pRecvData, u16 a_sizeRecvData, u16 i2cId);
 static void work_timeOutFunc(struct work_struct *data);
+#if defined(CONFIG_HCT_LED_SGM3785)
+extern void sgm3785_FL_Disable(void);
+extern void sgm3785_FL_Enable(int duty);
+#endif
+//=========================
 
-static struct i2c_client *LM3642_i2c_client = NULL;
-
-
-
-
-struct LM3642_platform_data {
-	u8 torch_pin_enable;    // 1:  TX1/TORCH pin isa hardware TORCH enable
-	u8 pam_sync_pin_enable; // 1:  TX2 Mode The ENVM/TX2 is a PAM Sync. on input
-	u8 thermal_comp_mode_enable;// 1: LEDI/NTC pin in Thermal Comparator Mode
-	u8 strobe_pin_disable;  // 1 : STROBE Input disabled
-	u8 vout_mode_enable;  // 1 : Voltage Out Mode enable
-};
-
-struct LM3642_chip_data {
-	struct i2c_client *client;
-
-	//struct led_classdev cdev_flash;
-	//struct led_classdev cdev_torch;
-	//struct led_classdev cdev_indicator;
-
-	struct LM3642_platform_data *pdata;
-	struct mutex lock;
-
-	u8 last_flag;
-	u8 no_pdata;
-};
-
-/* i2c access*/
-/*
-static int LM3642_read_reg(struct i2c_client *client, u8 reg,u8 *val)
-{
-	int ret;
-	struct LM3642_chip_data *chip = i2c_get_clientdata(client);
-
-	mutex_lock(&chip->lock);
-	ret = i2c_smbus_read_byte_data(client, reg);
-	mutex_unlock(&chip->lock);
-
-	if (ret < 0) {
-		PK_ERR("failed reading at 0x%02x error %d\n",reg, ret);
-		return ret;
-	}
-	*val = ret&0xff;
-
-	return 0;
-}*/
-
-static int LM3642_write_reg(struct i2c_client *client, u8 reg, u8 val)
-{
-	int ret=0;
-	struct LM3642_chip_data *chip = i2c_get_clientdata(client);
-
-	mutex_lock(&chip->lock);
-	ret =  i2c_smbus_write_byte_data(client, reg, val);
-	mutex_unlock(&chip->lock);
-
-	if (ret < 0)
-		PK_ERR("failed writting at 0x%02x\n", reg);
-	return ret;
-}
-
-static int LM3642_read_reg(struct i2c_client *client, u8 reg)
-{
-	int val=0;
-	struct LM3642_chip_data *chip = i2c_get_clientdata(client);
-
-	mutex_lock(&chip->lock);
-	val =  i2c_smbus_read_byte_data(client, reg);
-	mutex_unlock(&chip->lock);
-
-
-	return val;
-}
-
-
-
-
-static int LM3642_chip_init(struct LM3642_chip_data *chip)
-{
-
-
-	return 0;
-}
-
-static int LM3642_probe(struct i2c_client *client,
-			const struct i2c_device_id *id)
-{
-	struct LM3642_chip_data *chip;
-	struct LM3642_platform_data *pdata = client->dev.platform_data;
-
-	int err = -1;
-
-	PK_DBG("LM3642_probe start--->.\n");
-
-	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
-		err = -ENODEV;
-		printk(KERN_ERR  "LM3642 i2c functionality check fail.\n");
-		return err;
-	}
-
-	chip = kzalloc(sizeof(struct LM3642_chip_data), GFP_KERNEL);
-	chip->client = client;
-
-	mutex_init(&chip->lock);
-	i2c_set_clientdata(client, chip);
-
-	if(pdata == NULL){ //values are set to Zero.
-		PK_ERR("LM3642 Platform data does not exist\n");
-		pdata = kzalloc(sizeof(struct LM3642_platform_data),GFP_KERNEL);
-		chip->pdata  = pdata;
-		chip->no_pdata = 1;
-	}
-
-	chip->pdata  = pdata;
-	if(LM3642_chip_init(chip)<0)
-		goto err_chip_init;
-
-	LM3642_i2c_client = client;
-	PK_DBG("LM3642 Initializing is done \n");
-
-	return 0;
-
-err_chip_init:
-	i2c_set_clientdata(client, NULL);
-	kfree(chip);
-	PK_ERR("LM3642 probe is failed \n");
-	return -ENODEV;
-}
-
-static int LM3642_remove(struct i2c_client *client)
-{
-	struct LM3642_chip_data *chip = i2c_get_clientdata(client);
-
-    if(chip->no_pdata)
-		kfree(chip->pdata);
-	kfree(chip);
-	return 0;
-}
-
-
-#define LM3642_NAME "leds-LM3642"
-static const struct i2c_device_id LM3642_id[] = {
-	{LM3642_NAME, 0},
-	{}
-};
-
-static struct i2c_driver LM3642_i2c_driver = {
-	.driver = {
-		.name  = LM3642_NAME,
-	},
-	.probe	= LM3642_probe,
-	.remove   = LM3642_remove,
-	.id_table = LM3642_id,
-};
-
-struct LM3642_platform_data LM3642_pdata = {0, 0, 0, 0, 0};
-static struct i2c_board_info __initdata i2c_LM3642={ I2C_BOARD_INFO(LM3642_NAME, I2C_STROBE_MAIN_SLAVE_7_BIT_ADDR), \
-													.platform_data = &LM3642_pdata,};
-
-static int __init LM3642_init(void)
-{
-	printk("LM3642_init\n");
-	//i2c_register_board_info(2, &i2c_LM3642, 1);
-	i2c_register_board_info(I2C_STROBE_MAIN_CHANNEL, &i2c_LM3642, 1);
-
-
-	return i2c_add_driver(&LM3642_i2c_driver);
-}
-
-static void __exit LM3642_exit(void)
-{
-	i2c_del_driver(&LM3642_i2c_driver);
-}
-
-
-module_init(LM3642_init);
-module_exit(LM3642_exit);
-
-MODULE_DESCRIPTION("Flash driver for LM3642");
-MODULE_AUTHOR("pw <pengwei@mediatek.com>");
-MODULE_LICENSE("GPL v2");
-
-int readReg(int reg)
-{
-
-    int val;
-    val = LM3642_read_reg(LM3642_i2c_client, reg);
-    return (int)val;
-}
-
+//#define GPIO_CAMERA_FLASH_EN_PIN GPIO44
+//#define GPIO_CAMERA_FLASH_MODE_PIN GPIO43
 int FL_Enable(void)
 {
-	char buf[2];
-//	char bufR[2];
-    if(g_duty<0)
-        g_duty=0;
-    else if(g_duty>16)
-        g_duty=16;
-  if(g_duty<=2)
-  {
-        int val;
-        if(g_bLtVersion==1)
-        {
-            if(g_duty==0)
-                val=3;
-            else if(g_duty==1)
-                val=5;
-            else //if(g_duty==2)
-                val=7;
-        }
-        else
-        {
-            if(g_duty==0)
-                val=1;
-            else if(g_duty==1)
-                val=2;
-            else //if(g_duty==2)
-                val=3;
-        }
-        buf[0]=9;
-        buf[1]=val<<4;
-        //iWriteRegI2C(buf , 2, STROBE_DEVICE_ID);
-        LM3642_write_reg(LM3642_i2c_client, buf[0], buf[1]);
 
-        buf[0]=10;
-        buf[1]=0x02;
-        //iWriteRegI2C(buf , 2, STROBE_DEVICE_ID);
-        LM3642_write_reg(LM3642_i2c_client, buf[0], buf[1]);
-  }
-  else
-  {
-    int val;
-    val = (g_duty-1);
-    buf[0]=9;
-	  buf[1]=val;
-	  //iWriteRegI2C(buf , 2, STROBE_DEVICE_ID);
-	  LM3642_write_reg(LM3642_i2c_client, buf[0], buf[1]);
+#define FLASH_GPIO (43)
+mt_set_gpio_mode(FLASH_GPIO, 0);
+mt_set_gpio_dir(FLASH_GPIO, GPIO_DIR_OUT);
+mt_set_gpio_out(FLASH_GPIO, GPIO_OUT_ONE);
+/*
+#if defined(GPIO_CAMERA_FLASH_EN_PIN)
+	if(mt_set_gpio_mode(GPIO_CAMERA_FLASH_EN_PIN,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set enf gpio mode failed!! \n");}
+	if(mt_set_gpio_mode(GPIO_CAMERA_FLASH_MODE_PIN,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set enf gpio mode failed!! \n");}
+	if(mt_set_gpio_dir(GPIO_CAMERA_FLASH_EN_PIN,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set  enf gpio dir failed!! \n");}
+	if(mt_set_gpio_dir(GPIO_CAMERA_FLASH_MODE_PIN,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set  enf gpio dir failed!! \n");}
+	mt_set_gpio_out(GPIO_CAMERA_FLASH_EN_PIN,GPIO_OUT_ONE);
 
-	  buf[0]=10;
-	  buf[1]=0x03;
-	  //iWriteRegI2C(buf , 2, STROBE_DEVICE_ID);
-	  LM3642_write_reg(LM3642_i2c_client, buf[0], buf[1]);
-  }
-	PK_DBG(" FL_Enable line=%d\n",__LINE__);
+	if(g_duty > 0)//flashlight mode
+		mt_set_gpio_out(GPIO_CAMERA_FLASH_MODE_PIN,GPIO_OUT_ONE);
+	else //torch mode
+		mt_set_gpio_out(GPIO_CAMERA_FLASH_MODE_PIN,GPIO_OUT_ZERO);
+#endif
+#endif
 
-    readReg(0);
-	readReg(1);
-	readReg(6);
-	readReg(8);
-	readReg(9);
-	readReg(0xa);
-	readReg(0xb);
-//by zhu
-	mt_set_gpio_out(FLASH_GPIO_ENF,GPIO_OUT_ONE);
-	//mt_set_gpio_out(FLASH_GPIO_ENT,GPIO_OUT_ONE);
-//by zhu end
+#if defined(GPIO_CAMERA_FLASH_EXT1_PIN)
+	if(mt_set_gpio_mode(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set enf gpio mode failed!! \n");}
+	if(mt_set_gpio_dir(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set  enf gpio dir failed!! \n");}
+	mt_set_gpio_out(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_OUT_ONE);
+#endif
+*/
+    PK_DBG(" FL_Enable line=%d\n",__LINE__);
     return 0;
 }
 
@@ -374,15 +143,27 @@ int FL_Enable(void)
 
 int FL_Disable(void)
 {
-		char buf[2];
+mt_set_gpio_out(FLASH_GPIO, GPIO_OUT_ZERO);
+/*
+#if defined(CONFIG_HCT_LED_SGM3785)
+	sgm3785_FL_Disable();
+#else
+#if defined(GPIO_CAMERA_FLASH_EN_PIN)
+	if(mt_set_gpio_mode(GPIO_CAMERA_FLASH_EN_PIN,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set enf gpio mode failed!! \n");}
+	if(mt_set_gpio_mode(GPIO_CAMERA_FLASH_MODE_PIN,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set enf gpio mode failed!! \n");}
+	if(mt_set_gpio_dir(GPIO_CAMERA_FLASH_EN_PIN,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set  enf gpio dir failed!! \n");}
+	if(mt_set_gpio_dir(GPIO_CAMERA_FLASH_MODE_PIN,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set  enf gpio dir failed!! \n");}
+	mt_set_gpio_out(GPIO_CAMERA_FLASH_EN_PIN,GPIO_OUT_ZERO);
+	mt_set_gpio_out(GPIO_CAMERA_FLASH_MODE_PIN,GPIO_OUT_ZERO);
+#endif
+#endif
 
-///////////////////////
-	buf[0]=10;
-	buf[1]=0x00;
-	//iWriteRegI2C(buf , 2, STROBE_DEVICE_ID);
-	LM3642_write_reg(LM3642_i2c_client, buf[0], buf[1]);
-	mt_set_gpio_out(FLASH_GPIO_ENF,GPIO_OUT_ZERO);
-	//mt_set_gpio_out(FLASH_GPIO_ENT,GPIO_OUT_ZERO);
+#if defined(GPIO_CAMERA_FLASH_EXT1_PIN)
+	if(mt_set_gpio_mode(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set enf gpio mode failed!! \n");}
+	if(mt_set_gpio_dir(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set  enf gpio dir failed!! \n");}
+	mt_set_gpio_out(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_OUT_ZERO);
+#endif
+*/
 	PK_DBG(" FL_Disable line=%d\n",__LINE__);
     return 0;
 }
@@ -394,66 +175,19 @@ int FL_dim_duty(kal_uint32 duty)
     return 0;
 }
 
-
-
-
 int FL_Init(void)
 {
-   int regVal0;
-  char buf[2];
+#if defined(GPIO_CAMERA_FLASH_EN_PIN)
+	if(mt_set_gpio_mode(GPIO_CAMERA_FLASH_EN_PIN,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set enf gpio mode failed!! \n");}
+	if(mt_set_gpio_dir(GPIO_CAMERA_FLASH_EN_PIN,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set  enf gpio dir failed!! \n");}
+	mt_set_gpio_out(GPIO_CAMERA_FLASH_EN_PIN,GPIO_OUT_ZERO);
+#endif
 
-  buf[0]=0xa;
-	buf[1]=0x0;
-	//iWriteRegI2C(buf , 2, STROBE_DEVICE_ID);
-	LM3642_write_reg(LM3642_i2c_client, buf[0], buf[1]);
-
-	buf[0]=0x8;
-	buf[1]=0x47;
-	//iWriteRegI2C(buf , 2, STROBE_DEVICE_ID);
-	LM3642_write_reg(LM3642_i2c_client, buf[0], buf[1]);
-
-	buf[0]=9;
-	buf[1]=0x35;
-	//iWriteRegI2C(buf , 2, STROBE_DEVICE_ID);
-	LM3642_write_reg(LM3642_i2c_client, buf[0], buf[1]);
-
-
-
-
-	//static int LM3642_read_reg(struct i2c_client *client, u8 reg)
-	//regVal0 = readReg(0);
-	regVal0 = LM3642_read_reg(LM3642_i2c_client, 0);
-
-	if(regVal0==1)
-	    g_bLtVersion=1;
-	else
-	    g_bLtVersion=0;
-
-//by zhu
- //  if(mt_set_gpio_mode(FLASH_GPIO_ENT,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set gpio mode failed!! \n");}
-  //  if(mt_set_gpio_dir(FLASH_GPIO_ENT,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set gpio dir failed!! \n");}
- //   if(mt_set_gpio_out(FLASH_GPIO_ENT,GPIO_OUT_ZERO)){PK_DBG("[constant_flashlight] set gpio failed!! \n");}
-
-    	if(mt_set_gpio_mode(FLASH_GPIO_ENF,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set gpio mode failed!! \n");}
-    if(mt_set_gpio_dir(FLASH_GPIO_ENF,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set gpio dir failed!! \n");}
-    if(mt_set_gpio_out(FLASH_GPIO_ENF,GPIO_OUT_ZERO)){PK_DBG("[constant_flashlight] set gpio failed!! \n");}
-//by zhu end
-    PK_DBG(" FL_Init regVal0=%d isLtVer=%d\n",regVal0, g_bLtVersion);
-
-
-/*
-	if(mt_set_gpio_mode(FLASH_GPIO_ENT,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set gpio mode failed!! \n");}
-    if(mt_set_gpio_dir(FLASH_GPIO_ENT,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set gpio dir failed!! \n");}
-    if(mt_set_gpio_out(FLASH_GPIO_ENT,GPIO_OUT_ZERO)){PK_DBG("[constant_flashlight] set gpio failed!! \n");}
-
-    	if(mt_set_gpio_mode(FLASH_GPIO_ENF,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set gpio mode failed!! \n");}
-    if(mt_set_gpio_dir(FLASH_GPIO_ENF,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set gpio dir failed!! \n");}
-    if(mt_set_gpio_out(FLASH_GPIO_ENF,GPIO_OUT_ZERO)){PK_DBG("[constant_flashlight] set gpio failed!! \n");}
-    */
-
-
-
-
+#if defined(GPIO_CAMERA_FLASH_EXT1_PIN)
+	if(mt_set_gpio_mode(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set enf gpio mode failed!! \n");}
+	if(mt_set_gpio_dir(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set  enf gpio dir failed!! \n");}
+	mt_set_gpio_out(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_OUT_ZERO);
+#endif
     PK_DBG(" FL_Init line=%d\n",__LINE__);
     return 0;
 }
@@ -486,11 +220,14 @@ enum hrtimer_restart ledTimeOutCallback(struct hrtimer *timer)
 static struct hrtimer g_timeOutTimer;
 void timerInit(void)
 {
+	static int init_flag;
+	if (init_flag==0){
+		init_flag=1;
   INIT_WORK(&workTimeOut, work_timeOutFunc);
 	g_timeOutTimeMs=1000; //1s
 	hrtimer_init( &g_timeOutTimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL );
 	g_timeOutTimer.function=ledTimeOutCallback;
-
+}
 }
 
 
@@ -504,7 +241,7 @@ static int constant_flashlight_ioctl(unsigned int cmd, unsigned long arg)
 	ior_shift = cmd - (_IOR(FLASHLIGHT_MAGIC,0, int));
 	iow_shift = cmd - (_IOW(FLASHLIGHT_MAGIC,0, int));
 	iowr_shift = cmd - (_IOWR(FLASHLIGHT_MAGIC,0, int));
-	PK_DBG("LM3642 constant_flashlight_ioctl() line=%d ior_shift=%d, iow_shift=%d iowr_shift=%d arg=%d\n",__LINE__, ior_shift, iow_shift, iowr_shift,(int)arg);
+	PK_DBG("constant_flashlight_ioctl() line=%d ior_shift=%d, iow_shift=%d iowr_shift=%d arg=%d\n",__LINE__, ior_shift, iow_shift, iowr_shift, (int)arg);
     switch(cmd)
     {
 

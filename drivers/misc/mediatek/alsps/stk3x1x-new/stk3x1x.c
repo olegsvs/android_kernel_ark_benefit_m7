@@ -24,6 +24,9 @@
 #include <linux/irq.h>
 #include <linux/miscdevice.h>
 #include <asm/uaccess.h>
+#include <linux/hwmsensor.h>
+#include <linux/hwmsen_dev.h>
+#include <linux/sensors_io.h>
 #include <linux/delay.h>
 #include <linux/input.h>
 #include <linux/workqueue.h>
@@ -43,15 +46,19 @@
 #include <linux/hwmsensor.h>
 #include <linux/sensors_io.h>
 #include <linux/hwmsen_dev.h>
-#include <cust_alsps.h>
+#include "cust_alsps.h"
 #include <alsps.h>
 #include "stk3x1x.h"
-
+#define GPIO_ALS_EINT_PIN         (GPIO65 | 0x80000000)
+#define GPIO_ALS_EINT_PIN_M_GPIO   GPIO_MODE_00
+#define GPIO_ALS_EINT_PIN_M_KROW   GPIO_MODE_04
+#define GPIO_ALS_EINT_PIN_M_EINT   GPIO_ALS_EINT_PIN_M_GPIO
 #define DRIVER_VERSION          "3.1.2.1nk"
 //#define STK_PS_POLLING_LOG
 //#define STK_FIR
 //#define STK_IRS
 //#include <mach/mt_devs.h>
+extern struct alsps_hw *get_cust_alsps_hw(void);
 #include <mach/mt_typedefs.h>
 #include <mach/mt_gpio.h>
 #include <mach/mt_pm_ldo.h>

@@ -1,0 +1,50 @@
+//export CROSS_COMPILE=/home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+
+
+export CROSS_COMPILE=/home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+export ARCH=arm64 export ARCH_MTK_PLATFORM=mt6735m 
+make benefit_m7_defconfig
+make -j5
+
+export CROSS_COMPILE=/home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+export ARCH=arm64 export ARCH_MTK_PLATFORM=mt6735m 
+make k37tv1_64_defconfig
+make -j5
+
+export HOMEDIR=/home/olegsvs/318/
+export CONFIG=vz6735m_65u_i_m
+export KERNEL=kernel-3.18
+export ARCH=arm64
+export CROSS_COMPILE=/home/olegsvs/5/alps/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+export OUTDIR=$HOMEDIR/out/target/product/$PROJECT/obj/KERNEL_OBJ
+make -C $KERNEL O=$OUTDIR ROOTDIR=$ROOTDIR ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE ${CONFIG}_defconfig
+
+cat ALPS-MP-M0.MP1-V1.0.2_VZ6735_65T_I_M_INHOUSE.tar.gz00 \
+ALPS-MP-M0.MP1-V1.0.2_VZ6735_65T_I_M_INHOUSE.tar.gz01 \
+ALPS-MP-M0.MP1-V1.0.2_VZ6735_65T_I_M_INHOUSE.tar.gz02 \
+ALPS-MP-M0.MP1-V1.0.2_VZ6735_65T_I_M_INHOUSE.tar.gz03 \
+ALPS-MP-M0.MP1-V1.0.2_VZ6735_65T_I_M_INHOUSE.tar.gz04 \
+ALPS-MP-M0.MP1-V1.0.2_VZ6735_65T_I_M_INHOUSE.tar.gz05 \
+ALPS-MP-M0.MP1-V1.0.2_VZ6735_65T_I_M_INHOUSE.tar.gz06 \
+ALPS-MP-M0.MP1-V1.0.2_VZ6735_65T_I_M_INHOUSE.tar.gz07 \
+ALPS-MP-M0.MP1-V1.0.2_VZ6735_65T_I_M_INHOUSE.tar.gz08 \
+ALPS-MP-M0.MP1-V1.0.2_VZ6735_65T_I_M_INHOUSE.tar.gz09 | tar -xzv
+
+сток
+
+Resolution 1280x720
+LCMs JD9367_6735_dsi_video(rev1)+JD9365_6735_dsi_video(rev2)
+Touchscreen  b_gt9xx_hotknot
+Accelemometer MC3XXX
+Alsps stk3x1x 2-0048
+Magn mmc3416x
+Camer's:
+mipi_raw:
+ imx219 , imx164 , sp8408 , gc2355 , sp2508
+mipi_yuv: 
+ gc2145 , gc0310
+
+Lens FM50AF
+DW9714AF
+
+

@@ -599,10 +599,10 @@ static void mt65xx_leds_shutdown(struct platform_device *pdev)
 			}
 			break;
 
-			/* case MT65XX_LED_MODE_GPIO: */
-			/* brightness_set_gpio(g_leds_data[i]->cust.data, 0); */
-			/* break; */
-
+	
+	//	case MT65XX_LED_MODE_GPIO:
+			//LEDS_DEBUG("brightness_set_cust:go GPIO mode!!!!!\n");
+		//	return ((cust_set_brightness)(cust->data))(level);
 		case MT65XX_LED_MODE_PMIC:
 			brightness_set_pmic(g_leds_data[i]->cust.data, 0, 0);
 			break;

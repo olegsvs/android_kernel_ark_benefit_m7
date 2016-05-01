@@ -489,8 +489,8 @@ extern char* saved_command_line;
 kal_bool  gFG_Is_offset_init = KAL_FALSE;
 
 extern PMU_ChargerStruct BMT_status;
-//extern BATTERY_VOLTAGE_ENUM cv_voltage;
-BATTERY_VOLTAGE_ENUM cv_voltage=BATTERY_VOLT_04_020000_V;
+extern BATTERY_VOLTAGE_ENUM cv_voltage;
+
 
 extern kal_uint32 battery_tracking_time;
 extern kal_uint32 wake_up_smooth_time;

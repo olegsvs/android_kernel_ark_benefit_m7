@@ -1,0 +1,35 @@
+--- kernel/printk.c
++++ kernel/printk.c
+@@ -1506,13 +1417,6 @@
+ 	int this_cpu;
+ 	int printed_len = 0;
+ 
+-	/*
+-	 * Fall back to early_printk if a debugging subsystem has
+-	 * killed printk output
+-	 */
+-	if (unlikely(forced_early_printk(fmt, args)))
+-		return 1;
+-
+ 	boot_delay_msec(level);
+ 	printk_delay();
+ 
+@@ -2097,17 +2012,12 @@
+ 		console_idx = log_next(console_idx);
+ 		console_seq++;
+ 		console_prev = msg->flags;
++		raw_spin_unlock(&logbuf_lock);
+ 
+-#ifndef CONFIG_PREEMPT_RT_FULL
+-		raw_spin_unlock(&logbuf_lock);
+ 		stop_critical_timings();	/* don't trace print latency */
+ 		call_console_drivers(level, text, len);
+ 		start_critical_timings();
+ 		local_irq_restore(flags);
+-#else
+-		raw_spin_unlock_irqrestore(&logbuf_lock, flags);
+-		call_console_drivers(level, text, len);
+-#endif
+ 	}
+ 	console_locked = 0;
+ 	mutex_release(&console_lock_dep_map, 1, _RET_IP_);

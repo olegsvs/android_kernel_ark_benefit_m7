@@ -485,7 +485,7 @@ void select_charging_curret_bcct(void)
 
 		/* --------------------------------------------------- */
 		/* set IOCHARGE */
-		if (g_bcct_value < 550)
+		if (g_bcct_value < 100)
 			g_temp_CC_value = CHARGE_CURRENT_0_00_MA;
 		else if (g_bcct_value < 650)
 			g_temp_CC_value = CHARGE_CURRENT_550_00_MA;
@@ -510,6 +510,8 @@ void select_charging_curret_bcct(void)
 	} else {
 		g_temp_input_CC_value = CHARGE_CURRENT_500_00_MA;
 	}
+	printk("[BATTERY] sky select_charging_curret_bcct %d !\n",g_temp_CC_value);
+
 }
 
 static void pchr_turn_on_charging(void);
@@ -656,22 +658,25 @@ void select_charging_curret(void)
 
 }
 
-
+static kal_uint32 charging_full_current = CHARGING_FULL_CURRENT;	/* mA */
 static kal_uint32 charging_full_check(void)
 {
-	kal_uint32 status;
+	kal_uint32 status = KAL_FALSE;
+	static kal_uint8 full_check_count = 0;
 
-	battery_charging_control(CHARGING_CMD_GET_CHARGING_STATUS, &status);
-	if (status == KAL_TRUE) {
-		g_full_check_count++;
-		if (g_full_check_count >= FULL_CHECK_TIMES) {
-			return KAL_TRUE;
-		} else
-			return KAL_FALSE;
+	if (BMT_status.ICharging <= charging_full_current) {
+		full_check_count++;
+		if (6 == full_check_count) {
+			status = KAL_TRUE;
+			full_check_count = 0;
+			battery_log(BAT_LOG_CRTI,
+					    "[BATTERY] Battery full and disable charging on %d mA\n",
+					    BMT_status.ICharging);
+		}
 	} else {
-		g_full_check_count = 0;
-		return status;
+		full_check_count = 0;
 	}
+	return status;
 }
 
 
@@ -714,12 +719,16 @@ static void pchr_turn_on_charging(void)
 			g_temp_CC_value = AC_CHARGER_CURRENT;
 			battery_log(BAT_LOG_FULL,
 					    "USB_CURRENT_UNLIMITED, use AC_CHARGER_CURRENT\n");
-		} else if (g_bcct_flag == 1) {
+		} 
+#if !defined(CONFIG_MTK_FAN5405_SUPPORT)  // aka.jiang add
+		else if (g_bcct_flag == 1) {
 			select_charging_curret_bcct();
 
 			battery_log(BAT_LOG_FULL,
 					    "[BATTERY] select_charging_curret_bcct !\n");
-		} else {
+		} 
+#endif
+		else {
 			select_charging_curret();
 
 			battery_log(BAT_LOG_FULL, "[BATTERY] select_charging_curret !\n");

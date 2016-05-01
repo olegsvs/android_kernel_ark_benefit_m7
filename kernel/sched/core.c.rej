@@ -1,0 +1,58 @@
+--- kernel/sched/core.c
++++ kernel/sched/core.c
+@@ -2814,13 +2767,8 @@
+ 	DEBUG_LOCKS_WARN_ON((preempt_count() & PREEMPT_MASK) >=
+ 				PREEMPT_MASK - 10);
+ #endif
+-	if (preempt_count() == val) {
+-		unsigned long ip = get_parent_ip(CALLER_ADDR1);
+-#ifdef CONFIG_DEBUG_PREEMPT
+-		current->preempt_disable_ip = ip;
+-#endif
+-		trace_preempt_off(CALLER_ADDR0, ip);
+-	}
++	if (preempt_count() == val)
++		trace_preempt_off(CALLER_ADDR0, get_parent_ip(CALLER_ADDR1));
+ }
+ EXPORT_SYMBOL(add_preempt_count);
+ 
+@@ -3830,25 +3617,20 @@
+ 	return pid ? find_task_by_vpid(pid) : current;
+ }
+ 
+-static void __setscheduler_params(struct task_struct *p, int policy, int prio)
++/* Actually do priority change: must hold rq lock. */
++static void
++__setscheduler(struct rq *rq, struct task_struct *p, int policy, int prio)
+ {
+ 	p->policy = policy;
+ 	p->rt_priority = prio;
+ 	p->normal_prio = normal_prio(p);
+-	set_load_weight(p);
+-}
+-
+-/* Actually do priority change: must hold rq lock. */
+-static void
+-__setscheduler(struct rq *rq, struct task_struct *p, int policy, int prio)
+-{
+-	__setscheduler_params(p, policy, prio);
+ 	/* we are holding p->pi_lock already */
+ 	p->prio = rt_mutex_getprio(p);
+ 	if (rt_prio(p->prio))
+ 		p->sched_class = &rt_sched_class;
+ 	else
+ 		p->sched_class = &fair_sched_class;
++	set_load_weight(p);
+ }
+ 
+ /*
+@@ -7119,8 +6773,7 @@
+ 	static unsigned long prev_jiffy;	/* ratelimiting */
+ 
+ 	rcu_sleep_check(); /* WARN_ON_ONCE() by default, no rate limit reqd. */
+-	if ((preempt_count_equals(preempt_offset) && !irqs_disabled() &&
+-	     !is_idle_task(current)) ||
++	if ((preempt_count_equals(preempt_offset) && !irqs_disabled()) ||
+ 	    system_state != SYSTEM_RUNNING || oops_in_progress)
+ 		return;
+ 	if (time_before(jiffies, prev_jiffy + HZ) && prev_jiffy)

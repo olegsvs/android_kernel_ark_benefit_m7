@@ -62,9 +62,19 @@ extern void mt_eint_print_status(void);
 /******************************************************************************
  * configuration
 *******************************************************************************/
+struct wake_lock ps_lock;
+
 
 // TODO: change ps/als integrationtime
+#if defined(CONFIG_T99L_DWS_PROJ)||(CONFIG_T99F_LF_PROJ)||defined(CONFIG_T93BN_PROJ)
+int PS_INTT = 7;
+#elif defined(CONFIG_T93T_5512_PROJ)||(CONFIG_T985_PROJ)||defined(CONFIG_T93H_KLT_BOM22_PROJ)
+int PS_INTT = 6;
+#elif defined(CONFIG_T89P_HD_PROJ)
+int PS_INTT = 5;
+#else
 int PS_INTT = 4;
+#endif
 int ALS_INTT = 7;
 
 #define TXBYTES 				2
@@ -587,7 +597,7 @@ static void epl2182_dumpReg(struct i2c_client *client)
 
 
 /*----------------------------------------------------------------------------*/
-int hw8k_init_device(struct i2c_client *client)
+static int hw8k_init_device(struct i2c_client *client)
 {
     APS_LOG("hw8k_init_device.........\r\n");
 
@@ -1267,6 +1277,7 @@ static long epl2182_unlocked_ioctl(struct file *file, unsigned int cmd, unsigned
                     }
                 }
                 set_bit(CMC_BIT_PS, &obj->enable);
+	wake_lock(&ps_lock);
             }
             else
             {
@@ -1279,6 +1290,7 @@ static long epl2182_unlocked_ioctl(struct file *file, unsigned int cmd, unsigned
                     }
                 }
                 clear_bit(CMC_BIT_PS, &obj->enable);
+	     wake_unlock(&ps_lock);
             }
             break;
 
@@ -1815,6 +1827,7 @@ static int ps_enable_nodata(int en)
             }
         }
         set_bit(CMC_BIT_PS, &epl2182_obj->enable);
+		wake_lock(&ps_lock);
     }
     else
     {
@@ -1827,6 +1840,7 @@ static int ps_enable_nodata(int en)
             }
         }
         clear_bit(CMC_BIT_PS, &epl2182_obj->enable);
+		wake_unlock(&ps_lock);
     }
 #endif //#ifdef CUSTOM_KERNEL_SENSORHUB
     
@@ -1981,13 +1995,21 @@ static int epl2182_i2c_probe(struct i2c_client *client, const struct i2c_device_
 
     epl2182_i2c_client = client;
 
-    elan_epl2182_I2C_Write(client,REG_0,W_SINGLE_BYTE,0x02, EPL_S_SENSING_MODE);
-    elan_epl2182_I2C_Write(client,REG_9,W_SINGLE_BYTE,0x02,EPL_INT_DISABLE);
+    err = elan_epl2182_I2C_Write(client,REG_0,W_SINGLE_BYTE,0x02, EPL_S_SENSING_MODE);
+
+    if(err<0)
+        goto exit_init_failed;
+    
+    err =  elan_epl2182_I2C_Write(client,REG_9,W_SINGLE_BYTE,0x02,EPL_INT_DISABLE);
+    
+    if(err<0)
+        goto  exit_init_failed;
 
     if((err = epl2182_init_client(client)))
     {
         goto exit_init_failed;
     }
+	wake_lock_init(&ps_lock,WAKE_LOCK_SUSPEND,"eol2182 wakelock");
 
    APS_ERR("epl2182_init_client OK!\n");
    

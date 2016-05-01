@@ -21,9 +21,31 @@ ifeq ($(CONFIG_MTK_EPL2182),y)
 obj-y	+=  epl2182/
 endif
 
+ifeq ($(CONFIG_MTK_EM3071X),y)
+obj-y	+=  em3071X/
+endif
 ifeq ($(CONFIG_MTK_EPL2182_NEW),y)
 obj-y	+=  EPL2182-new/
 endif
+ifeq ($(CONFIG_MTK_STK3X1X_DRIVER),y)
+obj-y	+=  stk3x1x_driver/
+endif
+ifeq ($(CONFIG_MTK_EPL2182_NEW_FAE),y)
+obj-y	+=  EPL2182-new-fae/
+endif
+
+ifeq ($(CONFIG_MTK_EPL8862),y)
+obj-y	+=  EPL8862/
+endif
+
+ifeq ($(CONFIG_MTK_EPL2182_NEW_XINGFEI),y)
+obj-y	+=  EPL2182-new-xingfei/
+endif
+
+ifeq ($(CONFIG_MTK_AP3216C),y)
+obj-y	+=  ap3216c/
+endif
+
 ifeq ($(CONFIG_MTK_STK3X1X),y)
 obj-y	+=  stk3x1x/
 endif
@@ -47,4 +69,8 @@ obj-y	+=  stk3x1x-new/
 endif
 ifeq ($(CONFIG_MTK_RPR410),y)
 obj-y	+=  rpr410/
+endif
+
+ifeq ($(CONFIG_MTK_DUMMY_PS),y)
+obj-y	+=  dummy_ps/
 endif
