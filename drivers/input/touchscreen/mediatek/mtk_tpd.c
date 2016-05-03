@@ -657,4 +657,3 @@ module_exit(tpd_device_exit);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("MediaTek touch panel driver");
 MODULE_AUTHOR("Kirby Wu<kirby.wu@mediatek.com>");
-

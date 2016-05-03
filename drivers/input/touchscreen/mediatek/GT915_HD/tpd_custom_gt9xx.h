@@ -142,6 +142,9 @@ extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf
 #define GTP_DEBUG_ARRAY_ON    0
 #define GTP_DEBUG_FUNC_ON     0
 
+
+#define TPD_FILTER_PARA {1, 146} //{enable, pixel density}
+
 //***************************PART2:TODO define**********************************
 //STEP_1(REQUIRED):Change config table.
 // Sensor_ID Map:

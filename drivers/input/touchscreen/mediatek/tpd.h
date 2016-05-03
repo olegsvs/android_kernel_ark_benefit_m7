@@ -83,7 +83,7 @@ extern int tpd_def_calmat[];
 extern int TPD_DO_WARP;
 extern int tpd_wb_start[];
 extern int tpd_wb_end[];
-extern bool touchpanel_flag;//by zhu
+
 struct tpd_device {
 	struct device *tpd_dev;
 	struct regulator *reg;

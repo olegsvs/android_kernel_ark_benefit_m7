@@ -64,6 +64,8 @@
  *          5. no longer support GT915S
  *                  By Meta, 2014/01/14
  */
+#include "tpd_custom_gt9xx.h"
+
 
 #include "tpd.h"
 #include "tpd_custom_gt9xx.h"
@@ -95,7 +97,7 @@ static DECLARE_WAIT_QUEUE_HEAD(waiter);
 
 #ifdef TPD_HAVE_BUTTON
 static int tpd_keys_local[TPD_KEY_COUNT] = TPD_KEYS;
-static int tpd_keys_dim_local[TPD_KEY_COUNT][3] = TPD_KEYS_DIM;
+static int tpd_keys_dim_local[TPD_KEY_COUNT][4] = TPD_KEYS_DIM;
 #endif
 
 #if GTP_GESTURE_WAKEUP
@@ -192,7 +194,8 @@ u8 esd_running = 0;
 spinlock_t esd_lock;
 #endif
 
-
+extern struct tpd_filter_t tpd_filter;
+static struct tpd_filter_t tpd_filter_local = TPD_FILTER_PARA;
 #ifdef TPD_PROXIMITY
 #define TPD_PROXIMITY_VALID_REG                   0x814E
 #define TPD_PROXIMITY_ENABLE_REG                  0x8042
@@ -1919,7 +1922,7 @@ static s32 tpd_i2c_probe(struct i2c_client *client, const struct i2c_device_id *
 {
     s32 err = 0;
     s32 ret = 0;
-
+		memcpy(&tpd_filter, &tpd_filter_local, sizeof(struct tpd_filter_t));
     u16 version_info;
 #if GTP_HAVE_TOUCH_KEY
     s32 idx = 0;
@@ -1928,11 +1931,7 @@ static s32 tpd_i2c_probe(struct i2c_client *client, const struct i2c_device_id *
     struct hwmsen_object obj_ps;
 #endif
 //add at 20150330 by zhu
-#if 1//def MAIERXUN_TP_COM
-    if(touchpanel_flag){
-	return 0;
-     }
-#endif
+
 //add at 20150330 by zhu end
     i2c_client_point = client;
     ret = tpd_power_on(client);
@@ -1940,9 +1939,7 @@ static s32 tpd_i2c_probe(struct i2c_client *client, const struct i2c_device_id *
     if (ret < 0)
     {
 //add at 20150330 by zhu
-#if 1//def MAIERXUN_TP_COM
-       touchpanel_flag=false;
-#endif
+
 //add at 20150330 by zhu end
         GTP_ERROR("I2C communication ERROR!");
 	return 0;
@@ -2069,9 +2066,7 @@ static s32 tpd_i2c_probe(struct i2c_client *client, const struct i2c_device_id *
    
     tpd_load_status = 1;
 //add at 20150330 by zhu
-#if 1//def MAIERXUN_TP_COM
-    touchpanel_flag=true;
-#endif
+
 //add at 20150330 by zhu end
     return 0;
 }

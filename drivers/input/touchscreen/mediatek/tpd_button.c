@@ -7,9 +7,7 @@ extern struct tpd_device *tpd;
 /* static int tpd_keys_dim[TPD_KEY_COUNT][4] = TPD_KEYS_DIM; */
 static unsigned int tpd_keycnt;
 static int tpd_keys[TPD_VIRTUAL_KEY_MAX] = { 0 };
-//add at 2015330 by zhu for tp 
-bool touchpanel_flag=false;
-//add at 2015330 by zhu for tp end
+
 static int tpd_keys_dim[TPD_VIRTUAL_KEY_MAX][4];	/* = {0}; */
 static ssize_t mtk_virtual_keys_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
 {
