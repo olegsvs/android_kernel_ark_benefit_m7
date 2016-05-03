@@ -42,8 +42,8 @@ endif
 ifeq ($(CONFIG_MTK_APDS9930_NEW),y)
 obj-y	+=  APDS9930-new/
 endif
-ifeq ($(CONFIG_MTK_STK3X1X_DRIVER),y)
-obj-y	+=  stk3x1x_driver/
+ifeq ($(CONFIG_MTK_STK3X1X_NEW),y)
+obj-y	+=  stk3x1x-new/
 endif
 ifeq ($(CONFIG_MTK_RPR410),y)
 obj-y	+=  rpr410/

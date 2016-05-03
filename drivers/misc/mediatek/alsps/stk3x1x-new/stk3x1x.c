@@ -60,7 +60,7 @@
 #define CUST_EINT_ALS_SENSITIVE 	CUST_EINTF_TRIGGER_LOW 
 #define CUST_EINT_ALS_POLARITY 		CUST_EINT_ALS_TYPE
 #define POWER_NONE_MACRO MT65XX_POWER_NONE
-
+extern struct alsps_hw* get_cust_alsps_hw(void);
 /******************************************************************************
  * configuration
 *******************************************************************************/
