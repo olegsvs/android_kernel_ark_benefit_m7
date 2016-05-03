@@ -38,6 +38,10 @@ ifeq ($(CONFIG_MTK_AKM09911_NEW),y)
 obj-y   +=  akm09911-new/
 endif
 
+ifeq ($(CONFIG_MTK_MMC3416X),y)
+obj-y   +=  mmc3416x/
+endif
+
 ifeq ($(CONFIG_MTK_S62X),y)
 obj-y   +=  s62x/
 endif
