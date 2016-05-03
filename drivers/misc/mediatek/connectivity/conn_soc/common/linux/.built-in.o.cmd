@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/connectivity/conn_soc/common/linux/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/connectivity/conn_soc/common/linux/built-in.o drivers/misc/mediatek/connectivity/conn_soc/common/linux/pub/built-in.o drivers/misc/mediatek/connectivity/conn_soc/common/linux/pri/built-in.o 

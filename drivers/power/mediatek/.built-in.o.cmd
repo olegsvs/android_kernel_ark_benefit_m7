@@ -1,1 +1,0 @@
-cmd_drivers/power/mediatek/built-in.o :=  aarch64-ld -EL    -r -o drivers/power/mediatek/built-in.o drivers/power/mediatek/battery_meter.o drivers/power/mediatek/battery_common.o drivers/power/mediatek/linear_charging.o 

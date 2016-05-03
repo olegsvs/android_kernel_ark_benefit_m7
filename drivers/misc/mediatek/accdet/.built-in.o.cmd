@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/accdet/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/accdet/built-in.o drivers/misc/mediatek/accdet/accdet_drv.o drivers/misc/mediatek/accdet/mt6735/built-in.o 

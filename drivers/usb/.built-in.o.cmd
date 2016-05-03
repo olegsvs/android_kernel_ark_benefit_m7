@@ -1,1 +1,0 @@
-cmd_drivers/usb/built-in.o :=  aarch64-ld -EL    -r -o drivers/usb/built-in.o drivers/usb/core/built-in.o drivers/usb/storage/built-in.o drivers/usb/misc/built-in.o drivers/usb/phy/built-in.o drivers/usb/gadget/built-in.o drivers/usb/usb-common.o 

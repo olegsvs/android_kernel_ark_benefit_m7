@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/mach/mt6735/benefit_m7/accelerometer/mc3xxx_auto/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/mach/mt6735/benefit_m7/accelerometer/mc3xxx_auto/built-in.o drivers/misc/mediatek/mach/mt6735/benefit_m7/accelerometer/mc3xxx_auto/mc3xxx_cust_acc.o 

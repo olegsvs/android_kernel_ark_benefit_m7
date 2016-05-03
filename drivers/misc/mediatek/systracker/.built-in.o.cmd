@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/systracker/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/systracker/built-in.o drivers/misc/mediatek/systracker/systracker_interface.o drivers/misc/mediatek/systracker/mt6735/built-in.o drivers/misc/mediatek/systracker/backtrace_64bit.o 

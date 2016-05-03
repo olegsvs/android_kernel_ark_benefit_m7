@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/smi/mt6735/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/smi/mt6735/built-in.o drivers/misc/mediatek/smi/mt6735/smi_debug.o drivers/misc/mediatek/smi/mt6735/mmdvfs_mgr.o drivers/misc/mediatek/smi/mt6735/smi_common_d2.o 

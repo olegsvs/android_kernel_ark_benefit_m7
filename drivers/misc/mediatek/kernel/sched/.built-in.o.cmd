@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/kernel/sched/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/kernel/sched/built-in.o drivers/misc/mediatek/kernel/sched/rq_stats.o drivers/misc/mediatek/kernel/sched/sched_avg.o drivers/misc/mediatek/kernel/sched/cputopo.o 

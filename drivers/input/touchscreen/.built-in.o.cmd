@@ -1,1 +1,0 @@
-cmd_drivers/input/touchscreen/built-in.o :=  aarch64-ld -EL    -r -o drivers/input/touchscreen/built-in.o drivers/input/touchscreen/sweep2wake.o drivers/input/touchscreen/doubletap2wake.o drivers/input/touchscreen/mediatek/built-in.o 

@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/hibcore/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/hibcore/built-in.o drivers/misc/mediatek/hibcore/mtk_hibernate_dpm.o drivers/misc/mediatek/hibcore/mtk_hibernate_core.o 

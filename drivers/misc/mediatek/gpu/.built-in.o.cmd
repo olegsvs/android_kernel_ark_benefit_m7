@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/gpu/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/gpu/built-in.o drivers/misc/mediatek/gpu/ged/built-in.o drivers/misc/mediatek/gpu/hal/built-in.o drivers/misc/mediatek/gpu/mt6735/built-in.o 

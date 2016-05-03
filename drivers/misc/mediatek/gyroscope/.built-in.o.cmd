@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/gyroscope/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/gyroscope/built-in.o drivers/misc/mediatek/gyroscope/gyroscope.o drivers/misc/mediatek/gyroscope/gyro_factory.o 

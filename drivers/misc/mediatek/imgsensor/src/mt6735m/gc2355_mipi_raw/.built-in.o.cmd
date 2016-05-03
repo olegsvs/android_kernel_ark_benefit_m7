@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/imgsensor/src/mt6735m/gc2355_mipi_raw/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/imgsensor/src/mt6735m/gc2355_mipi_raw/built-in.o drivers/misc/mediatek/imgsensor/src/mt6735m/gc2355_mipi_raw/gc2355mipi_Sensor.o 

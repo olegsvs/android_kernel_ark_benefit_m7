@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/fingerprint/eh570.o := aarch64-ld -EL    -r -o drivers/misc/mediatek/fingerprint/eh570.o drivers/misc/mediatek/fingerprint/eh570-spi.o drivers/misc/mediatek/fingerprint/eh570-spi_data_transfer.o drivers/misc/mediatek/fingerprint/fps_trigger.o 

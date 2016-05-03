@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/aee/aed/aed.o := aarch64-ld -EL    -r -o drivers/misc/mediatek/aee/aed/aed.o drivers/misc/mediatek/aee/aed/aed-main.o drivers/misc/mediatek/aee/aed/aed-debug.o drivers/misc/mediatek/aee/aed/aed-process.o drivers/misc/mediatek/aee/aed/monitor_hang.o 

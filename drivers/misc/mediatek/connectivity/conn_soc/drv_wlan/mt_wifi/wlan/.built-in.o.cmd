@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/connectivity/conn_soc/drv_wlan/mt_wifi/wlan/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/connectivity/conn_soc/drv_wlan/mt_wifi/wlan/built-in.o drivers/misc/mediatek/connectivity/conn_soc/drv_wlan/mt_wifi/wlan/wlan_mt.o 

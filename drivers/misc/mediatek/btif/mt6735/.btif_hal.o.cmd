@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/btif/mt6735/btif_hal.o := aarch64-ld -EL    -r -o drivers/misc/mediatek/btif/mt6735/btif_hal.o drivers/misc/mediatek/btif/mt6735/hal_btif.o drivers/misc/mediatek/btif/mt6735/hal_btif_dma.o 

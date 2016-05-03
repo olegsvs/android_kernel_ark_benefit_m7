@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/mmc-host/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/mmc-host/built-in.o drivers/misc/mediatek/mmc-host/mt6735/built-in.o drivers/misc/mediatek/mmc-host/emmc_rpmb.o 

@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/vibrator/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/vibrator/built-in.o drivers/misc/mediatek/vibrator/vibrator_drv.o drivers/misc/mediatek/vibrator/thunderquake_engine.o drivers/misc/mediatek/vibrator/mt6735/built-in.o 

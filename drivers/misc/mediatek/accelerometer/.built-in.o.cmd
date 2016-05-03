@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/accelerometer/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/accelerometer/built-in.o drivers/misc/mediatek/accelerometer/accel.o drivers/misc/mediatek/accelerometer/accel_factory.o drivers/misc/mediatek/accelerometer/mc3xxx_auto/built-in.o 

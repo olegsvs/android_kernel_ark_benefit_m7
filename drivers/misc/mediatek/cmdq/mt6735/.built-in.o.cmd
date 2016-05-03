@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/cmdq/mt6735/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/cmdq/mt6735/built-in.o drivers/misc/mediatek/cmdq/mt6735/cmdq_mdp.o drivers/misc/mediatek/cmdq/mt6735/cmdq_device.o drivers/misc/mediatek/cmdq/mt6735/cmdq_platform.o 

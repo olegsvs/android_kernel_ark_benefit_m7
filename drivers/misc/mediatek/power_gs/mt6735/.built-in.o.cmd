@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/power_gs/mt6735/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/power_gs/mt6735/built-in.o drivers/misc/mediatek/power_gs/mt6735/mt_power_gs.o drivers/misc/mediatek/power_gs/mt6735/mt_power_gs_6328_array.o drivers/misc/mediatek/power_gs/mt6735/mt_power_gs_suspend.o 

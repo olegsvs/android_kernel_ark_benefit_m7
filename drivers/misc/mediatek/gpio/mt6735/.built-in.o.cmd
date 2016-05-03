@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/gpio/mt6735/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/gpio/mt6735/built-in.o drivers/misc/mediatek/gpio/mt6735/mt_gpio_base.o drivers/misc/mediatek/gpio/mt6735/mt_gpio_ext.o drivers/misc/mediatek/gpio/mt6735/mt_gpio_affix.o drivers/misc/mediatek/gpio/mt6735/mt_gpio_debug.o drivers/misc/mediatek/gpio/mt6735/mt_gpio_base_linux.o 

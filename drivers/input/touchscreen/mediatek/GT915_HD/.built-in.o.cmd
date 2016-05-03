@@ -1,1 +1,0 @@
-cmd_drivers/input/touchscreen/mediatek/GT915_HD/built-in.o :=  aarch64-ld -EL    -r -o drivers/input/touchscreen/mediatek/GT915_HD/built-in.o drivers/input/touchscreen/mediatek/GT915_HD/goodix_tool.o drivers/input/touchscreen/mediatek/GT915_HD/gt9xx_driver.o drivers/input/touchscreen/mediatek/GT915_HD/gt9xx_update.o 

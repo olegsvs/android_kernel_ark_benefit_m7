@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/alsps/built-in.o :=  aarch64-ld -EL    -r -o drivers/misc/mediatek/alsps/built-in.o drivers/misc/mediatek/alsps/alsps.o drivers/misc/mediatek/alsps/alsps_factory.o drivers/misc/mediatek/alsps/aal_control.o 
