@@ -114,9 +114,7 @@ static unsigned int lcm_esd_test = FALSE;      ///only for ESD test
 // ---------------------------------------------------------------------------
 //  Local Variables
 // ---------------------------------------------------------------------------
-#ifdef CONFIG_POCKETMOD
-#include <linux/pocket_mod.h>
-#endif
+
 #ifdef CONFIG_DOUBLETAP2WAKE
 #include <linux/input/doubletap2wake.h>
 #endif
@@ -596,9 +594,7 @@ static void lcm_suspend(void)
 
     SET_RESET_PIN(0);
     MDELAY(200);
-#ifdef CONFIG_POCKETMOD
-	is_screen_on = 0;
-	#endif 
+
 
 }
 
@@ -606,9 +602,6 @@ static void lcm_suspend(void)
 static void lcm_resume(void)
 {
   lcm_init();
-#ifdef CONFIG_POCKETMOD
-	is_screen_on = 1;
-	#endif
 
 }
          

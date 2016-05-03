@@ -37,6 +37,10 @@ ifeq ($(CONFIG_MTK_MC3XXX_AUTO),y)
 obj-y   +=  accelerometer/mc3xxx_auto/
 endif
 
+ifeq ($(CONFIG_MTK_STK3X1X_DRIVER),y)
+obj-y   +=  alsps/stk3x1x_driver/
+endif
+
 ifeq ($(CONFIG_MTK_ITG1010_NEW),y)
 obj-y   +=  gyroscope/ITG1010-new/
 endif

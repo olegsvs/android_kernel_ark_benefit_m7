@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 3.10.65 Kernel Configuration
+# Linux/arm64 3.10.101 Kernel Configuration
 #
 CONFIG_ARM64=y
 CONFIG_ARM_HAS_SG_CHAIN=y
@@ -995,7 +995,7 @@ CONFIG_THUNDERQUAKE_ENGINE_GPL=y
 # CONFIG_SENSORS_LIS3_I2C is not set
 
 # pocket mode (avoid dt2w to be active while proximity sensor is triggered)
-CONFIG_POCKETMOD=n
+# CONFIG_POCKETMOD is not set
 CONFIG_DYNAMIC_FSYNC=y
 #
 # Altera FPGA firmware download module
@@ -1288,7 +1288,8 @@ CONFIG_MTK_SIM2=y
 # CONFIG_MTK_APM_16D is not set
 # CONFIG_MTK_EPL2182 is not set
 # CONFIG_MTK_EPL2182_NEW is not set
-#CONFIG_MTK_STK3X1X_NEW=y
+CONFIG_MTK_STK3X1X_NEW=n
+CONFIG_MTK_STK3X1X_DRIVER=y
 # CONFIG_MTK_CM36652_NEW is not set
 # CONFIG_MTK_APDS9930 is not set
 # CONFIG_MTK_CM3232_NEW is not set

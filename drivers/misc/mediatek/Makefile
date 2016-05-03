@@ -322,4 +322,3 @@ endif
 ###########
 obj-y += custeint/
 obj-y += fingerprint/
-obj-y += mac_fingerprint/

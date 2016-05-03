@@ -109,9 +109,6 @@
 #ifndef FALSE
     #define FALSE 0
 #endif
-#ifdef CONFIG_POCKETMOD
-#include <linux/pocket_mod.h>
-#endif
 #ifdef CONFIG_DOUBLETAP2WAKE
 #include <linux/input/doubletap2wake.h>
 #endif
@@ -415,8 +412,7 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 {REGFLAG_END_OF_TABLE,0x00,{}}
 };
-
-static struct LCM_setting_table lcm_sleep_out_setting[] = {
+/*
     // Sleep Out
     {0x11, 0, {0x00}},
     {REGFLAG_DELAY, 120, {}},
@@ -437,7 +433,36 @@ static struct LCM_setting_table lcm_sleep_mode_in_setting[] = {
 	{0x10, 0, {0x00}},
 	{REGFLAG_DELAY, 120, {}},
 	//{REGFLAG_END_OF_TABLE, 0x00, {}}
+};*/
+static struct LCM_setting_table lcm_sleep_out_setting[] = {
+	// Sleep Out
+	{0x11, 1, {0x00}},
+	{REGFLAG_DELAY, 120, {}},
+
+	// Display ON
+	{0x29, 1, {0x00}},
+	{REGFLAG_DELAY, 10, {}},
+
+	{REGFLAG_END_OF_TABLE, 0x00, {}}
 };
+
+
+static struct LCM_setting_table lcm_sleep_in_setting[] = {
+	// Display off sequence
+	{0x01, 1, {0x00}},
+	{REGFLAG_DELAY, 50, {}},
+	
+	{0x28, 1, {0x00}},
+	{REGFLAG_DELAY, 50, {}},
+
+	// Sleep Mode On
+	{0x10, 1, {0x00}},
+	{REGFLAG_DELAY, 50, {}},
+
+	{REGFLAG_END_OF_TABLE, 0x00, {}}
+};
+
+
 
 
 static void push_table(struct LCM_setting_table *table, unsigned int count,
@@ -602,9 +627,7 @@ static void lcm_suspend(void)
  	array[0] = 0x014f1500;// read id return two byte,version and id
 	dsi_set_cmdq(&array, 1, 1);
 	MDELAY(50);
-#ifdef CONFIG_POCKETMOD
-	is_screen_on = 0;
-	#endif 
+
 }
 
 
@@ -616,9 +639,7 @@ static void lcm_resume(void)
 	//lcm_compare_id();
 //	push_table(lcm_sleep_out_setting,sizeof(lcm_sleep_out_setting) /sizeof(struct LCM_setting_table), 1);
 	lcm_init();
-			#ifdef CONFIG_POCKETMOD
-	is_screen_on = 1;
-	#endif
+
 /*array[0] = 0x00063902;// read id return two byte,version and id
 	array[1] = 0x52AA55F0;
 	array[2] = 0x00000108;

@@ -46,13 +46,6 @@ config AD525X_DPOT_I2C
 	  To compile this driver as a module, choose M here: the
 	  module will be called ad525x_dpot-i2c.
 
-config POCKETMOD
-	bool "PocketMod for device wake modifications"
-	default y
-	help
-		Say Y here to enable PocketMod. Users can always
-		toggle this on/off from sysfs later (should they
-		want it)  
 
 config AD525X_DPOT_SPI
 	tristate "support SPI bus connection"
