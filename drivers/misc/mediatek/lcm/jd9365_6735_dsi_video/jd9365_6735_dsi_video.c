@@ -435,31 +435,26 @@ static struct LCM_setting_table lcm_sleep_mode_in_setting[] = {
 	//{REGFLAG_END_OF_TABLE, 0x00, {}}
 };*/
 static struct LCM_setting_table lcm_sleep_out_setting[] = {
-	// Sleep Out
-	{0x11, 1, {0x00}},
-	{REGFLAG_DELAY, 120, {}},
+    // Sleep Out
+    {0x11, 1, {0x00}},
+    {REGFLAG_DELAY, 120, {}},
 
-	// Display ON
-	{0x29, 1, {0x00}},
-	{REGFLAG_DELAY, 10, {}},
-
-	{REGFLAG_END_OF_TABLE, 0x00, {}}
+    // Display ON
+    {0x29, 1, {0x00}},
+    {REGFLAG_DELAY, 10, {}},
+    
+    //{REGFLAG_END_OF_TABLE, 0x00, {}}
 };
 
+static struct LCM_setting_table lcm_sleep_mode_in_setting[] = {
+    // Display off sequence
+    {0x28, 1, {0x00}},
+    {REGFLAG_DELAY, 10, {}},
 
-static struct LCM_setting_table lcm_sleep_in_setting[] = {
-	// Display off sequence
-	{0x01, 1, {0x00}},
-	{REGFLAG_DELAY, 50, {}},
-	
-	{0x28, 1, {0x00}},
-	{REGFLAG_DELAY, 50, {}},
-
-	// Sleep Mode On
+    // Sleep Mode On
 	{0x10, 1, {0x00}},
-	{REGFLAG_DELAY, 50, {}},
-
-	{REGFLAG_END_OF_TABLE, 0x00, {}}
+	{REGFLAG_DELAY, 120, {}},
+	//{REGFLAG_END_OF_TABLE, 0x00, {}}
 };
 
 

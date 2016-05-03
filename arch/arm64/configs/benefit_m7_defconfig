@@ -994,7 +994,6 @@ CONFIG_THUNDERQUAKE_ENGINE_GPL=y
 # CONFIG_SENSORS_LIS3_I2C is not set
 
 # pocket mode (avoid dt2w to be active while proximity sensor is triggered)
-# CONFIG_POCKETMOD is not set
 CONFIG_DYNAMIC_FSYNC=y
 #
 # Altera FPGA firmware download module
@@ -1324,6 +1323,7 @@ CONFIG_MTK_MC3XXX_AUTO=y
 # CONFIG_MTK_BMM050 is not set
 # CONFIG_MTK_BMM050_NEW is not set
 CONFIG_MTK_MMC3416X=y
+CONFIG_POCKETMOD=n
 # CONFIG_MTK_BMA050 is not set
 # CONFIG_MTK_BMA050_NEW is not set
 # CONFIG_MTK_BMA255_SDO0 is not set
