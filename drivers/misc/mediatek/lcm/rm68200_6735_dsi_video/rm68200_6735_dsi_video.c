@@ -525,57 +525,34 @@ static void lcm_get_params(LCM_PARAMS * params)
 {
 	memset(params, 0, sizeof(LCM_PARAMS));
 
-	params->type = LCM_TYPE_DSI;
+  params->dsi.data_format.color_order = 0;
+  params->dsi.data_format.trans_seq = 0;
+  params->dsi.data_format.padding = 0;
+  params->dsi.intermediat_buffer_num = 0;
+  params->dsi.packet_size = 256;
+  params->dsi.word_count = 2160;
+  params->dsi.PLL_CLOCK = 208;
+  params->dsi.lcm_esd_check_table[0].para_list[0] = -100;
+  params->type = 2;
+  params->dsi.data_format.format = 2;
+  params->dsi.PS = 2;
+  params->width = 720;
+  params->dsi.horizontal_active_pixel = 720;
+  params->height = 1280;
+  params->dsi.vertical_active_line = 1280;
+  params->dsi.mode = 1;
+  params->dsi.esd_check_enable = 1;
+  params->dsi.customization_esd_check_enable = 1;
+  params->dsi.lcm_esd_check_table[0].count = 1;
+  params->dsi.LANE_NUM = 4;
+  params->dsi.vertical_sync_active = 4;
+  params->dsi.vertical_backporch = 16;
+  params->dsi.vertical_frontporch = 16;
+  params->dsi.horizontal_sync_active = 10;
+  params->dsi.lcm_esd_check_table[0].cmd = 10;
+  params->dsi.horizontal_backporch = 50;
+  params->dsi.horizontal_frontporch = 50;
 
-	params->width = FRAME_WIDTH;
-	params->height = FRAME_HEIGHT;
-
-	// enable tearing-free
-	params->dbi.te_mode = LCM_DBI_TE_MODE_DISABLED;
-	params->dbi.te_edge_polarity = LCM_POLARITY_RISING;
-
-#if (LCM_DSI_CMD_MODE)
-	params->dsi.mode = CMD_MODE;
-#else
-	params->dsi.mode   = SYNC_PULSE_VDO_MODE;//SYNC_EVENT_VDO_MODE;//BURST_VDO_MODE;////
-#endif
-
-	// DSI
-	/* Command mode setting */
-		params->dsi.LANE_NUM				= LCM_THREE_LANE;
-	
-	//The following defined the fomat for data coming from LCD engine.
-	params->dsi.data_format.color_order = LCM_COLOR_ORDER_RGB;
-	params->dsi.data_format.trans_seq   = LCM_DSI_TRANS_SEQ_MSB_FIRST;
-	params->dsi.data_format.padding     = LCM_DSI_PADDING_ON_LSB;
-	params->dsi.data_format.format      = LCM_DSI_FORMAT_RGB888;
-	
-	
-	params->dsi.PS=LCM_PACKED_PS_24BIT_RGB888;
-	
-#if (LCM_DSI_CMD_MODE)
-	params->dsi.intermediat_buffer_num = 0;//because DSI/DPI HW design change, this parameters should be 0 when video mode in MT658X; or memory leakage
-	params->dsi.word_count=FRAME_WIDTH*3;	//DSI CMD mode need set these two bellow params, different to 6577
-#else
-	params->dsi.intermediat_buffer_num = 0;	//because DSI/DPI HW design change, this parameters should be 0 when video mode in MT658X; or memory leakage
-#endif
-
-	// Video mode setting
-	params->dsi.packet_size=256;
-
-	params->dsi.vertical_sync_active				=  2;//4
-	params->dsi.vertical_backporch					= 14;//50;
-	params->dsi.vertical_frontporch					= 16;//50;
-	params->dsi.vertical_active_line				= FRAME_HEIGHT; 
-
-	params->dsi.horizontal_sync_active				= 4;//10
-	params->dsi.horizontal_backporch				= 16;//34; 
-	params->dsi.horizontal_frontporch				= 8;//24;
-	params->dsi.horizontal_active_pixel				= FRAME_WIDTH;
-
-	// Bit rate calculation
-	//1 Every lane speed
-params->dsi.PLL_CLOCK=250;
 }
 
 static void lcm_init(void)
