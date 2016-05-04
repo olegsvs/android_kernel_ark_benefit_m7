@@ -641,7 +641,7 @@ static int ft5x0x_read_Touchdata(void)
         printk( "%s read touchdata failed.\n", __func__);
         return ret;
     }
-    /* FW ?°¿?®Æ??3?®∫?®∫? */
+    /* FW ?–é–ê?–Å¬Æ??3?–Å—î?–Å—î? */
     if (0x24 == buf[0])
     {
         gestrue_id = 0x24;
@@ -837,11 +837,7 @@ static int tpd_probe(struct i2c_client *client, const struct i2c_device_id *id)
 reset_proc:   
 	i2c_client = client;
 //add at 20150330 by zhu
-#if 1//def MAIERXUN_TP_COM
-    if(touchpanel_flag){
-	return 0;
-     }
-#endif
+
 //add at 20150330 by zhu end   
 	//power on, need confirm with SA
        mt_set_gpio_mode(GPIO_CTP_RST_PIN, GPIO_CTP_RST_PIN_M_GPIO);
@@ -908,9 +904,7 @@ reset_proc:
         }
 #endif
 //add at 20150330 by zhu
-#if 1//def MAIERXUN_TP_COM
-	    touchpanel_flag=false;
-#endif
+
 //add at 20150330 by zhu end
 		   return -1; 
 	}
@@ -974,9 +968,7 @@ reset_proc:
 	}		
 #endif
 //add at 20150330 by zhu
-#if 1//def MAIERXUN_TP_COM
-    touchpanel_flag=true;
-#endif
+
 //add at 20150330 by zhu end
    return 0;
    
@@ -1158,5 +1150,6 @@ static void __exit tpd_driver_exit(void) {
  
 module_init(tpd_driver_init);
 module_exit(tpd_driver_exit);
+
 
 

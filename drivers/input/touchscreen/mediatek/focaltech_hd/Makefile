@@ -13,6 +13,5 @@ ccflags-y += -I$(srctree)/drivers/input/touchscreen/mediatek/
 obj-y	+=  focaltech_ctl.o
 obj-y	+=  focaltech_driver.o
 obj-y	+=  focaltech_ex_fun.o
-obj-y	+=  ft_gesture_lib.a
 #obj-y	+=  gt1x_update.o
 

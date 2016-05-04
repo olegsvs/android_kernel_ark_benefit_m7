@@ -523,36 +523,60 @@ static void lcm_set_util_funcs(const LCM_UTIL_FUNCS * util)
 
 static void lcm_get_params(LCM_PARAMS * params)
 {
-	memset(params, 0, sizeof(LCM_PARAMS));
+memset(params, 0, sizeof(LCM_PARAMS));
+	
+		params->type   = LCM_TYPE_DSI;
 
-  params->dsi.data_format.color_order = 0;
-  params->dsi.data_format.trans_seq = 0;
-  params->dsi.data_format.padding = 0;
-  params->dsi.intermediat_buffer_num = 0;
-  params->dsi.packet_size = 256;
-  params->dsi.word_count = 2160;
-  params->dsi.PLL_CLOCK = 208;
-  params->dsi.lcm_esd_check_table[0].para_list[0] = -100;
-  params->type = 2;
-  params->dsi.data_format.format = 2;
-  params->dsi.PS = 2;
-  params->width = 720;
-  params->dsi.horizontal_active_pixel = 720;
-  params->height = 1280;
-  params->dsi.vertical_active_line = 1280;
-  params->dsi.mode = 1;
-  params->dsi.esd_check_enable = 1;
-  params->dsi.customization_esd_check_enable = 1;
-  params->dsi.lcm_esd_check_table[0].count = 1;
-  params->dsi.LANE_NUM = 4;
-  params->dsi.vertical_sync_active = 4;
-  params->dsi.vertical_backporch = 16;
-  params->dsi.vertical_frontporch = 16;
-  params->dsi.horizontal_sync_active = 10;
-  params->dsi.lcm_esd_check_table[0].cmd = 10;
-  params->dsi.horizontal_backporch = 50;
-  params->dsi.horizontal_frontporch = 50;
+		params->width  = FRAME_WIDTH;
+		params->height = FRAME_HEIGHT;
 
+		// enable tearing-free
+		params->dbi.te_mode 				= LCM_DBI_TE_MODE_DISABLED;
+		params->dbi.te_edge_polarity		= LCM_POLARITY_RISING;
+
+#if (LCM_DSI_CMD_MODE)
+		params->dsi.mode   = CMD_MODE;
+#else
+		params->dsi.mode   = SYNC_PULSE_VDO_MODE;
+#endif
+	
+		// DSI
+		/* Command mode setting */
+		params->dsi.LANE_NUM				= LCM_FOUR_LANE;
+		//The following defined the fomat for data coming from LCD engine.
+		params->dsi.data_format.color_order = LCM_COLOR_ORDER_RGB;
+		params->dsi.data_format.trans_seq   = LCM_DSI_TRANS_SEQ_MSB_FIRST;
+		params->dsi.data_format.padding     = LCM_DSI_PADDING_ON_LSB;
+		params->dsi.data_format.format      = LCM_DSI_FORMAT_RGB888;
+
+		// Highly depends on LCD driver capability.
+		// Not support in MT6573
+		params->dsi.packet_size=256;
+
+		// Video mode setting		
+		params->dsi.intermediat_buffer_num = 2;
+
+		params->dsi.PS=LCM_PACKED_PS_24BIT_RGB888;
+
+		params->dsi.vertical_sync_active				= 4;// 4;2
+		params->dsi.vertical_backporch					= 8;// 8;2
+		params->dsi.vertical_frontporch					= 12;// 8;2
+		params->dsi.vertical_active_line				= FRAME_HEIGHT; 
+
+		params->dsi.horizontal_sync_active				= 10;//6
+		params->dsi.horizontal_backporch				= 10;//37
+		params->dsi.horizontal_frontporch				= 20;//37
+		params->dsi.horizontal_active_pixel				= FRAME_WIDTH;
+
+		params->dsi.PLL_CLOCK=213;
+
+		/* ESD or noise interference recovery For video mode LCM only. */ // Send TE packet to LCM in a period of n frames and check the response. 
+		params->dsi.lcm_int_te_monitor = FALSE; 
+		params->dsi.lcm_int_te_period = 1; // Unit : frames 
+ 
+		// Need longer FP for more opportunity to do int. TE monitor applicably. 
+		if(params->dsi.lcm_int_te_monitor) 
+			params->dsi.vertical_frontporch *= 2; 
 }
 
 static void lcm_init(void)

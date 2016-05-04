@@ -78,9 +78,9 @@ FHD   1920x1080  2key ( (160,2100);(920,2100) )           3key  ( (160,2100);(54
 #define TPD_HAVE_BUTTON	// if have virtual key,need define the MACRO
 #define TPD_BUTTON_WIDTH        (200)  //100
 #define TPD_BUTTON_HEIGH	(200)
-#define TPD_KEY_COUNT           1    //  4
+#define TPD_KEY_COUNT           3    //  4
 //#define TPD_KEYS                { KEY_FAKE_FINGERPRINT_UNLOCK/*KEY_MENU*/, KEY_HOMEPAGE, KEY_BACK}
-#define TPD_KEYS                {KEY_FINGER}
+#define TPD_KEYS                {KEY_MENU,KEY_HOME,KEY_BACK}
 //#define TPD_KEYS_DIM            	{{80,900,20,TPD_BUTTON_HEIGH}, {240,900,20,TPD_BUTTON_HEIGH}, {400,900,20,TPD_BUTTON_HEIGH}}
 #define TPD_KEYS_DIM            	{{60,1350,TPD_BUTTON_WIDTH,TPD_BUTTON_HEIGH}}
 /*********************Custom Define end*************************************************/
