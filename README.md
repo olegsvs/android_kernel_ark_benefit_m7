@@ -1,5 +1,3 @@
-# android_kernel_ark_benefit_m7
-
 Big Thanks To
 
 @visi0nary
@@ -25,5 +23,4 @@ Big Thanks To
 @UNwS 
 @vipintm
 @walter79
-
 
