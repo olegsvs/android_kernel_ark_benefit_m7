@@ -1319,9 +1319,7 @@ void dod_init(void)
 	kal_int32 gFG_capacity_by_sw_ocv = gFG_capacity_by_v;	
 #endif//by zhu
 
-#if defined(IS_BATTERY_REMOVE_BY_PMIC)
-	kal_int32 gFG_capacity_by_sw_ocv = gFG_capacity_by_v;	
-#endif
+
 #if defined(SOC_BY_HW_FG)
 	int ret = 0;
 
