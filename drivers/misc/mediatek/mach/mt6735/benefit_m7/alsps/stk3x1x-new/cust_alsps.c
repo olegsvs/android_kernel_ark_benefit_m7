@@ -40,7 +40,7 @@
 static struct alsps_hw cust_alsps_hw = {
 	/* i2c bus number, for mt657x, default=0. For mt6589, default=3 */
 
-    .i2c_num    = 3,	
+    .i2c_num    = 2,	
 	//.polling_mode =1,
 	.polling_mode_ps =0,
 	.polling_mode_als =1,   
