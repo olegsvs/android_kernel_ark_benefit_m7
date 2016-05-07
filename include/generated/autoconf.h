@@ -655,7 +655,7 @@
 #define CONFIG_MTK_AEE_FEATURE 1
 #define CONFIG_SCSI_MOD 1
 #define CONFIG_CUSTOM_KERNEL_CAM_CAL_DRV "imx219_eeprom"
-#define CONFIG_CUSTOM_KERNEL_IMGSENSOR " imx219_mipi_raw gc2355_mipi_raw gc2145_mipi_yuv gc0310_mipi_yuv sp2508_mipi_raw"
+#define CONFIG_CUSTOM_KERNEL_IMGSENSOR " imx219_mipi_raw sp2508_mipi_raw"
 #define CONFIG_ASYNC_FSYNC 1
 #define CONFIG_CRYPTO_CRC32C 1
 #define CONFIG_SERIAL_CORE 1

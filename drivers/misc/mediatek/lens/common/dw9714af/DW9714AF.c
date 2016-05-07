@@ -23,8 +23,8 @@
 #define LENS_I2C_BUSNUM 0
 
 #define AF_DRVNAME "DW9714AF"
-#define I2C_SLAVE_ADDRESS        0x18
-#define I2C_REGISTER_ID            0x18
+#define I2C_SLAVE_ADDRESS        0x1c
+#define I2C_REGISTER_ID            0x1c
 #define PLATFORM_DRIVER_NAME "lens_actuator_dw9714af"
 #define AF_DRIVER_CLASS_NAME "actuatordrv_dw9714af"
 
