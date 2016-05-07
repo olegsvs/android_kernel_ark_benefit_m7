@@ -60,7 +60,7 @@
 #define CUST_EINT_ALS_SENSITIVE 	CUST_EINTF_TRIGGER_LOW 
 #define CUST_EINT_ALS_POLARITY 		CUST_EINT_ALS_TYPE
 #define POWER_NONE_MACRO MT65XX_POWER_NONE
-extern struct alsps_hw* get_cust_alsps_hw(void);
+
 /******************************************************************************
  * configuration
 *******************************************************************************/
@@ -71,9 +71,6 @@ extern struct alsps_hw* get_cust_alsps_hw(void);
 
 /*----------------------------------------------------------------------------*/
 #define stk3x1x_DEV_NAME     "stk3x1x"
-#ifdef CONFIG_POCKETMOD
-#include <linux/pocket_mod.h>
-#endif
 /*----------------------------------------------------------------------------*/
 #define APS_TAG                  "[ALS/PS] "
 #define APS_FUN(f)               printk(APS_TAG"%s\n", __FUNCTION__)
@@ -3354,40 +3351,6 @@ static int __init stk3x1x_init(void)
 	return 0;
 }
 
-
-
-
-#ifdef CONFIG_POCKETMOD
-int stk3x1x_pocket_detection_check(void)
-{
-	int ps_val;
-	int als_val;
-
-	struct stk3x1x_priv *obj = stk3x1x_obj;
-	
-	if(obj == NULL)
-	{
-		APS_DBG("[stk3x1x] stk3x1x_obj is NULL!");
-		return 0;
-	}
-	else
-	{
-		stk3x1x_enable_ps(obj->client, 1);
-
-		msleep(50);
-
-		ps_val = stk3x1x_get_ps_value(obj, obj->ps);
-		als_val = stk3x1x_get_als_value(obj, obj->ps);
-
-		APS_DBG("[stk3x1x] %s als_val = %d, ps_val = %d\n", __func__, als_val, ps_val);
-
-		stk3x1x_enable_ps(obj->client, 0);
-
-		return (ps_val);
-	}
-}
-#endif
-
 static void __exit stk3x1x_exit(void)
 {
 	APS_FUN();
@@ -3399,3 +3362,4 @@ module_exit(stk3x1x_exit);
 MODULE_AUTHOR("MingHsien Hsieh");
 MODULE_DESCRIPTION("SensorTek stk3x1x proximity and light sensor driver");
 MODULE_LICENSE("GPL");
+
