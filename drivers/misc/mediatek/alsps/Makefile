@@ -45,6 +45,3 @@ endif
 ifeq ($(CONFIG_MTK_STK3X1X_NEW),y)
 obj-y	+=  stk3x1x-new/
 endif
-ifeq ($(CONFIG_MTK_RPR410),y)
-obj-y	+=  rpr410/
-endif

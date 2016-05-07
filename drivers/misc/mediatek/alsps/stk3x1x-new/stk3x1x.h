@@ -127,4 +127,3 @@
 #define STK_ALS_CODE_CHANGE_THD	5
 
 #endif
-

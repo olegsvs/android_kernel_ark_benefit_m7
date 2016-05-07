@@ -1872,12 +1872,6 @@ static int cm36283_i2c_remove(struct i2c_client *client)
 
 }
 
-static int cm36283_i2c_detect(struct i2c_client *client, struct i2c_board_info *info)
-{
-	strcpy(info->type, CM36283_DEV_NAME);
-	return 0;
-
-}
 
 static int cm36283_i2c_suspend(struct i2c_client *client, pm_message_t msg)
 {

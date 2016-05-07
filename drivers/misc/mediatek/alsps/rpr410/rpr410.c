@@ -1489,7 +1489,7 @@ static long rpr410_unlocked_ioctl(struct file *file, unsigned int cmd,
 			{
 				if(err = rpr410_enable_als(obj->client, 1))
 				{
-					APS_ERR("enable als fail: %d\n", (int)err); 
+					APS_ERR("enable als fail: %d\n", err); 
 					goto err_out;
 				}
 				set_bit(CMC_BIT_ALS, &obj->enable);
@@ -1498,7 +1498,7 @@ static long rpr410_unlocked_ioctl(struct file *file, unsigned int cmd,
 			{
 				if(err = rpr410_enable_als(obj->client, 0))
 				{
-					APS_ERR("disable als fail: %d\n", (int)err); 
+					APS_ERR("disable als fail: %d\n", err); 
 					goto err_out;
 				}
 				clear_bit(CMC_BIT_ALS, &obj->enable);

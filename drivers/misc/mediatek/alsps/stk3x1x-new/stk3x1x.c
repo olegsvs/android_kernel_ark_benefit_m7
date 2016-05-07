@@ -3362,4 +3362,3 @@ module_exit(stk3x1x_exit);
 MODULE_AUTHOR("MingHsien Hsieh");
 MODULE_DESCRIPTION("SensorTek stk3x1x proximity and light sensor driver");
 MODULE_LICENSE("GPL");
-

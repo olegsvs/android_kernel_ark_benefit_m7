@@ -23,6 +23,10 @@ ifeq ($(CONFIG_TOUCHSCREEN_MTK_GT9XX),y)
 obj-y	+=  GT9XX/
 endif
 
+ifeq ($(CONFIG_TOUCHSCREEN_MTK_FT6206_X2605),y)
+obj-y	+=  FT6206_X2605/
+endif
+
 ifeq ($(CONFIG_TOUCHSCREEN_MTK_GT9XX_AIO),y)
 obj-y	+=  GT9XX_aio/
 endif
