@@ -218,6 +218,7 @@
 #define GC0313MIPI_YUV_SENSOR_ID                0xD0
 /*SP*/
 #define SP0A19_YUV_SENSOR_ID                    0xA6
+#define SP2508MIPI_SENSOR_ID 					0x2508
 #define SP2518_YUV_SENSOR_ID                    0x53
 /*A*/
 #define A5141MIPI_SENSOR_ID                     0x4800
@@ -356,6 +357,7 @@
 /*SP*/
 #define SENSOR_DRVNAME_SP0A19_YUV               "sp0a19yuv"
 #define SENSOR_DRVNAME_SP2518_YUV               "sp2518yuv"
+#define SENSOR_DRVNAME_SP2508_MIPI_RAW 			"sp2508mipiraw"
 /*A*/
 #define SENSOR_DRVNAME_A5141_MIPI_RAW           "a5141mipiraw"
 #define SENSOR_DRVNAME_A5142_MIPI_RAW           "a5142mipiraw"
