@@ -76,6 +76,10 @@
 #include <mach/mt_pm_ldo.h>
 #endif
 
+#ifdef CONFIG_POCKETMOD
+#include <linux/pocket_mod.h>
+#endif
+
 #if !defined(BUILD_LK)
 #include <linux/string.h>
 #endif
@@ -599,13 +603,18 @@ static void lcm_suspend(void)
     MDELAY(200);
 //needed for pocket mode
 
+	#ifdef CONFIG_POCKETMOD
+	is_screen_on = 0;
+	#endif 
 }
 
 
 static void lcm_resume(void)
 {
   lcm_init();
-
+#ifdef CONFIG_POCKETMOD
+	is_screen_on = 1;
+	#endif
 }
          
 #if (LCM_DSI_CMD_MODE)

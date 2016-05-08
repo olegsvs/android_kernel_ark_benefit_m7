@@ -67,6 +67,16 @@ config ATMEL_PWM
 	  purposes including software controlled power-efficient backlights
 	  on LCD displays, motor control, and waveform generation.
 
+	  
+config POCKETMOD
+	bool "PocketMod for device wake modifications"
+	default y
+	help
+		Say Y here to enable PocketMod. Users can always
+		toggle this on/off from sysfs later (should they
+		want it)  
+
+
 config THUNDERQUAKE_ENGINE_GPL
    tristate "Vibrator Intensity Controller for MTK Vibrator"
    default y

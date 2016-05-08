@@ -82,7 +82,9 @@
 //#define STK_IRS
 //#define STK_CHK_REG
 //#define STK_GES
-
+#ifdef CONFIG_POCKETMOD
+#include <linux/pocket_mod.h>
+#endif
 /////
 extern struct alsps_hw* stk_get_cust_alsps_hw(void);
 
@@ -2697,6 +2699,36 @@ static ssize_t stk3x1x_show_config(struct device_driver *ddri, char *buf)
 	return res;    
 }
 /*----------------------------------------------------------------------------*/
+#ifdef CONFIG_POCKETMOD
+int stk3x1x_pocket_detection_check(void)
+{
+	int ps_val;
+	int als_val;
+
+	struct  stk3x1x_priv *obj = stk3x1x_obj;
+	
+	if(obj == NULL)
+	{
+		APS_DBG("[stk3x1x] stk3x1x_obj is NULL!");
+		return 0;
+	}
+	else
+	{
+		stk3x1x_enable_ps(obj->client, 1);
+
+		msleep(50);
+
+		ps_val = stk3x1x_get_ps_value(obj, obj->ps);
+		als_val = stk3x1x_get_als_value(obj, obj->ps);
+
+		APS_DBG("[stk3x1x] %s als_val = %d, ps_val = %d\n", __func__, als_val, ps_val);
+
+		stk3x1x_enable_ps(obj->client, 0);
+
+		return (ps_val);
+	}
+}
+#endif
 static ssize_t stk3x1x_store_config(struct device_driver *ddri, const char *buf, size_t count)
 {
 	int retry, als_deb, ps_deb, mask, hthres, lthres, err;

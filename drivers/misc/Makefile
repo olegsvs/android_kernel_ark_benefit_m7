@@ -2,6 +2,8 @@
 # Makefile for misc devices that really don't fit anywhere else.
 #
 
+
+obj-$(CONFIG_POCKETMOD)		+= pocket_mod.o
 obj-$(CONFIG_ANDROID_PMEM)      += pmem.o
 obj-$(CONFIG_IBM_ASM)		+= ibmasm/
 obj-$(CONFIG_AD525X_DPOT)	+= ad525x_dpot.o
