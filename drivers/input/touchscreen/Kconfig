@@ -66,6 +66,10 @@ config TOUCHSCREEN_AD7879
 	  To compile this driver as a module, choose M here: the
 	  module will be called ad7879.
 
+config TOUCHSCREEN_MTK_FT6206_X2605
+	bool "FT6206_X2605 for Mediatek package"
+	depends on TOUCHSCREEN_MTK
+
 config TOUCHSCREEN_AD7879_I2C
 	tristate "support I2C bus connection"
 	depends on TOUCHSCREEN_AD7879 && I2C
