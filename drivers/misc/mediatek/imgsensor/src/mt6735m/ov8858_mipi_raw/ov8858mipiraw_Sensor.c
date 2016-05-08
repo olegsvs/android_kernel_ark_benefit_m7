@@ -149,15 +149,23 @@ static imgsensor_info_struct imgsensor_info = {
 	
 	.isp_driving_current = ISP_DRIVING_8MA, //mclk driving current
 	.sensor_interface_type = SENSOR_INTERFACE_TYPE_MIPI,//sensor_interface_type
+#ifdef VANZO_IMGSENSOR_OV8858_ROTATION
 	.sensor_output_dataformat = SENSOR_OUTPUT_FORMAT_RAW_Gb,//sensor output first pixel color
+#else
+	.sensor_output_dataformat = SENSOR_OUTPUT_FORMAT_RAW_B,//sensor output first pixel color
+#endif
 	.mclk = 24,//mclk value, suggest 24 or 26 for 24Mhz or 26Mhz
 	.mipi_lane_num = SENSOR_MIPI_4_LANE,//mipi lane num
-	.i2c_addr_table = {0x42, 0x20,0x6C,0xff},//record sensor support all write id addr, only supprt 4must end with 0xff
+	.i2c_addr_table = {0x42, 0xff},//record sensor support all write id addr, only supprt 4must end with 0xff
 };
 
 
 static imgsensor_struct imgsensor = {
-	.mirror = IMAGE_HV_MIRROR,//IMAGE_NORMAL,				//mirrorflip information
+#ifdef VANZO_IMGSENSOR_OV8858_ROTATION
+	.mirror = IMAGE_HV_MIRROR,
+#else
+	.mirror = IMAGE_NORMAL,				//mirrorflip information
+#endif
 	.sensor_mode = IMGSENSOR_MODE_INIT, //IMGSENSOR_MODE enum value,record current sensor mode,such as: INIT, Preview, Capture, Video,High Speed Video, Slim Video
 	.shutter = 0x4C00,					//current shutter
 	.gain = 0x200,						//current gain
@@ -174,11 +182,11 @@ static imgsensor_struct imgsensor = {
 
 /* Sensor output window information*/
 static SENSOR_WINSIZE_INFO_STRUCT imgsensor_winsize_info[5] =	 
-{{ 3296, 2480,	  12,	12, 3272, 2456, 3264, 2452,   4,	2, 1632, 1224,	 0, 0, 1632, 1224}, // Preview 
- { 3296, 2480,	  12,	12, 3272, 2456, 3264, 2452,   4,	2, 3264, 2448,	 0, 0, 3264, 2448}, // capture 
- { 3296, 2480,	  12,	12, 3272, 2456, 3264, 2452,   4,	2, 3264, 2448,	 0, 0, 3264, 2448}, // video 
- { 3296, 2480,	  12,	12, 3272, 2456,  640,  480,   4,	2,  640,  480,	 0, 0,  640,  480}, //hight speed video 
- { 3296, 2480,	  12,	12, 3272, 2456, 3264, 2452,   4,	2, 1632, 1224,	 0, 0, 1632, 1224}};// slim video 
+{{ 3296, 2480,	  12,	12, 3272, 2456, 1636, 1228,   0,	0, 1632, 1224,	 0, 0, 1632, 1224}, // Preview 
+ { 3296, 2480,	  12,	12, 3272, 2456, 3264, 2452,   0,	0, 3264, 2448,	 0, 0, 3264, 2448}, // capture 
+ { 3296, 2480,	  12,	12, 3272, 2456, 3264, 2452,   0,	0, 3264, 2448,	 0, 0, 3264, 2448}, // video 
+ { 3296, 2480,	  12,	12, 3272, 2456,  640,  480,   0,	0,  640,  480,	 0, 0,  640,  480}, //hight speed video 
+ { 3296, 2480,	  12,	12, 3272, 2456, 3264, 2452,   0,	0, 1632, 1224,	 0, 0, 1632, 1224}};// slim video 
 
 static kal_uint16 read_cmos_sensor(kal_uint32 addr)
 {
@@ -1522,7 +1530,7 @@ otp_ptr = &otp_struct_obj;
 int read_otp(struct otp_struct *otp_ptr)
 {
 	int otp_flag, addr, temp, i;
-	//set 0x5002[3] to \A1\B00\A1\B1
+	//set 0x5002[3] to ¡°0¡±
 	int temp1;
 	temp1 = read_cmos_sensor(0x5002);
 	write_cmos_sensor(0x5002, (0x00 & 0x08) | (temp1 & (~0x08)));
@@ -1614,7 +1622,7 @@ int read_otp(struct otp_struct *otp_ptr)
 	for(i=0x7010;i<=0x720a;i++) {
 		write_cmos_sensor(i,0); // clear OTP buffer, recommended use continuous write to accelarate
 	}
-	//set 0x5002[3] to \A1\B01\A1\B1
+	//set 0x5002[3] to ¡°1¡±
 	temp1 = read_cmos_sensor(0x5002);
 	write_cmos_sensor(0x5002, (0x08 & 0x08) | (temp1 & (~0x08)));
 	return (*otp_ptr).flag;
@@ -1816,8 +1824,8 @@ static kal_uint32 preview(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
 	imgsensor.autoflicker_en = KAL_FALSE;
 	spin_unlock(&imgsensor_drv_lock);
 	preview_setting();
-	set_mirror_flip(imgsensor.mirror);
 	mdelay(10);
+	set_mirror_flip(imgsensor.mirror);
 	return ERROR_NONE;
 }	/*	preview   */
 
@@ -1860,8 +1868,8 @@ static kal_uint32 capture(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
 	spin_unlock(&imgsensor_drv_lock);
 
 	capture_setting(imgsensor.current_fps); 
-	set_mirror_flip(imgsensor.mirror);
 	mdelay(10);
+	set_mirror_flip(imgsensor.mirror);
 
 	#if 0
 	if(imgsensor.test_pattern == KAL_TRUE)
@@ -1890,8 +1898,8 @@ static kal_uint32 normal_video(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
 	imgsensor.autoflicker_en = KAL_FALSE;
 	spin_unlock(&imgsensor_drv_lock);
 	capture_setting(imgsensor.current_fps);
-	set_mirror_flip(imgsensor.mirror);
 	mdelay(10);
+	set_mirror_flip(imgsensor.mirror);
 	
 	
 	return ERROR_NONE;
@@ -1915,8 +1923,8 @@ static kal_uint32 hs_video(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
 	imgsensor.autoflicker_en = KAL_FALSE;
 	spin_unlock(&imgsensor_drv_lock);
 	hs_video_setting();
-	set_mirror_flip(imgsensor.mirror);
 	mdelay(10);
+	set_mirror_flip(imgsensor.mirror);
 	
 	return ERROR_NONE;
 }	/*	hs_video   */
@@ -1939,8 +1947,8 @@ static kal_uint32 slim_video(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
 	imgsensor.autoflicker_en = KAL_FALSE;
 	spin_unlock(&imgsensor_drv_lock);
 	slim_video_setting();
-	set_mirror_flip(imgsensor.mirror);
 	mdelay(10);
+	set_mirror_flip(imgsensor.mirror);
 	
 	return ERROR_NONE;
 }	/*	slim_video	 */

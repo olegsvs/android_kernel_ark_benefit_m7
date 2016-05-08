@@ -26,7 +26,7 @@
 #include <linux/uaccess.h>
 #include <linux/fs.h>
 #include <asm/atomic.h>
-#include <asm/system.h>
+//#include <asm/system.h>
 #include <linux/xlog.h>
 
 #include "kd_camera_hw.h"
@@ -42,7 +42,7 @@
 #define LOG_1 LOG_INF("OV9760,MIPI 1LANE\n")
 #define LOG_2 LOG_INF("preview 1470*1100@30fps,256Mbps/lane\n")
 /****************************   Modify end    *******************************************/
-#define LOG_INF(format, args...)	xlog_printk(ANDROID_LOG_INFO   , PFX, "[%s] " format, __FUNCTION__, ##args)
+#define LOG_INF(format, args...)	pr_debug(PFX "[%s] " format, __FUNCTION__, ##args)
 
 static DEFINE_SPINLOCK(imgsensor_drv_lock);
 static kal_uint8  test_pattern_flag=0;
@@ -50,10 +50,9 @@ static kal_uint8  test_pattern_flag=0;
 #define MIPI_SETTLEDELAY_AUTO     0
 #define MIPI_SETTLEDELAY_MANNUAL  1
 
-#define BIRD_OV9760_HV_MIRROR
 
 static imgsensor_info_struct imgsensor_info = { 
-	.sensor_id = OV9760MIPI_SENSOR_ID,
+	.sensor_id = OV9760MIPI_SENSOR_ID,//OV9760MIPI_SENSOR_ID
 	
 	.checksum_value = 0x1ec5153d,
 	
@@ -145,11 +144,7 @@ static imgsensor_info_struct imgsensor_info = {
 	.sensor_interface_type = SENSOR_INTERFACE_TYPE_MIPI,//sensor_interface_type
     .mipi_sensor_type = MIPI_OPHY_NCSI2, //0,MIPI_OPHY_NCSI2;  1,MIPI_OPHY_CSI2
     .mipi_settle_delay_mode = MIPI_SETTLEDELAY_AUTO,//0,MIPI_SETTLEDELAY_AUTO; 1,MIPI_SETTLEDELAY_MANNUAL
-#if defined(BIRD_OV9760_HV_MIRROR) 
 	.sensor_output_dataformat = SENSOR_OUTPUT_FORMAT_RAW_B,//sensor output first pixel color
-#else	
-	.sensor_output_dataformat = SENSOR_OUTPUT_FORMAT_RAW_R,
-#endif	
 	.mclk = 24,//mclk value, suggest 24 or 26 for 24Mhz or 26Mhz
 	.mipi_lane_num = SENSOR_MIPI_1_LANE,//mipi lane num
 	.i2c_addr_table = {0x6c, 0x20, 0xff},//record sensor support all write id addr, only supprt 4must end with 0xff
@@ -945,7 +940,7 @@ static void normal_video_setting(kal_uint16 currefps)
 static void hs_video_setting()
 {
 	write_cmos_sensor(0x0103, 0x01); //;S/W reset
-	//Sleep(10); 									//;insert 10ms delay here
+	mdelay(10); 									//;insert 10ms delay here
 	write_cmos_sensor(0x0340, 0x04); //;VTS
 	write_cmos_sensor(0x0341, 0x7C); //";VTS, 03/05/2012"
 	write_cmos_sensor(0x0342, 0x06); //";HTS, 03/05/2012"  0x06
@@ -1109,6 +1104,7 @@ static kal_uint32 get_imgsensor_id(UINT32 *sensor_id)
 		spin_unlock(&imgsensor_drv_lock);
 		do {
             *sensor_id = return_sensor_id();
+		printk("**************sensor_id=%x\n",*sensor_id);
 			if (*sensor_id == imgsensor_info.sensor_id) {				
 				LOG_INF("i2c write id: 0x%x, sensor id: 0x%x\n", imgsensor.i2c_write_id,*sensor_id);	  
 				return ERROR_NONE;
@@ -1258,10 +1254,10 @@ static kal_uint32 preview(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
 	imgsensor.autoflicker_en = KAL_FALSE;
 	spin_unlock(&imgsensor_drv_lock);
 	preview_setting();
-#if defined(BIRD_OV9760_HV_MIRROR)   
-	set_mirror_flip(IMAGE_H_MIRROR);
+#if !defined(VANZO_IMGSENSOR_OV9760_ROTATION) 
+	set_mirror_flip(IMAGE_HV_MIRROR);
 #else	
-	set_mirror_flip(IMAGE_NORMAL);
+	set_mirror_flip(IMAGE_V_MIRROR);
 #endif
 	return ERROR_NONE;
 }	/*	preview   */
@@ -1313,10 +1309,10 @@ static kal_uint32 capture(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
 		spin_unlock(&imgsensor_drv_lock);
 	}
 
-#if defined(BIRD_OV9760_HV_MIRROR)   
-		set_mirror_flip(IMAGE_H_MIRROR);
+#if !defined(VANZO_IMGSENSOR_OV9760_ROTATION) 
+		set_mirror_flip(IMAGE_HV_MIRROR);
 #else	
-		set_mirror_flip(IMAGE_NORMAL);
+		set_mirror_flip(IMAGE_V_MIRROR);
 #endif
     return ERROR_NONE;
 }    /* capture() */
@@ -1335,11 +1331,7 @@ static kal_uint32 normal_video(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
 	imgsensor.autoflicker_en = KAL_FALSE;
 	spin_unlock(&imgsensor_drv_lock);
 	normal_video_setting(imgsensor.current_fps);
-#if defined(BIRD_OV9760_HV_MIRROR)   
-		set_mirror_flip(IMAGE_H_MIRROR);
-#else	
-		set_mirror_flip(IMAGE_NORMAL);
-#endif
+	set_mirror_flip(IMAGE_V_MIRROR);
 	
 	return ERROR_NONE;
 }	/*	normal_video   */
@@ -1362,11 +1354,7 @@ static kal_uint32 hs_video(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
 	imgsensor.autoflicker_en = KAL_FALSE;
 	spin_unlock(&imgsensor_drv_lock);
 	hs_video_setting();
-#if defined(BIRD_OV9760_HV_MIRROR)   
-		set_mirror_flip(IMAGE_H_MIRROR);
-#else	
-		set_mirror_flip(IMAGE_NORMAL);
-#endif
+	set_mirror_flip(IMAGE_V_MIRROR);
 	return ERROR_NONE;
 }	/*	hs_video   */
 
@@ -1389,11 +1377,7 @@ static kal_uint32 slim_video(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
 	spin_unlock(&imgsensor_drv_lock);
 	slim_video_setting();
 
-#if defined(BIRD_OV9760_HV_MIRROR)   
-		set_mirror_flip(IMAGE_H_MIRROR);
-#else	
-		set_mirror_flip(IMAGE_NORMAL);
-#endif
+	set_mirror_flip(IMAGE_V_MIRROR);
 
 	
 	return ERROR_NONE;
@@ -1703,7 +1687,8 @@ static kal_uint32 feature_control(MSDK_SENSOR_FEATURE_ENUM feature_id,
 	UINT16 *feature_data_16=(UINT16 *) feature_para;
 	UINT32 *feature_return_para_32=(UINT32 *) feature_para;
 	UINT32 *feature_data_32=(UINT32 *) feature_para;
-    unsigned long long *feature_data=(unsigned long long *) feature_para;
+	unsigned long long *feature_data=(unsigned long long *) feature_para;
+    unsigned long long *feature_return_para=(unsigned long long *) feature_para;
 
 	SENSOR_WINSIZE_INFO_STRUCT *wininfo;	
 	MSDK_SENSOR_REG_INFO_STRUCT *sensor_reg_data=(MSDK_SENSOR_REG_INFO_STRUCT *) feature_para;
@@ -1715,19 +1700,19 @@ static kal_uint32 feature_control(MSDK_SENSOR_FEATURE_ENUM feature_id,
 			*feature_return_para_16 = imgsensor.frame_length;
 			*feature_para_len=4;
 			break;
-		case SENSOR_FEATURE_GET_PIXEL_CLOCK_FREQ:
-            LOG_INF("feature_Control imgsensor.pclk = %d,imgsensor.current_fps = %d\n", imgsensor.pclk,imgsensor.current_fps);
+		case SENSOR_FEATURE_GET_PIXEL_CLOCK_FREQ:	 
+			LOG_INF("feature_Control imgsensor.pclk = %d,imgsensor.current_fps = %d\n", imgsensor.pclk,imgsensor.current_fps);
 			*feature_return_para_32 = imgsensor.pclk;
 			*feature_para_len=4;
-			break;
+			break;		   
 		case SENSOR_FEATURE_SET_ESHUTTER:
-            set_shutter(*feature_data);
+			set_shutter(*feature_data);
 			break;
 		case SENSOR_FEATURE_SET_NIGHTMODE:
-            night_mode((BOOL) *feature_data);
+			night_mode((BOOL) *feature_data);
 			break;
-		case SENSOR_FEATURE_SET_GAIN:
-            set_gain((UINT16) *feature_data);
+		case SENSOR_FEATURE_SET_GAIN:		
+			set_gain((UINT16) *feature_data);
 			break;
 		case SENSOR_FEATURE_SET_FLASHLIGHT:
 			break;
@@ -1746,43 +1731,43 @@ static kal_uint32 feature_control(MSDK_SENSOR_FEATURE_ENUM feature_id,
 			*feature_para_len=4;
 			break;
 		case SENSOR_FEATURE_SET_VIDEO_MODE:
-            set_video_mode(*feature_data);
-			break;
+			set_video_mode(*feature_data);
+			break; 
 		case SENSOR_FEATURE_CHECK_SENSOR_ID:
-			get_imgsensor_id(feature_return_para_32);
-			break;
+			get_imgsensor_id(feature_return_para_32); 
+			break; 
 		case SENSOR_FEATURE_SET_AUTO_FLICKER_MODE:
 			set_auto_flicker_mode((BOOL)*feature_data_16,*(feature_data_16+1));
 			break;
 		case SENSOR_FEATURE_SET_MAX_FRAME_RATE_BY_SCENARIO:
-            set_max_framerate_by_scenario((MSDK_SCENARIO_ID_ENUM)*feature_data, *(feature_data+1));
+			set_max_framerate_by_scenario((MSDK_SCENARIO_ID_ENUM)*feature_data, *(feature_data+1));
 			break;
 		case SENSOR_FEATURE_GET_DEFAULT_FRAME_RATE_BY_SCENARIO:
-            get_default_framerate_by_scenario((MSDK_SCENARIO_ID_ENUM)*(feature_data), (MUINT32 *)(uintptr_t)(*(feature_data+1)));
+			get_default_framerate_by_scenario((MSDK_SCENARIO_ID_ENUM)*feature_data, (MUINT32 *)(uintptr_t)(*(feature_data+1)));
 			break;
 		case SENSOR_FEATURE_SET_TEST_PATTERN:
-            set_test_pattern_mode((BOOL)*feature_data);
+			set_test_pattern_mode((BOOL)*feature_data);
 			break;
-		case SENSOR_FEATURE_GET_TEST_PATTERN_CHECKSUM_VALUE: //for factory mode auto testing
+		case SENSOR_FEATURE_GET_TEST_PATTERN_CHECKSUM_VALUE: //for factory mode auto testing			 
 			*feature_return_para_32 = imgsensor_info.checksum_value;
-			*feature_para_len=4;
-			break;
+			*feature_para_len=4;							 
+			break;				
 		case SENSOR_FEATURE_SET_FRAMERATE:
-            LOG_INF("current fps :%d\n", (UINT32)*feature_data);
+			LOG_INF("current fps :%d\n",  (UINT32)*feature_data);
 			spin_lock(&imgsensor_drv_lock);
-            imgsensor.current_fps = *feature_data;
-			spin_unlock(&imgsensor_drv_lock);
+			imgsensor.current_fps = *feature_data;
+			spin_unlock(&imgsensor_drv_lock);		
 			break;
 		case SENSOR_FEATURE_SET_HDR:
-            LOG_INF("ihdr enable :%d\n", (BOOL)*feature_data);
+			LOG_INF("ihdr enable :%d\n", (BOOL)*feature_data);
 			spin_lock(&imgsensor_drv_lock);
-			imgsensor.ihdr_en = *feature_data;
-			spin_unlock(&imgsensor_drv_lock);
+			imgsensor.ihdr_en = (bool)*feature_data;
+			spin_unlock(&imgsensor_drv_lock);		
 			break;
 		case SENSOR_FEATURE_GET_CROP_INFO:
-            LOG_INF("SENSOR_FEATURE_GET_CROP_INFO scenarioId:%d\n", (UINT32)*feature_data);
-            wininfo = (SENSOR_WINSIZE_INFO_STRUCT *)(uintptr_t)(*(feature_data+1));
-
+			LOG_INF("SENSOR_FEATURE_GET_CROP_INFO scenarioId:%d\n", (UINT32)*feature_data);
+			wininfo = (SENSOR_WINSIZE_INFO_STRUCT *)(uintptr_t)(*(feature_data+1));
+		
 			switch (*feature_data_32) {
 				case MSDK_SCENARIO_ID_CAMERA_CAPTURE_JPEG:
 					memcpy((void *)wininfo,(void *)&imgsensor_winsize_info[1],sizeof(SENSOR_WINSIZE_INFO_STRUCT));
@@ -1801,9 +1786,11 @@ static kal_uint32 feature_control(MSDK_SENSOR_FEATURE_ENUM feature_id,
 					memcpy((void *)wininfo,(void *)&imgsensor_winsize_info[0],sizeof(SENSOR_WINSIZE_INFO_STRUCT));
 					break;
 			}
+            break;
 		case SENSOR_FEATURE_SET_IHDR_SHUTTER_GAIN:
-            LOG_INF("SENSOR_SET_SENSOR_IHDR LE=%d, SE=%d, Gain=%d\n",(UINT16)*feature_data,(UINT16)*(feature_data+1),(UINT16)*(feature_data+2));
-            ihdr_write_shutter_gain((UINT16)*feature_data,(UINT16)*(feature_data+1),(UINT16)*(feature_data+2));
+			LOG_INF("SENSOR_SET_SENSOR_IHDR is no support");
+			//LOG_INF("SENSOR_SET_SENSOR_IHDR LE=%d, SE=%d, Gain=%d\n",(UINT16)*feature_data_32,(UINT16)*(feature_data_32+1),(UINT16)*(feature_data_32+2)); 
+			//ihdr_write_shutter_gain((UINT16)*feature_data_32,(UINT16)*(feature_data_32+1),(UINT16)*(feature_data_32+2));	
 			break;
 		default:
 			break;

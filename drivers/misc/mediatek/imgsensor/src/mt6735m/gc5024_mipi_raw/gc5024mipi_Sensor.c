@@ -274,13 +274,13 @@ static void set_shutter(kal_uint16 shutter)
   	{
 		write_cmos_sensor(0xfe, 0x00);
 		write_cmos_sensor(0x32, 0x09);
-		write_cmos_sensor(0xb0, 0x50);
+		write_cmos_sensor(0xb0, 0x53);
   	}
   	else 
 	{
 		write_cmos_sensor(0xfe, 0x00);
 		write_cmos_sensor(0x32, 0x49);
-		write_cmos_sensor(0xb0, 0x40);	
+		write_cmos_sensor(0xb0, 0x4b);	
   	}	
 	//Update Shutter
 	write_cmos_sensor(0xfe, 0x00);	
@@ -319,12 +319,13 @@ static kal_uint16 gain2reg(const kal_uint16 gain)
 *
 *************************************************************************/
 
-#define ANALOG_GAIN_1 64  // 1x
-#define ANALOG_GAIN_2 88  // 1.38x
-#define ANALOG_GAIN_3 122  // 1.91x
-#define ANALOG_GAIN_4 174  // 2.72x
-#define ANALOG_GAIN_5 245  // 3.83x
-#define ANALOG_GAIN_6 351  // 5.48x
+#define ANALOG_GAIN_1 64   // 1.000x
+#define ANALOG_GAIN_2 88   // 1.375x
+#define ANALOG_GAIN_3 121  // 1.891x 
+#define ANALOG_GAIN_4 168  // 2.625x
+#define ANALOG_GAIN_5 239  // 3.734x
+#define ANALOG_GAIN_6 336  // 5.250x
+#define ANALOG_GAIN_7 481  // 7.516x
 
 static kal_uint16 set_gain(kal_uint16 gain)
 {	
@@ -357,8 +358,8 @@ static kal_uint16 set_gain(kal_uint16 gain)
 	else if((ANALOG_GAIN_2<= iReg)&&(iReg < ANALOG_GAIN_3))
 	{
 		write_cmos_sensor(0xfe, 0x00);
-		write_cmos_sensor(0x21, 0x0b);
-		write_cmos_sensor(0x29, 0x1b);
+		write_cmos_sensor(0x21, 0x0f);
+		write_cmos_sensor(0x29, 0x0f);
 		write_cmos_sensor(0xe8, 0x03); 
 		write_cmos_sensor(0xe9, 0x01); 
  		write_cmos_sensor(0xea, 0x02); 
@@ -372,19 +373,19 @@ static kal_uint16 set_gain(kal_uint16 gain)
 		temp = 64*iReg/ANALOG_GAIN_2;
 		write_cmos_sensor(0xb1, temp>>6);
 		write_cmos_sensor(0xb2, (temp<<2)&0xfc);
-		LOG_INF("GC5024MIPI analogic gain 1.38x , GC5024MIPI add pregain = %d\n",temp);
+		LOG_INF("GC5024MIPI analogic gain 1.375x , GC5024MIPI add pregain = %d\n",temp);
 	}
 	else if((ANALOG_GAIN_3<= iReg)&&(iReg < ANALOG_GAIN_4))
 	{
 		write_cmos_sensor(0xfe, 0x00);
-		write_cmos_sensor(0x21, 0x0d);
-		write_cmos_sensor(0x29, 0x1d);
-		write_cmos_sensor(0xe8, 0x02); 
- 		write_cmos_sensor(0xe9, 0x02); 
+		write_cmos_sensor(0x21, 0x0b);
+		write_cmos_sensor(0x29, 0x1b);
+		write_cmos_sensor(0xe8, 0x03); 
+ 		write_cmos_sensor(0xe9, 0x01); 
  		write_cmos_sensor(0xea, 0x02); 
  		write_cmos_sensor(0xeb, 0x02); 
- 		write_cmos_sensor(0xec, 0x02); 
- 		write_cmos_sensor(0xed, 0x02); 
+ 		write_cmos_sensor(0xec, 0x03); 
+ 		write_cmos_sensor(0xed, 0x01); 
  		write_cmos_sensor(0xee, 0x02); 
  		write_cmos_sensor(0xef, 0x02); 
 		//analog gain
@@ -392,27 +393,27 @@ static kal_uint16 set_gain(kal_uint16 gain)
 		temp = 64*iReg/ANALOG_GAIN_3;
 		write_cmos_sensor(0xb1, temp>>6);
 		write_cmos_sensor(0xb2, (temp<<2)&0xfc);
-		LOG_INF("GC5024MIPI analogic gain 1.91x , GC5024MIPI add pregain = %d\n",temp);
+		LOG_INF("GC5024MIPI analogic gain 1.891x , GC5024MIPI add pregain = %d\n",temp);
 	}
 	else if((ANALOG_GAIN_4<= iReg)&&(iReg < ANALOG_GAIN_5))
 	{
 		write_cmos_sensor(0xfe, 0x00);
-		write_cmos_sensor(0x21, 0x08);
-		write_cmos_sensor(0x29, 0x38);
-		write_cmos_sensor(0xe8, 0x03); 
-		write_cmos_sensor(0xe9, 0x03); 
-		write_cmos_sensor(0xea, 0x03); 
-		write_cmos_sensor(0xeb, 0x03); 
-		write_cmos_sensor(0xec, 0x03); 
-		write_cmos_sensor(0xed, 0x03); 
-		write_cmos_sensor(0xee, 0x03); 
-		write_cmos_sensor(0xef, 0x03); 
+		write_cmos_sensor(0x21, 0x0d);
+		write_cmos_sensor(0x29, 0x1d);
+		write_cmos_sensor(0xe8, 0x02); 
+		write_cmos_sensor(0xe9, 0x02); 
+		write_cmos_sensor(0xea, 0x02); 
+		write_cmos_sensor(0xeb, 0x02); 
+		write_cmos_sensor(0xec, 0x02); 
+		write_cmos_sensor(0xed, 0x02); 
+		write_cmos_sensor(0xee, 0x02); 
+		write_cmos_sensor(0xef, 0x02); 
 		//analog gain
 		write_cmos_sensor(0xb6,  0x03);//
 		temp = 64*iReg/ANALOG_GAIN_4;
 		write_cmos_sensor(0xb1, temp>>6);
 		write_cmos_sensor(0xb2, (temp<<2)&0xfc);
-		LOG_INF("GC5024MIPI analogic gain 2.72x , GC5024MIPI add pregain = %d\n",temp);
+		LOG_INF("GC5024MIPI analogic gain 2.625x , GC5024MIPI add pregain = %d\n",temp);
 	}
 	else if((ANALOG_GAIN_5<= iReg)&&(iReg < ANALOG_GAIN_6))
 	{
@@ -432,9 +433,9 @@ static kal_uint16 set_gain(kal_uint16 gain)
 		temp = 64*iReg/ANALOG_GAIN_5;
 		write_cmos_sensor(0xb1, temp>>6);
 		write_cmos_sensor(0xb2, (temp<<2)&0xfc);
-		LOG_INF("GC5024MIPI analogic gain 3.83x , GC5024MIPI add pregain = %d\n",temp);
+		LOG_INF("GC5024MIPI analogic gain 3.734x , GC5024MIPI add pregain = %d\n",temp);
 	}
-	else if(ANALOG_GAIN_6<= iReg)
+	else if((ANALOG_GAIN_6<= iReg)&&(iReg < ANALOG_GAIN_7))
 	{
 		write_cmos_sensor(0xfe, 0x00);
 		write_cmos_sensor(0x21, 0x08); 
@@ -452,7 +453,27 @@ static kal_uint16 set_gain(kal_uint16 gain)
 		temp = 64*iReg/ANALOG_GAIN_6;
 		write_cmos_sensor(0xb1, temp>>6);
 		write_cmos_sensor(0xb2, (temp<<2)&0xfc);
-		LOG_INF("GC5024MIPI analogic gain 5.48x , GC5024MIPI add pregain = %d\n",temp);
+		LOG_INF("GC5024MIPI analogic gain 5.250x , GC5024MIPI add pregain = %d\n",temp);
+	}
+	else if(ANALOG_GAIN_7<= iReg)
+	{
+		write_cmos_sensor(0xfe, 0x00);
+		write_cmos_sensor(0x21, 0x08); 
+		write_cmos_sensor(0x29, 0x38);
+		write_cmos_sensor(0xe8, 0x03); 
+		write_cmos_sensor(0xe9, 0x03); 
+		write_cmos_sensor(0xea, 0x03); 
+		write_cmos_sensor(0xeb, 0x03); 
+		write_cmos_sensor(0xec, 0x03); 
+		write_cmos_sensor(0xed, 0x03); 
+		write_cmos_sensor(0xee, 0x03); 
+		write_cmos_sensor(0xef, 0x03); 
+		//analog gain
+		write_cmos_sensor(0xb6,  0x06);//
+		temp = 64*iReg/ANALOG_GAIN_7;
+		write_cmos_sensor(0xb1, temp>>6);
+		write_cmos_sensor(0xb2, (temp<<2)&0xfc);
+		LOG_INF("GC5024MIPI analogic gain 7.516x , GC5024MIPI add pregain = %d\n",temp);
 	}
 	return gain;
 
@@ -496,7 +517,7 @@ static void night_mode(kal_bool enable)
 static void sensor_init(void)
 {
 	LOG_INF("E");
-       /*SYS*/
+    /*SYS*/
 	write_cmos_sensor(0xfe, 0x80);				
 	write_cmos_sensor(0xfe, 0x80);						  
 	write_cmos_sensor(0xfe, 0x80);
@@ -539,6 +560,7 @@ static void sensor_init(void)
 	write_cmos_sensor(0x32, 0x49); 
 	
 	write_cmos_sensor(0xcd, 0xaa); 	     
+	write_cmos_sensor(0xd0, 0xc2);
 	write_cmos_sensor(0xd1, 0xc4);
 	write_cmos_sensor(0xd2, 0xcb);								  
 	write_cmos_sensor(0xd3, 0x73); 		 
@@ -560,13 +582,14 @@ static void sensor_init(void)
 	write_cmos_sensor(0x98, 0x20); 
 	
 	/*Gain*/
-	write_cmos_sensor(0x99, 0x02); 
-	write_cmos_sensor(0x9a, 0x03); 
-	write_cmos_sensor(0x9b, 0x04); 
-	write_cmos_sensor(0x9c, 0x0d); 
-	write_cmos_sensor(0x9d, 0x15); 
-	write_cmos_sensor(0x9e, 0x1d);
-	write_cmos_sensor(0xb0, 0x40); 
+	write_cmos_sensor(0x99, 0x01); 
+	write_cmos_sensor(0x9a, 0x02); 
+	write_cmos_sensor(0x9b, 0x03); 
+	write_cmos_sensor(0x9c, 0x04); 
+	write_cmos_sensor(0x9d, 0x0d); 
+	write_cmos_sensor(0x9e, 0x15);
+	write_cmos_sensor(0x9f, 0x1d);
+	write_cmos_sensor(0xb0, 0x4b); 
 	write_cmos_sensor(0xb1, 0x01);
 	write_cmos_sensor(0xb2, 0x00);
 	write_cmos_sensor(0xb6, 0x00);
@@ -637,7 +660,7 @@ static void preview_setting(void)
 	//2592x1944
 	/*SYS*/
 	write_cmos_sensor(0xfe, 0x03);				
-	write_cmos_sensor(0x10, 0x00);//Stream off						  
+	write_cmos_sensor(0x10, 0x81);//Stream off						  
 	write_cmos_sensor(0xfe, 0x00);
 	/*Analog*/		  
 	write_cmos_sensor(0x0a, 0x00);					  	  
@@ -668,7 +691,7 @@ static void capture_setting(kal_uint16 currefps)
 	//2592x1944
 	/*SYS*/
 	write_cmos_sensor(0xfe, 0x03);				
-	write_cmos_sensor(0x10, 0x00);//Stream off						  
+	write_cmos_sensor(0x10, 0x81);//Stream off						  
 	write_cmos_sensor(0xfe, 0x00);
 	/*Analog*/		  
 	write_cmos_sensor(0x0a, 0x00);					  	  
@@ -699,7 +722,7 @@ static void normal_video_setting(kal_uint16 currefps)
 	//2560x1440
 	/*SYS*/
 	write_cmos_sensor(0xfe, 0x03);
-	write_cmos_sensor(0x10, 0x00); //Stream off
+	write_cmos_sensor(0x10, 0x81); //Stream off
 	write_cmos_sensor(0xfe, 0x00);
 	/*Analog*/
 	write_cmos_sensor(0x0a, 0xfc);					   

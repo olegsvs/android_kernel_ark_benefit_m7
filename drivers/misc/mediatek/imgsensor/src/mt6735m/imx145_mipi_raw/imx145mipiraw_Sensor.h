@@ -36,7 +36,7 @@
  *
  * Filename:
  * ---------
- *   imx145mipiraw_sensor.h
+ *   imx175mipiraw_sensor.h
  *
  * Project:
  * --------
@@ -51,8 +51,8 @@
 
  *============================================================================
  ****************************************************************************/
-#ifndef _IMX145mipi_SENSOR_H
-#define _IMX145mipi_SENSOR_H
+#ifndef _IMX145MIPI_SENSOR_H
+#define _IMX145MIPI_SENSOR_H
 
 
 typedef enum{

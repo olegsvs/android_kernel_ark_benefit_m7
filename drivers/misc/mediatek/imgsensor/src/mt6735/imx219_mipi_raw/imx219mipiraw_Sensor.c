@@ -61,7 +61,7 @@ static imgsensor_info_struct imgsensor_info = {
 		.grabwindow_width = 1632,		//record different mode's width of grabwindow
 		.grabwindow_height = 1224,		//record different mode's height of grabwindow
 		/*	 following for MIPIDataLowPwr2HighSpeedSettleDelayCount by different scenario	*/
-		.mipi_data_lp2hs_settle_dc = 65,//unit , ns
+		.mipi_data_lp2hs_settle_dc = 85,//unit , ns
 		/*	 following for GetDefaultFramerateByScenario()	*/
 		.max_framerate = 300,
 	},
@@ -73,7 +73,7 @@ static imgsensor_info_struct imgsensor_info = {
 		.starty = 4,
 		.grabwindow_width = 3264,
 		.grabwindow_height = 2448,
-		.mipi_data_lp2hs_settle_dc = 65,//unit , ns
+		.mipi_data_lp2hs_settle_dc = 85,//unit , ns
 		.max_framerate = 300,
 	},
 	.cap1 = {							//capture for PIP 24fps relative information, capture1 mode must use same framelength, linelength with Capture mode for shutter calculate
@@ -84,7 +84,7 @@ static imgsensor_info_struct imgsensor_info = {
 		.starty = 4,
 		.grabwindow_width = 3264,
 		.grabwindow_height = 2448,
-		.mipi_data_lp2hs_settle_dc = 65,//unit , ns
+		.mipi_data_lp2hs_settle_dc = 85,//unit , ns
 		.max_framerate = 240,	//less than 13M(include 13M),cap1 max framerate is 24fps,16M max framerate is 20fps, 20M max framerate is 15fps
 	},
 	.normal_video = {
@@ -95,7 +95,7 @@ static imgsensor_info_struct imgsensor_info = {
 		.starty = 4,
 		.grabwindow_width = 3264,
 		.grabwindow_height = 2448,
-		.mipi_data_lp2hs_settle_dc = 65,//unit , ns
+		.mipi_data_lp2hs_settle_dc = 85,//unit , ns
 		.max_framerate = 300,
 	},
 	.hs_video = {
@@ -106,7 +106,7 @@ static imgsensor_info_struct imgsensor_info = {
 		.starty = 0,
 		.grabwindow_width = 1920,
 		.grabwindow_height = 1080,
-		.mipi_data_lp2hs_settle_dc = 65,//unit , ns
+		.mipi_data_lp2hs_settle_dc = 85,//unit , ns
 		.max_framerate = 600,
 	},
 	.slim_video = {
@@ -117,7 +117,7 @@ static imgsensor_info_struct imgsensor_info = {
 		.starty = 4,
 		.grabwindow_width = 1280,
 		.grabwindow_height = 720,
-		.mipi_data_lp2hs_settle_dc = 65,//unit , ns
+		.mipi_data_lp2hs_settle_dc = 85,//unit , ns
 		.max_framerate = 300,
 
 	},

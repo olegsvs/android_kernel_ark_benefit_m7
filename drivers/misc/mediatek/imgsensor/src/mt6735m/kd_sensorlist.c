@@ -41,18 +41,6 @@
 
 #include <mach/mt_chip.h>
 
-#ifdef CONFIG_HCT_DEVICE_INFO_SUPPORT
-//#include "hct_devices.h"
-extern int hct_set_camera_device_used(char * module_name, int pdata);
-typedef enum 
-{ 
-    DEVICE_SUPPORTED = 0,        
-    DEVICE_USED = 1,
-}campatible_type;
-
-#endif
-
-
 /* Camera information */
 #define PROC_CAMERA_INFO "driver/camera_info"
 #define camera_info_size 128
@@ -149,7 +137,7 @@ inline static void KD_IMGSENSOR_PROFILE(char *tag) {}
 *
 ********************************************************************************/
 extern int kdCISModulePowerOn(CAMERA_DUAL_CAMERA_SENSOR_ENUM SensorIdx, char *currSensorName, BOOL On, char *mode_name);
-//extern void checkPowerBeforClose( char* mode_name);
+extern void checkPowerBeforClose( char* mode_name);
 /* extern ssize_t strobe_VDIrq(void);  //cotta : add for high current solution */
 
 /*******************************************************************************
@@ -189,8 +177,7 @@ static u32 gI2CBusNum = SUPPORT_I2C_BUS_NUM1;
 static DEFINE_MUTEX(kdCam_Mutex);
 static BOOL bSesnorVsyncFlag = FALSE;
 static ACDK_KD_SENSOR_SYNC_STRUCT g_NewSensorExpGain = {128, 128, 128, 128, 1000, 640, 0xFF, 0xFF, 0xFF, 0};
-char g_MainSensorName[32] = KDIMGSENSOR_NOSENSOR;
-char g_SubSensorName[32] = KDIMGSENSOR_NOSENSOR;
+
 
 extern MULTI_SENSOR_FUNCTION_STRUCT2 kd_MultiSensorFunc;
 static MULTI_SENSOR_FUNCTION_STRUCT2 *g_pSensorFunc = &kd_MultiSensorFunc;
@@ -1404,30 +1391,28 @@ inline static int adopt_CAMERA_HW_CheckIsAlive(void)
 
             PK_DBG(" Sensor found ID = 0x%x\n", sensorID);
             snprintf(mtk_ccm_name,sizeof(mtk_ccm_name),"%s CAM[%d]:%s;",mtk_ccm_name,g_invokeSocketIdx[i],g_invokeSensorNameStr[i]);
-            #ifdef CONFIG_HCT_DEVICE_INFO_SUPPORT
-            hct_set_camera_device_used(g_invokeSensorNameStr[i], (int)g_invokeSocketIdx[i]);
-            #endif
             err = ERROR_NONE;
-					if (DUAL_CAMERA_MAIN_SENSOR == g_invokeSocketIdx[i])
-					{
-						if(0==strcmp(g_MainSensorName,KDIMGSENSOR_NOSENSOR))
-						{
-							memcpy((char*)g_MainSensorName,(char*)g_invokeSensorNameStr[i],sizeof(g_invokeSensorNameStr[i]));  
-						}
-					}
-					else
-					{
-						if(0==strcmp(g_SubSensorName,KDIMGSENSOR_NOSENSOR))
-						{
-							memcpy((char*)g_SubSensorName,(char*)g_invokeSensorNameStr[i],sizeof(g_invokeSensorNameStr[i]));  
-						}
-	
-					}
         }
         if (ERROR_NONE != err)
         {
             PK_DBG("ERROR:adopt_CAMERA_HW_CheckIsAlive(), No imgsensor alive\n");
         }
+/* Vanzo:maxiaojun on: Mon, 26 Aug 2013 17:04:18 +0800
+ * board device name support.
+ */
+#ifdef VANZO_DEVICE_NAME_SUPPORT
+        {
+          extern void v_set_dev_name(int id, char *name);
+          if(ERROR_NONE == err){
+            if(DUAL_CAMERA_MAIN_SENSOR==g_invokeSocketIdx[i]){
+              v_set_dev_name(3, (char *)g_invokeSensorNameStr[i]);
+            }else if(DUAL_CAMERA_SUB_SENSOR==g_invokeSocketIdx[i]){
+              v_set_dev_name(4, (char *)g_invokeSensorNameStr[i]);
+            }
+          }
+        }
+#endif
+// End of Vanzo:maxiaojun
         }
     }
     }
@@ -2170,7 +2155,6 @@ inline static int kdSetSensorGpio(int *pBuf)
 #ifndef GPIO_CMPCLK_M_CMCSK
     #define GPIO_CMPCLK_M_CMCSK   GPIO_MODE_02
 #endif
-
     int ret = 0;
     IMGSENSOR_GPIO_STRUCT *pSensorgpio = (IMGSENSOR_GPIO_STRUCT *)pBuf;
 
@@ -2777,7 +2761,7 @@ static int CAMERA_HW_Release(struct inode *a_pstInode, struct file *a_pstFile)
     atomic_dec(&g_CamDrvOpenCnt);
 //	PK_DBG("[CAMERA_HW_Release] g_CamDrvOpenCnt %d\n",g_CamDrvOpenCnt);
 	//if (atomic_read(&g_CamDrvOpenCnt) == 0)
-//	checkPowerBeforClose( CAMERA_HW_DRVNAME1);
+	checkPowerBeforClose( CAMERA_HW_DRVNAME1);
 
     return 0;
 }

@@ -152,7 +152,7 @@ static imgsensor_info_struct imgsensor_info = {
 	.sensor_output_dataformat = SENSOR_OUTPUT_FORMAT_RAW_B,//sensor output first pixel color
 	.mclk = 24,//mclk value, suggest 24 or 26 for 24Mhz or 26Mhz
 	.mipi_lane_num = SENSOR_MIPI_4_LANE,//mipi lane num
-	.i2c_addr_table = {0x42, 0x20,0x6C,0xff},//record sensor support all write id addr, only supprt 4must end with 0xff
+	.i2c_addr_table = {0x42, 0xff},//record sensor support all write id addr, only supprt 4must end with 0xff
 };
 
 
@@ -1522,7 +1522,7 @@ otp_ptr = &otp_struct_obj;
 int read_otp(struct otp_struct *otp_ptr)
 {
 	int otp_flag, addr, temp, i;
-	//set 0x5002[3] to \A1\B00\A1\B1
+	//set 0x5002[3] to ¡°0¡±
 	int temp1;
 	temp1 = read_cmos_sensor(0x5002);
 	write_cmos_sensor(0x5002, (0x00 & 0x08) | (temp1 & (~0x08)));
@@ -1614,7 +1614,7 @@ int read_otp(struct otp_struct *otp_ptr)
 	for(i=0x7010;i<=0x720a;i++) {
 		write_cmos_sensor(i,0); // clear OTP buffer, recommended use continuous write to accelarate
 	}
-	//set 0x5002[3] to \A1\B01\A1\B1
+	//set 0x5002[3] to ¡°1¡±
 	temp1 = read_cmos_sensor(0x5002);
 	write_cmos_sensor(0x5002, (0x08 & 0x08) | (temp1 & (~0x08)));
 	return (*otp_ptr).flag;

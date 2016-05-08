@@ -142,7 +142,7 @@ static imgsensor_info_struct imgsensor_info = {
 	
 	.isp_driving_current = ISP_DRIVING_8MA, //mclk driving current
 	.sensor_interface_type = SENSOR_INTERFACE_TYPE_MIPI,//sensor_interface_type
-	.sensor_output_dataformat = SENSOR_OUTPUT_FORMAT_RAW_Gb,//sensor output first pixel color
+	.sensor_output_dataformat = SENSOR_OUTPUT_FORMAT_RAW_Gr,//sensor output first pixel color
 	.mclk = 24,//mclk value, suggest 24 or 26 for 24Mhz or 26Mhz
 	.mipi_lane_num = SENSOR_MIPI_2_LANE,//mipi lane num
 	.i2c_addr_table = {0x6c, 0xff},//record sensor support all write id addr, only supprt 4must end with 0xff  //2015-1-14 sp_miao
@@ -150,7 +150,7 @@ static imgsensor_info_struct imgsensor_info = {
 
 
 static imgsensor_struct imgsensor = {
-	.mirror = IMAGE_NORMAL,				//mirrorflip information
+	.mirror = IMAGE_HV_MIRROR,				//mirrorflip information
 	.sensor_mode = IMGSENSOR_MODE_INIT, //IMGSENSOR_MODE enum value,record current sensor mode,such as: INIT, Preview, Capture, Video,High Speed Video, Slim Video
 	.shutter = 0x00bb,					//current shutter
 	.gain = 0x200,						//current gain
@@ -520,7 +520,7 @@ write_cmos_sensor(0x3238,0x0003);//, Reserved;wm
 write_cmos_sensor(0x3239,0x0003);//, Reserved;wm
 write_cmos_sensor(0x323A,0x0005);//, Reserved;wm
 write_cmos_sensor(0x323B,0x0006);//, -/-/-/-/-/-/LSC_EN/SHD_GRID_EN;
-write_cmos_sensor(0x3243,0x0003);//, -/-/-/-/-/-/LSC_EN/SHD_GRID_EN;
+write_cmos_sensor(0x3243,0x0000);//, -/-/-/-/-/-/LSC_EN/SHD_GRID_EN;
 write_cmos_sensor(0x3244,0x0008);//, Reserved;
 write_cmos_sensor(0x3245,0x0001);//, Reserved;
 write_cmos_sensor(0x3307,0x0019);//, Reserved;
@@ -789,7 +789,7 @@ static kal_uint32 get_imgsensor_id(UINT32 *sensor_id)
 }
 #define SP8408MIPI_USE_OTP
 #ifdef SP8408MIPI_USE_OTP
-void ReadOTP(int page, UINT8 *rbuf){
+static void ReadOTP(int page, UINT8 *rbuf){
 	int i;
 	write_cmos_sensor( 0x4A00, 0x01);
 	write_cmos_sensor( 0x4A02, page);
@@ -799,7 +799,15 @@ void ReadOTP(int page, UINT8 *rbuf){
 	write_cmos_sensor( 0x4A00, 0x00);
 }
 
-void SP8408MIPI_update_lenc()
+
+static void ReadParam_012Page(UINT8 page, UINT8 *pbuf){
+	int i;
+	UINT8 rbuf[64];
+	ReadOTP(page, rbuf);
+	for(i=0;i<32;i++) pbuf[i]=rbuf[i] | rbuf[32+i];
+}
+
+static void SP8408MIPI_update_lenc()
 {
 	UINT8 sp8408_buf_3[64];
 	UINT8 sp8408_buf_4[64];
@@ -879,7 +887,7 @@ void SP8408MIPI_update_lenc()
 
 
 }
-kal_uint16 SP5408MIPI_update_lenc_register_from_otp(void)
+static kal_uint16 SP8408MIPI_update_lenc_register_from_otp(void)
 {
 	UINT8 sp8408_buf_0[64];
 	UINT8 *p_buf = sp8408_buf_0;
@@ -893,16 +901,45 @@ kal_uint16 SP5408MIPI_update_lenc_register_from_otp(void)
 	    SP8408MIPI_update_lenc();
 	else
 	{
-		return 1;
+		
 	       LOG_INF("[gpw ] no valid LSC OTP data!\n");
+		   return 1;
 	}
    	
    return 0;
    
 
 }
+static kal_uint16 GetOtpCpId()
+{
 
+	UINT8 sp8408_buf[64];
+	UINT8 *p_buf = sp8408_buf;
+	ReadOTP(15,p_buf);
+   
+	kal_uint8 sensorIDH0 =sp8408_buf[32] ;
+    kal_uint8 sensorIDl0 =sp8408_buf[33] ; 
+	kal_uint8 sensorIDH1 =sp8408_buf[34] ;
+    kal_uint8 sensorIDl1 =sp8408_buf[35] ;
+	kal_uint8 sensorIDH2 =sp8408_buf[36] ;
+    kal_uint8 sensorIDl2 =sp8408_buf[37] ;
+	kal_uint8 sensorIDH = sensorIDH0 | sensorIDH1 | sensorIDH2;
+	kal_uint8 sensorIDl = sensorIDl0 | sensorIDl1 | sensorIDl2;
+   return ((sensorIDH<<8) + sensorIDl);
+}
+static kal_uint16 GetOtpId()
+{
 
+	UINT8 sp8408_buf[32];
+	UINT8 *p_buf = sp8408_buf;
+	ReadParam_012Page(0,p_buf);
+    kal_uint16 oknum = sp8408_buf[5];
+	ReadParam_012Page(2,p_buf);
+	oknum = 20+(((oknum&0x04)>>2)+((oknum&0x02)>>1)+(oknum&0x1))*3;
+	 kal_uint8 sensorIDH =sp8408_buf[oknum] ;
+    kal_uint8 sensorIDl =sp8408_buf[oknum+1] ; 
+   return ((sensorIDH<<8) + sensorIDl);
+}
 #endif
 /*************************************************************************
 * FUNCTION
@@ -929,11 +966,16 @@ static kal_uint32 open(void)
 	LOG_INF("MIPI 4LANE\n");
 	//LOG_INF("preview 1280*960@30fps,864Mbps/lane; video 1280*960@30fps,864Mbps/lane; capture 5M@30fps,864Mbps/lane\n");
 #ifdef SP8408MIPI_USE_OTP
-   
-	printk("[SP8408MIPI_USE_OTP] before update otp wb...........................................\n");
 
-	//ret = sp8408_update_otp_wb();
-    SP5408MIPI_update_lenc_register_from_otp();
+
+   kal_uint16 sensorIDtest = GetOtpId() ;
+   kal_uint16 sensorIDtest_Cp = GetOtpCpId();
+   printk("gpw  sensorIDtest 0x%x, sensorIDtest_Cp:0x%x\n",sensorIDtest,sensorIDtest_Cp );	
+   
+   if ((sensorIDtest != 0x8408)&&(sensorIDtest_Cp != 0x8408 ))
+   return ERROR_SENSOR_CONNECT_FAIL;
+
+    SP8408MIPI_update_lenc_register_from_otp();
 	
 #endif
 	//sensor have two i2c address 0x6c 0x6d & 0x21 0x20, we should detect the module used i2c address
@@ -961,6 +1003,7 @@ static kal_uint32 open(void)
 	/* initail sequence write in  */
 	sensor_init();
 	mdelay(10);
+	set_mirror_flip(imgsensor.mirror);
 	spin_lock(&imgsensor_drv_lock);
 
 	imgsensor.autoflicker_en= KAL_FALSE;
@@ -1524,7 +1567,7 @@ static kal_uint32 feature_control(MSDK_SENSOR_FEATURE_ENUM feature_id,
             set_max_framerate_by_scenario((MSDK_SCENARIO_ID_ENUM)*feature_data, *(feature_data+1));
 			break;
 		case SENSOR_FEATURE_GET_DEFAULT_FRAME_RATE_BY_SCENARIO:
-            //get_default_framerate_by_scenario((MSDK_SCENARIO_ID_ENUM)*(feature_data), (MUINT32 *)(uintptr_t)(*(feature_data+1)));
+            get_default_framerate_by_scenario((MSDK_SCENARIO_ID_ENUM)*(feature_data), (MUINT32 *)(uintptr_t)(*(feature_data+1)));
 			break;
 		case SENSOR_FEATURE_SET_TEST_PATTERN:
             set_test_pattern_mode((BOOL)*feature_data);

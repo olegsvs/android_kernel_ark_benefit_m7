@@ -167,16 +167,14 @@ bool start_read_otp(BYTE zone)
 
 int read_imx135_otp(u8 page, u16 offset, u8* data)
 {
-	static int page_old=-1;
-	if((page_old!=page)&&(!start_read_otp(page)))
-	  {
-	  CAM_CALERR("OTP Start read Page %d Fail!\n", page);
-	  return 0;
+	if(!start_read_otp(page))
+    {
+		CAM_CALERR("OTP Start read Page %d Fail!\n", page);
+		return 0;
 	} else {
-	  *data = read_cmos_sensor(offset);
-	  CAM_CALDB("OTP read page 0x%x offset 0x%x data 0x%x\n", page,offset,*data);
+		*data = read_cmos_sensor(offset);
+		//CAM_CALDB("OTP read page 0x%x offset 0x%x  data 0x%x\n", page,offset,*data);
 	}
-	page_old = page;
 	return 1;
 }
 

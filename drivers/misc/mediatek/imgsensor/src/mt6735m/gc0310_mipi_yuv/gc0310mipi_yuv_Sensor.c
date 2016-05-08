@@ -231,20 +231,20 @@ void GC0310_set_contrast(UINT16 para)
 			GC0310_write_cmos_sensor(0xfe, 0x00);	 
 			GC0310_write_cmos_sensor(0xd3, 0x30);
 			GC0310_write_cmos_sensor(0xfe, 0x00); 
-			Sleep(200);
+			Sleep(50);
 			break;
         case ISP_CONTRAST_HIGH:			 
 			GC0310_write_cmos_sensor(0xfe, 0x00); 	
 			GC0310_write_cmos_sensor(0xd3, 0x60);
 			GC0310_write_cmos_sensor(0xfe, 0x00);
-			Sleep(200);			
+			Sleep(50);			
 			break;
         case ISP_CONTRAST_MIDDLE: 
         default:
 			GC0310_write_cmos_sensor(0xfe, 0x00);	 
-			GC0310_write_cmos_sensor(0xd3, 0x40);
+			GC0310_write_cmos_sensor(0xd3, 0x44);
 			GC0310_write_cmos_sensor(0xfe, 0x00);
-			Sleep(200);			
+			Sleep(50);			
 			break;
         //default:
 		//	break;
@@ -326,14 +326,14 @@ void GC0310_set_brightness(UINT16 para)
 {
 
 	SENSORDB("[GC0310]CONTROLFLOW enter GC0310_set_brightness function:\n ");
-#if 0
+#if 1
 	//return;
     switch (para)
     {
         case ISP_BRIGHT_LOW:
 		//case AE_EV_COMP_n13:
-			GC0310_write_cmos_sensor(0xd5, 0xc0);
-			Sleep(200);
+			GC0310_write_cmos_sensor(0xd5, 0xe0);
+			Sleep(50);
 			
 		//	GC0310_SET_PAGE1;
 		//	GC0310_write_cmos_sensor(0x13, 0x30);
@@ -341,8 +341,8 @@ void GC0310_set_brightness(UINT16 para)
 		break;
         case ISP_BRIGHT_HIGH:
 		//case AE_EV_COMP_13:
-			GC0310_write_cmos_sensor(0xd5, 0x70);
-			Sleep(200);
+			GC0310_write_cmos_sensor(0xd5, 0x20);
+			Sleep(50);
 		//	GC0310_SET_PAGE1;
 		//	GC0310_write_cmos_sensor(0x13, 0x90);
 		//	GC0310_SET_PAGE0;
@@ -350,8 +350,8 @@ void GC0310_set_brightness(UINT16 para)
         case ISP_BRIGHT_MIDDLE:
         default:
 		//case AE_EV_COMP_00:
-			GC0310_write_cmos_sensor(0xd5, 0x40);
-			Sleep(200);
+			GC0310_write_cmos_sensor(0xd5, 0xf0);
+			Sleep(50);
 		//	GC0310_SET_PAGE1;
 		//	GC0310_write_cmos_sensor(0x13, 0x60);
 		//	GC0310_SET_PAGE0;
@@ -377,15 +377,15 @@ void GC0310_set_saturation(UINT16 para)
 			break;
         case ISP_SAT_LOW:
 			GC0310_write_cmos_sensor(0xfe, 0x00); 	
-			GC0310_write_cmos_sensor(0xd1, 0x28);
-			GC0310_write_cmos_sensor(0xd2, 0x28);	
+			GC0310_write_cmos_sensor(0xd1, 0x24);
+			GC0310_write_cmos_sensor(0xd2, 0x24);	
 			GC0310_write_cmos_sensor(0xfe, 0x00);
 			break;
         case ISP_SAT_MIDDLE:
         default:
 			GC0310_write_cmos_sensor(0xfe, 0x00); 	
-			GC0310_write_cmos_sensor(0xd1, 0x34);
-			GC0310_write_cmos_sensor(0xd2, 0x34);	
+			GC0310_write_cmos_sensor(0xd1, 0x2a);
+			GC0310_write_cmos_sensor(0xd2, 0x2a);	
 			GC0310_write_cmos_sensor(0xfe, 0x00);
 			break;
 		//	return KAL_FALSE;
@@ -415,7 +415,7 @@ void GC0310_set_edge(UINT16 para)
         case ISP_SAT_MIDDLE:
         default:
 			GC0310_write_cmos_sensor(0xfe, 0x00); 	
-			GC0310_write_cmos_sensor(0x95, 0x45);
+			GC0310_write_cmos_sensor(0x95, 0x54);
 			GC0310_write_cmos_sensor(0xfe, 0x00);
 			break;
 		//	return KAL_FALSE;
@@ -807,7 +807,7 @@ void GC0310GammaSelect(kal_uint32 GammaLvl)
 			GC0310_write_cmos_sensor(0xcF, 0xFF);
 			break;
 		default:
-			//GC0310_RGB_Gamma_m1
+			//GC0310_RGB_Gamma_m3
 			GC0310_write_cmos_sensor(0xfe, 0x00);
 			GC0310_write_cmos_sensor(0xbf , 0x0b);
 			GC0310_write_cmos_sensor(0xc0 , 0x17);
@@ -982,7 +982,7 @@ void GC0310_Sensor_Init(void)
 	GC0310_write_cmos_sensor(0x10,0x84);
                                         
 	GC0310_write_cmos_sensor(0x01,0x03);             
-	GC0310_write_cmos_sensor(0x02,0x11);  ///00           
+	GC0310_write_cmos_sensor(0x02,0x11);  //flower sreen switching to front camera
 	GC0310_write_cmos_sensor(0x03,0x94);             
 	GC0310_write_cmos_sensor(0x04,0x01);            
 	GC0310_write_cmos_sensor(0x05,0x40);  // 40      20     
@@ -1007,8 +1007,8 @@ void GC0310_Sensor_Init(void)
     GC0310_write_cmos_sensor(0x00,0x2f);
     GC0310_write_cmos_sensor(0x01,0x0f);
     GC0310_write_cmos_sensor(0x02,0x04);
-    GC0310_write_cmos_sensor(0x03,0x04);
-    GC0310_write_cmos_sensor(0x04,0xd0);
+    GC0310_write_cmos_sensor(0x03,0x03);  
+    GC0310_write_cmos_sensor(0x04,0x50);
     GC0310_write_cmos_sensor(0x09,0x00);
     GC0310_write_cmos_sensor(0x0a,0x00);
     GC0310_write_cmos_sensor(0x0b,0x00);
@@ -1022,11 +1022,12 @@ void GC0310_Sensor_Init(void)
     GC0310_write_cmos_sensor(0x18,0x1a);
     GC0310_write_cmos_sensor(0x19,0x14);
     GC0310_write_cmos_sensor(0x1b,0x48);
+	GC0310_write_cmos_sensor(0x1c,0x6c);
     GC0310_write_cmos_sensor(0x1e,0x6b);
     GC0310_write_cmos_sensor(0x1f,0x28);
     GC0310_write_cmos_sensor(0x20,0x8b);  // from 89 to 8b
     GC0310_write_cmos_sensor(0x21,0x49);
-    GC0310_write_cmos_sensor(0x22,0xb0);
+    GC0310_write_cmos_sensor(0x22,0xd0); //b0
     GC0310_write_cmos_sensor(0x23,0x04);
     GC0310_write_cmos_sensor(0x24,0x16);
     GC0310_write_cmos_sensor(0x34,0x20);
@@ -1079,7 +1080,7 @@ void GC0310_Sensor_Init(void)
         ///////////////////////////////////////////////// 
         ///////////////////   DNDD  /////////////////////
         ///////////////////////////////////////////////// 
-    GC0310_write_cmos_sensor(0x82,0x1f); 
+    GC0310_write_cmos_sensor(0x82,0x08);   //  1f
     GC0310_write_cmos_sensor(0x83,0x0b);
         
         
@@ -1092,7 +1093,7 @@ void GC0310_Sensor_Init(void)
     GC0310_write_cmos_sensor(0x92,0x03); 
     GC0310_write_cmos_sensor(0x93,0x03); 
     GC0310_write_cmos_sensor(0x94,0x05);
-    GC0310_write_cmos_sensor(0x95,0x65); 
+    GC0310_write_cmos_sensor(0x95,0x54); 
     GC0310_write_cmos_sensor(0x96,0xf0); 
         
         ///////////////////////////////////////////////// 
@@ -1105,10 +1106,10 @@ void GC0310_Sensor_Init(void)
     GC0310_write_cmos_sensor(0x9d,0x80);
     GC0310_write_cmos_sensor(0xa1,0x30);
     GC0310_write_cmos_sensor(0xa2,0x32);
-    GC0310_write_cmos_sensor(0xa4,0x30);
-    GC0310_write_cmos_sensor(0xa5,0x30);
+    GC0310_write_cmos_sensor(0xa4,0x35);//30
+    GC0310_write_cmos_sensor(0xa5,0x40);//30 bob
     GC0310_write_cmos_sensor(0xaa,0x50);
-    GC0310_write_cmos_sensor(0xac,0x22);
+    GC0310_write_cmos_sensor(0xac,0xff);
         
         /////////////////////////////////////////////////
         ///////////////////   GAMMA   ///////////////////
@@ -1135,9 +1136,10 @@ void GC0310_Sensor_Init(void)
         ///////////////////   YCP  //////////////////////
         /////////////////////////////////////////////////
     GC0310_write_cmos_sensor(0xd0,0x40); 
-    GC0310_write_cmos_sensor(0xd1,0x34); 
-    GC0310_write_cmos_sensor(0xd2,0x34); 
-    GC0310_write_cmos_sensor(0xd3,0x3c); 
+    GC0310_write_cmos_sensor(0xd1,0x2a); 
+    GC0310_write_cmos_sensor(0xd2,0x2a); 
+    GC0310_write_cmos_sensor(0xd3,0x44); 
+    GC0310_write_cmos_sensor(0xd5,0xf0); 
     GC0310_write_cmos_sensor(0xd6,0xf2); 
     GC0310_write_cmos_sensor(0xd7,0x1b); 
     GC0310_write_cmos_sensor(0xd8,0x18); 
@@ -1154,11 +1156,11 @@ void GC0310_Sensor_Init(void)
     GC0310_write_cmos_sensor(0x0b,0x11);
     GC0310_write_cmos_sensor(0x0c,0x00); 
     GC0310_write_cmos_sensor(0x12,0x52);
-    GC0310_write_cmos_sensor(0x13,0x38); 
+    GC0310_write_cmos_sensor(0x13,0x42);   //38
     GC0310_write_cmos_sensor(0x18,0x95);
     GC0310_write_cmos_sensor(0x19,0x96);
-    GC0310_write_cmos_sensor(0x1f,0x20);
-    GC0310_write_cmos_sensor(0x20,0xc0); 
+    GC0310_write_cmos_sensor(0x1f,0x10);
+    GC0310_write_cmos_sensor(0x20,0xd0); 
     GC0310_write_cmos_sensor(0x3e,0x40); 
     GC0310_write_cmos_sensor(0x3f,0x57); 
     GC0310_write_cmos_sensor(0x40,0x7d); 
@@ -1167,56 +1169,31 @@ void GC0310_Sensor_Init(void)
     /////////////////////////////////////////////////
     ////////////////////   AWB   ////////////////////
     /////////////////////////////////////////////////
-    GC0310_write_cmos_sensor(0x1c,0x91); 
-    GC0310_write_cmos_sensor(0x21,0x15); 
-    GC0310_write_cmos_sensor(0x50,0x80);
-    GC0310_write_cmos_sensor(0x56,0x04);
-    GC0310_write_cmos_sensor(0x58,0x08);    
-    GC0310_write_cmos_sensor(0x59,0x08); 
-    GC0310_write_cmos_sensor(0x5b,0x82);  // 02 to 82 to 02
-    GC0310_write_cmos_sensor(0x61,0x8d); 
-    GC0310_write_cmos_sensor(0x62,0xa7); 
-    GC0310_write_cmos_sensor(0x63,0x00);   // d0 to  00
-    GC0310_write_cmos_sensor(0x65,0x06);
-    GC0310_write_cmos_sensor(0x66,0x06);   // 06 to 03
-    GC0310_write_cmos_sensor(0x67,0x84); 
-    GC0310_write_cmos_sensor(0x69,0x08);   // 08 to 20
-    GC0310_write_cmos_sensor(0x6a,0x25); 
-    GC0310_write_cmos_sensor(0x6b,0x01); 
-    GC0310_write_cmos_sensor(0x6c,0x00);   // 00 to 0c
-    GC0310_write_cmos_sensor(0x6d,0x02); 
-    GC0310_write_cmos_sensor(0x6e,0x00);  // f0 to 00
-    GC0310_write_cmos_sensor(0x6f,0x80); 
-    GC0310_write_cmos_sensor(0x76,0x80); 
-    GC0310_write_cmos_sensor(0x78,0xaf); 
-    GC0310_write_cmos_sensor(0x79,0x75);
-    GC0310_write_cmos_sensor(0x7a,0x40);
-    GC0310_write_cmos_sensor(0x7b,0x50);
-    GC0310_write_cmos_sensor(0x7c,0x08); //0c to 08 8.11
-         
-    GC0310_write_cmos_sensor(0xa4,0xb9); 
+    GC0310_write_cmos_sensor(0xfe,0x01);
+    GC0310_write_cmos_sensor(0x6e,0x30);
+    GC0310_write_cmos_sensor(0xa4,0xb9);
     GC0310_write_cmos_sensor(0xa5,0xa0);
     GC0310_write_cmos_sensor(0x90,0xc9); 
     GC0310_write_cmos_sensor(0x91,0xbe);
     GC0310_write_cmos_sensor(0xa6,0xb8); 
-    GC0310_write_cmos_sensor(0xa7,0x95); 
+    GC0310_write_cmos_sensor(0xa7,0x80); 
     GC0310_write_cmos_sensor(0x92,0xe6); 
     GC0310_write_cmos_sensor(0x93,0xca); 
-    GC0310_write_cmos_sensor(0xa9,0xb6); 
-    GC0310_write_cmos_sensor(0xaa,0x89); 
+    GC0310_write_cmos_sensor(0xa9,0xbc); 
+    GC0310_write_cmos_sensor(0xaa,0x80); 
     GC0310_write_cmos_sensor(0x95,0x23); 
     GC0310_write_cmos_sensor(0x96,0xe7); 
     GC0310_write_cmos_sensor(0xab,0x9d); 
     GC0310_write_cmos_sensor(0xac,0x80);
     GC0310_write_cmos_sensor(0x97,0x43); 
     GC0310_write_cmos_sensor(0x98,0x24); 
-    GC0310_write_cmos_sensor(0xae,0xd0);   // b7 to d0
+    GC0310_write_cmos_sensor(0xae,0xb7);   // b7 to d0
     GC0310_write_cmos_sensor(0xaf,0x9e); 
     GC0310_write_cmos_sensor(0x9a,0x43);
     GC0310_write_cmos_sensor(0x9b,0x24); 
         
-    GC0310_write_cmos_sensor(0xb0,0xc0);  // c8 to c0
-    GC0310_write_cmos_sensor(0xb1,0xa8);   // 97 to a8
+    GC0310_write_cmos_sensor(0xb0,0xc8);  // c8 to c0
+    GC0310_write_cmos_sensor(0xb1,0x97);   // 97 to a8
     GC0310_write_cmos_sensor(0x9c,0xc4); 
     GC0310_write_cmos_sensor(0x9d,0x44); 
     GC0310_write_cmos_sensor(0xb3,0xb7); 
@@ -1245,19 +1222,45 @@ void GC0310_Sensor_Init(void)
     GC0310_write_cmos_sensor(0xb2,0x55);
     GC0310_write_cmos_sensor(0xb7,0x05);
     GC0310_write_cmos_sensor(0x8f,0x05);
-    GC0310_write_cmos_sensor(0xb8,0xcc);
-    GC0310_write_cmos_sensor(0xb9,0x9a);
+    GC0310_write_cmos_sensor(0xb8,0xcb);
+    GC0310_write_cmos_sensor(0xb9,0x9b);
+    GC0310_write_cmos_sensor(0x1c,0x91);
+    GC0310_write_cmos_sensor(0x21,0x15);
+    GC0310_write_cmos_sensor(0x50,0x80);
+    GC0310_write_cmos_sensor(0x56,0x04);
+    GC0310_write_cmos_sensor(0x59,0x08);
+    GC0310_write_cmos_sensor(0x5b,0x02);
+    GC0310_write_cmos_sensor(0x61,0x8d);
+    GC0310_write_cmos_sensor(0x62,0xa7);
+    GC0310_write_cmos_sensor(0x63,0xd0);
+    GC0310_write_cmos_sensor(0x65,0x0a);
+    GC0310_write_cmos_sensor(0x66,0x06);
+    GC0310_write_cmos_sensor(0x67,0x84);
+    GC0310_write_cmos_sensor(0x69,0x08);
+    GC0310_write_cmos_sensor(0x6a,0x25);
+    GC0310_write_cmos_sensor(0x6b,0x01);
+    GC0310_write_cmos_sensor(0x6c,0x00);
+    GC0310_write_cmos_sensor(0x6d,0x02);
+    GC0310_write_cmos_sensor(0x6e,0x30);
+    GC0310_write_cmos_sensor(0x6f,0xa0);
+    GC0310_write_cmos_sensor(0x76,0x80);
+    GC0310_write_cmos_sensor(0x78,0xaf);
+    GC0310_write_cmos_sensor(0x79,0x75);
+    GC0310_write_cmos_sensor(0x7a,0x40);
+    GC0310_write_cmos_sensor(0x7b,0x50);
+    GC0310_write_cmos_sensor(0x7c,0x0c);
+
         
         /////////////////////////////////////
         ////////////////////  CC ////////////
         /////////////////////////////////////
     GC0310_write_cmos_sensor(0xfe,0x01);
-    GC0310_write_cmos_sensor(0xd0,0x38);
-    GC0310_write_cmos_sensor(0xd1,0xfd);
+    GC0310_write_cmos_sensor(0xd0,0x34);//32//3a
+    GC0310_write_cmos_sensor(0xd1,0x02);//fd
     GC0310_write_cmos_sensor(0xd2,0x06);
-    GC0310_write_cmos_sensor(0xd3,0xf0);
-    GC0310_write_cmos_sensor(0xd4,0x40);
-    GC0310_write_cmos_sensor(0xd5,0x08);
+    GC0310_write_cmos_sensor(0xd3,0xff);//f0//fa
+    GC0310_write_cmos_sensor(0xd4,0x36);//40//3a
+    GC0310_write_cmos_sensor(0xd5,0xed);//08
     GC0310_write_cmos_sensor(0xd6,0x30);
     GC0310_write_cmos_sensor(0xd7,0x00);
     GC0310_write_cmos_sensor(0xd8,0x0a);
@@ -1317,26 +1320,21 @@ void GC0310_Sensor_Init(void)
         ///////////////////  banding  ///////////////////
         /////////////////////////////////////////////////
     GC0310_write_cmos_sensor(0xfe,0x00);
-    GC0310_write_cmos_sensor(0x05,0x01);
-    GC0310_write_cmos_sensor(0x06,0x18); //HB
-#if 1    
+    GC0310_write_cmos_sensor(0x05,0x02);
+    GC0310_write_cmos_sensor(0x06,0xd1); //HB
     GC0310_write_cmos_sensor(0x07,0x00);
-    GC0310_write_cmos_sensor(0x08,0x10); //VB  from 10 to 50
-#else
-	GC0310_write_cmos_sensor(0x07,0x01);
-	GC0310_write_cmos_sensor(0x08,0xe0); //VB
-#endif
+    GC0310_write_cmos_sensor(0x08,0x22); //VB  from 10 to 50
     GC0310_write_cmos_sensor(0xfe,0x01);
     GC0310_write_cmos_sensor(0x25,0x00); //step 
-    GC0310_write_cmos_sensor(0x26,0x9a); 
-    GC0310_write_cmos_sensor(0x27,0x01); //30fps
-    GC0310_write_cmos_sensor(0x28,0xce);  
-    GC0310_write_cmos_sensor(0x29,0x04); //12.5fps
-	GC0310_write_cmos_sensor(0x2a,0x36); 
+    GC0310_write_cmos_sensor(0x26,0x6a); 
+    GC0310_write_cmos_sensor(0x27,0x04); //30fps
+    GC0310_write_cmos_sensor(0x28,0xf8);  
+    GC0310_write_cmos_sensor(0x29,0x05); //12.5fps
+	GC0310_write_cmos_sensor(0x2a,0x62); 
 	GC0310_write_cmos_sensor(0x2b,0x06); //10fps
-	GC0310_write_cmos_sensor(0x2c,0x04); 
-	GC0310_write_cmos_sensor(0x2d,0x0c); //5fps
-	GC0310_write_cmos_sensor(0x2e,0x08);
+	GC0310_write_cmos_sensor(0x2c,0x36); 
+	GC0310_write_cmos_sensor(0x2d,0x07); //5fps
+	GC0310_write_cmos_sensor(0x2e,0xde);
     GC0310_write_cmos_sensor(0x3c,0x20);
         
         /////////////////////////////////////////////////
@@ -1497,8 +1495,11 @@ UINT32 GC0310Preview(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
     image_window->ExposureWindowWidth = IMAGE_SENSOR_PV_WIDTH;
     image_window->ExposureWindowHeight =IMAGE_SENSOR_PV_HEIGHT;
 
-    GC0310_Set_Mirrorflip(IMAGE_NORMAL);
-    
+	if(0 == strncmp(VANZO_SUB_CAM_ROTATION, "180", 3)){
+		GC0310_Set_Mirrorflip(IMAGE_HV_MIRROR);
+    }else{
+		GC0310_Set_Mirrorflip(IMAGE_NORMAL);
+	}
 
     // copy sensor_config_data
     memcpy(&GC0310SensorConfigData, sensor_config_data, sizeof(MSDK_SENSOR_CONFIG_STRUCT));
@@ -1678,37 +1679,37 @@ BOOL GC0310_set_param_wb(UINT16 para)
 		
 		case AWB_MODE_CLOUDY_DAYLIGHT: //cloudy
 			GC0310_awb_enable(KAL_FALSE);
-			GC0310_write_cmos_sensor(0x77, 0x40);
-			GC0310_write_cmos_sensor(0x78, 0x54);
-			GC0310_write_cmos_sensor(0x79, 0x70);
+			GC0310_write_cmos_sensor(0x77, 0xb0);
+			GC0310_write_cmos_sensor(0x78, 0x40);
+			GC0310_write_cmos_sensor(0x79, 0x40);
 		break;
 		
 		case AWB_MODE_DAYLIGHT: //sunny
 			GC0310_awb_enable(KAL_FALSE);
-			GC0310_write_cmos_sensor(0x77, 0x74); 
-			GC0310_write_cmos_sensor(0x78, 0x52);
-			GC0310_write_cmos_sensor(0x79, 0x40);			
+			GC0310_write_cmos_sensor(0x77, 0x80); 
+			GC0310_write_cmos_sensor(0x78, 0x40);
+			GC0310_write_cmos_sensor(0x79, 0x48);			
 		break;
 		
 		case AWB_MODE_INCANDESCENT: //office
 			GC0310_awb_enable(KAL_FALSE);
-			GC0310_write_cmos_sensor(0x77, 0x48);
+			GC0310_write_cmos_sensor(0x77, 0x40);
 			GC0310_write_cmos_sensor(0x78, 0x40);
-			GC0310_write_cmos_sensor(0x79, 0x5c);
+			GC0310_write_cmos_sensor(0x79, 0x80);
 		break;
 		
 		case AWB_MODE_TUNGSTEN: //home		
 			GC0310_awb_enable(KAL_FALSE);
-			GC0310_write_cmos_sensor(0x77, 0x8c); //WB_manual_gain 
-			GC0310_write_cmos_sensor(0x78, 0x50);
-			GC0310_write_cmos_sensor(0x79, 0x40);
+			GC0310_write_cmos_sensor(0x77, 0x40); //WB_manual_gain 
+			GC0310_write_cmos_sensor(0x78, 0x40);
+			GC0310_write_cmos_sensor(0x79, 0xb0);
 		break;
 		
 		case AWB_MODE_FLUORESCENT:
 			GC0310_awb_enable(KAL_FALSE);
-			GC0310_write_cmos_sensor(0x77, 0x40);
-			GC0310_write_cmos_sensor(0x78, 0x42);
-			GC0310_write_cmos_sensor(0x79, 0x50);
+			GC0310_write_cmos_sensor(0x77, 0x60);
+			GC0310_write_cmos_sensor(0x78, 0x48);
+			GC0310_write_cmos_sensor(0x79, 0x88);
 		break;
 		
 		default:
@@ -1776,23 +1777,23 @@ BOOL GC0310_set_param_banding(UINT16 para)
 		case AE_FLICKER_MODE_OFF:
 		case AE_FLICKER_MODE_50HZ:
 			GC0310_write_cmos_sensor(0xfe, 0x00); 
-			GC0310_write_cmos_sensor(0x05, 0x01); 	
-			GC0310_write_cmos_sensor(0x06, 0x18); 
+			GC0310_write_cmos_sensor(0x05, 0x02); 	
+			GC0310_write_cmos_sensor(0x06, 0xd1); 
 			GC0310_write_cmos_sensor(0x07, 0x00);
-			GC0310_write_cmos_sensor(0x08, 0x10);
+			GC0310_write_cmos_sensor(0x08, 0x22);
 			
 			GC0310_write_cmos_sensor(0xfe, 0x01);
 			GC0310_write_cmos_sensor(0x25,0x00); //step 
-			GC0310_write_cmos_sensor(0x26,0x9a); 
+			GC0310_write_cmos_sensor(0x26,0x6a); 
 		
-			GC0310_write_cmos_sensor(0x27,0x01); //30fps
-			GC0310_write_cmos_sensor(0x28,0xce);  
-			GC0310_write_cmos_sensor(0x29,0x04); //15fps
-			GC0310_write_cmos_sensor(0x2a,0x36); 
+			GC0310_write_cmos_sensor(0x27,0x04); //30fps
+			GC0310_write_cmos_sensor(0x28,0xf8);  
+			GC0310_write_cmos_sensor(0x29,0x05); //15fps
+			GC0310_write_cmos_sensor(0x2a,0x62); 
 			GC0310_write_cmos_sensor(0x2b,0x06); //10fps
-			GC0310_write_cmos_sensor(0x2c,0x04); 
-			GC0310_write_cmos_sensor(0x2d,0x09); //8fps  
-			GC0310_write_cmos_sensor(0x2e,0xa0);  // 
+			GC0310_write_cmos_sensor(0x2c,0x36); 
+			GC0310_write_cmos_sensor(0x2d,0x07); //8fps  
+			GC0310_write_cmos_sensor(0x2e,0xde);  // 
 			//GC0310_write_cmos_sensor(0x3c,0x20);
 			GC0310_write_cmos_sensor(0xfe, 0x00); 			
 			break;
@@ -1847,7 +1848,7 @@ BOOL GC0310_set_param_exposure(UINT16 para)
 		
 		case AE_EV_COMP_00:	
 			GC0310_write_cmos_sensor(0xfe, 0x01);
-			GC0310_write_cmos_sensor(0x13, 0x38);//35
+			GC0310_write_cmos_sensor(0x13, 0x42);//35
 			GC0310_write_cmos_sensor(0xfe, 0x00);
 		break;
 
@@ -1856,7 +1857,7 @@ BOOL GC0310_set_param_exposure(UINT16 para)
 			GC0310_write_cmos_sensor(0xfe, 0x01);
 			GC0310_write_cmos_sensor(0x13, 0x48);  // 48 to 60
 			GC0310_write_cmos_sensor(0xfe, 0x00);
-			Sleep(200);
+			Sleep(50);
 		break;
 		
 		case AE_EV_COMP_20:

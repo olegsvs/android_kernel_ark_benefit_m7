@@ -233,7 +233,7 @@ static void set_max_framerate(UINT16 framerate,kal_bool min_framelength_en)
     kal_uint32 frame_length = imgsensor.frame_length;
     //unsigned long flags;
 
-    LOG_INF("framerate = %d, min framelength should enable? \n", framerate,min_framelength_en);
+    LOG_INF("framerate = %d, min framelength should enable = %d\n", framerate,min_framelength_en);
 
     frame_length = imgsensor.pclk / framerate * 10 / imgsensor.line_length;
     spin_lock(&imgsensor_drv_lock);
@@ -364,9 +364,6 @@ static kal_uint16 set_gain(kal_uint16 gain)
 #define ANALOG_GAIN_7 435  // 7.15x
 			
 	kal_uint16 iReg,temp,temp1; 	
-
-	write_cmos_sensor(0xb1, 0x01);
-	write_cmos_sensor(0xb2, 0x00);
 	
 	iReg = gain;
 	
@@ -532,7 +529,7 @@ static void sensor_init(void)
 	write_cmos_sensor(0x0e, 0xa8); 
 	write_cmos_sensor(0x0f, 0x0a); 
 	write_cmos_sensor(0x10, 0x50); 
-	write_cmos_sensor(0x17, 0x16); //[0]mirror [1]flip
+	write_cmos_sensor(0x17, 0x15); //[0]mirror [1]flip
 	write_cmos_sensor(0x18, 0x02); //sdark off
 	write_cmos_sensor(0x19, 0x0c); 
 	write_cmos_sensor(0x1a, 0x13); 
@@ -651,8 +648,8 @@ static void sensor_init(void)
 	/////////////////////////////////////////////////////
 	write_cmos_sensor(0xfe, 0x03);
 	write_cmos_sensor(0x01, 0x07);
-	write_cmos_sensor(0x02, 0x11);//33
-	write_cmos_sensor(0x03, 0x11);//93
+	write_cmos_sensor(0x02, 0x33); // 33
+	write_cmos_sensor(0x03, 0x93);
 	write_cmos_sensor(0x04, 0x80);
 	write_cmos_sensor(0x05, 0x02);
 	write_cmos_sensor(0x06, 0x80);
@@ -699,7 +696,7 @@ static void preview_setting(void)
 	write_cmos_sensor(0x4e, 0x00); //blk 20140722
 	write_cmos_sensor(0x4f, 0x06); 
   
-	write_cmos_sensor(0x17, 0x36); 
+	write_cmos_sensor(0x17, 0x35); 
 	write_cmos_sensor(0x92, 0x02); //add  //mly  00 tao 9.26
 	write_cmos_sensor(0x94, 0x05); //07  tao 9.26  
 	write_cmos_sensor(0x95, 0x03);
@@ -739,7 +736,7 @@ static void capture_setting(kal_uint16 currefps)
 	write_cmos_sensor(0x4e, 0x00); //blk 20140722
 	write_cmos_sensor(0x4f, 0x3c); 
 	
-	write_cmos_sensor(0x17, 0x16); 
+	write_cmos_sensor(0x17, 0x15); 
 	write_cmos_sensor(0x92, 0x01);//add //mly
 	write_cmos_sensor(0x94, 0x0a);//0d //mly  0e  tao 9.26
 	write_cmos_sensor(0x95, 0x07);
