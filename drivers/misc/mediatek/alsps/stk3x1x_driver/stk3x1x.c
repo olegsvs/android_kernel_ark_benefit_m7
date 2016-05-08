@@ -77,11 +77,11 @@
 #define DRIVER_VERSION          "3.5.2"
 //#define STK_PS_POLLING_LOG
 #define STK_TUNE0
-#define CALI_EVERY_TIME
+//#define CALI_EVERY_TIME
 #define STK_ALS_FIR
 //#define STK_IRS
 //#define STK_CHK_REG
-#define STK_GES
+//#define STK_GES
 
 /////
 extern struct alsps_hw* stk_get_cust_alsps_hw(void);
@@ -193,8 +193,8 @@ extern void MT6516_EINT_Registration(kal_uint8 eintno, kal_bool Dbounce_En,
 
 #ifdef STK_TUNE0
 	#define STK_MAX_MIN_DIFF	200
-	#define STK_LT_N_CT	130
-	#define STK_HT_N_CT	330
+	#define STK_LT_N_CT	100
+	#define STK_HT_N_CT	150
 #endif /* #ifdef STK_TUNE0 */
 
 #define STK_IRC_MAX_ALS_CODE		20000
@@ -299,7 +299,7 @@ struct stk3x1x_i2c_addr {
 };
 /*----------------------------------------------------------------------------*/
 #ifdef STK_ALS_FIR
-	#define STK_FIR_LEN	16
+	#define STK_FIR_LEN	8
 	#define MAX_FIR_LEN 32
 struct data_filter {
     u16 raw[MAX_FIR_LEN];
