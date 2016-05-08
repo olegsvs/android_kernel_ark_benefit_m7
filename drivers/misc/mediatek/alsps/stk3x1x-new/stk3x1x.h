@@ -45,6 +45,9 @@
 #define STK_PDT_ID_REG 			0x3E
 #define STK_RSRVD_REG 			0x3F
 #define STK_SW_RESET_REG		0x80
+	
+#define STK_GSCTRL_REG			0x1A
+#define STK_FLAG2_REG			0x1C	
 
 /* Define state reg */
 #define STK_STATE_EN_IRS_SHIFT  	7
@@ -120,10 +123,20 @@
 #define STK_FLG_IR_RDY_MASK		0x02
 #define STK_FLG_NF_MASK			0x01
 
+/* Define flag2 reg */
+#define STK_FLG2_INT_GS_SHIFT		6
+#define STK_FLG2_GS10_SHIFT		5
+#define STK_FLG2_GS01_SHIFT		4
+
+#define STK_FLG2_INT_GS_MASK	0x40
+#define STK_FLG2_GS10_MASK		0x20
+#define STK_FLG2_GS01_MASK		0x10
+
 /* misc define */
 #define ALS_MIN_DELAY   100
 #define PS_MIN_DELAY    10
 
-#define STK_ALS_CODE_CHANGE_THD	5
+#define STK_ALS_CODE_CHANGE_THD	20
 
 #endif
+

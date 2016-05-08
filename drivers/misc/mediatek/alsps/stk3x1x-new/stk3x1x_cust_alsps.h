@@ -33,30 +33,33 @@
  * applicable license agreements with MediaTek Inc.
  */
 
-#include <linux/types.h>
-#include "stk_cust_alsps.h"
-#include <mach/mt_pm_ldo.h>
+#ifndef __CUST_ALSPS_H__
+#define __CUST_ALSPS_H__
 
-static struct alsps_hw cust_alsps_hw = {
-	/* i2c bus number, for mt657x, default=0. For mt6589, default=3 */
+#define C_CUST_ALS_LEVEL    16
+#define C_CUST_I2C_ADDR_NUM 1
 
-    .i2c_num    = 2,	
-	//.polling_mode =1,
-	.polling_mode_ps =0,
-	.polling_mode_als =1,   
-    .power_id   = MT65XX_POWER_NONE,    /*LDO is not used*/
-    .power_vol  = VOL_DEFAULT,          /*LDO is not used*/
-    .i2c_addr   = {0x90, 0x00, 0x00, 0x00},	/*STK3x1x*/
-    .als_level  = {5,  9, 36, 59, 90, 260, 300, 400, 500, 845, 1136, 1545, 2364, 4655, 6982},	/* als_code */
-    .als_value  = {10, 10, 40, 65, 90, 145, 225, 300, 550, 930, 1250, 1700, 2600, 5120, 7680, 10240},    /* lux */
-   	.state_val = 0x0,		/* disable all */
-	.psctrl_val = 0x31,		/* ps_persistance=1, ps_gain=64X, PS_IT=0.391ms */
-	.alsctrl_val = 0x2A,	/* als_persistance=1, als_gain=16X, ALS_IT=200ms */
-	.ledctrl_val = 0xFF,	/* 100mA IRDR, 64/64 LED duty */
-	.wait_val = 0x7,		/* 50 ms */
-    .ps_threshold_high = 1700,
-    .ps_threshold_low = 1500,
+struct alsps_hw {
+    int i2c_num;                                    /*!< the i2c bus used by ALS/PS */
+    int power_id;                                   /*!< the power id of the chip */
+    int power_vol;                                  /*!< the power voltage of the chip */
+	//int polling_mode;                               /*!< 1: polling mode ; 0:interrupt mode*/
+	int polling_mode_ps;                               /*!< 1: polling mode ; 0:interrupt mode*/
+	int polling_mode_als;                               /*!< 1: polling mode ; 0:interrupt mode*/
+    unsigned char   i2c_addr[C_CUST_I2C_ADDR_NUM];  /*!< i2c address list, some chip will have multiple address */
+    unsigned int    als_level[C_CUST_ALS_LEVEL-1];  /*!< (C_CUST_ALS_LEVEL-1) levels divides all range into C_CUST_ALS_LEVEL levels*/
+    unsigned int    als_value[C_CUST_ALS_LEVEL];    /*!< the value reported in each level */
+    //unsigned int    ps_threshold;                   /*!< the threshold of proximity sensor */	
+	unsigned int	state_val;
+	unsigned int 	psctrl_val;
+	unsigned int 	alsctrl_val;
+	unsigned int 	ledctrl_val;
+	unsigned int 	wait_val;	
+    unsigned int    ps_high_thd_val;
+    unsigned int    ps_low_thd_val;
+	unsigned int    als_window_loss;                /*!< the window loss  */
 };
-struct alsps_hw *stk_get_cust_alsps_hw(void) {
-    return &cust_alsps_hw;
-}
+
+extern struct alsps_hw* stx3x1x_get_cust_alsps_hw(void);
+#endif 
+

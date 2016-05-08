@@ -37,8 +37,17 @@ ifeq ($(CONFIG_MTK_MC3XXX_AUTO),y)
 obj-y   +=  accelerometer/mc3xxx_auto/
 endif
 
+
+ifeq ($(CONFIG_MTK_CM36652_NEW),y)
+obj-y   +=  alsps/cm36652-new/
+endif
+
 ifeq ($(CONFIG_MTK_STK3X1X_NEW),y)
 obj-y   +=  alsps/stk3x1x-new/
+endif
+
+ifeq ($(CONFIG_MTK_STK3X1X_DRIVER),y)
+obj-y	+=  alsps/stk3x1x_driver/
 endif
 
 ifeq ($(CONFIG_MTK_MMC3416X),y)

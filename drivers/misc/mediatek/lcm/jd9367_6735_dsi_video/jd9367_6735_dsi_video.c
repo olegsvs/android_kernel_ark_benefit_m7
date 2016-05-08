@@ -119,9 +119,7 @@ static unsigned int lcm_esd_test = FALSE;      ///only for ESD test
 #include <linux/input/doubletap2wake.h>
 #endif
 
-#ifdef CONFIG_POCKETMOD
-#include <linux/pocket_mod.h>
-#endif
+
 
 static LCM_UTIL_FUNCS lcm_util = {0};
 
@@ -600,9 +598,6 @@ static void lcm_suspend(void)
     SET_RESET_PIN(0);
     MDELAY(200);
 //needed for pocket mode
-	#ifdef CONFIG_POCKETMOD
-	is_screen_on = 0;
-	#endif 
 
 }
 
@@ -610,9 +605,7 @@ static void lcm_suspend(void)
 static void lcm_resume(void)
 {
   lcm_init();
-#ifdef CONFIG_POCKETMOD
-	is_screen_on = 1;
-	#endif
+
 }
          
 #if (LCM_DSI_CMD_MODE)

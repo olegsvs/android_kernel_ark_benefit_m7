@@ -81,13 +81,6 @@ config ATMEL_TCLIB
 	  blocks found on many Atmel processors.  This facilitates using
 	  these blocks by different drivers despite processor differences.
 
-config POCKETMOD
-	bool "PocketMod for device wake modifications"
-	default y
-	help
-		Say Y here to enable PocketMod. Users can always
-		toggle this on/off from sysfs later (should they
-		want it)  
 
 
 config ATMEL_TCB_CLKSRC
