@@ -56,7 +56,7 @@ static struct alsps_hw cust_alsps_hw = {
 	.polling_mode_als =1,
     .power_id   = MT65XX_POWER_NONE,    /*LDO is not used*/
     .power_vol  = VOL_DEFAULT,          /*LDO is not used*/
-    //.i2c_addr   = {0x0C, 0x48, 0x78, 0x00},
+   // .i2c_addr   = {0x49, 0x00, 0x00, 0x00},
 
     /* MTK: modified to support AAL */
 	.als_level	= {5, 8, 16, 32, 60, 90, 140, 180, 400, 900, 4000, 7000, 8000, 10000, 20000},

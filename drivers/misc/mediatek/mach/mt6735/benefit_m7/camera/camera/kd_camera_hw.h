@@ -45,7 +45,7 @@
  * Porting from wuzhiyong
 #define SUPPORT_I2C_BUS_NUM2        0
  */
-#define SUPPORT_I2C_BUS_NUM2        2
+#define SUPPORT_I2C_BUS_NUM2        0
 // End of Vanzo: yucheng
 
 #endif

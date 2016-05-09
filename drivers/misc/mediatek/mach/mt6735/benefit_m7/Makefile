@@ -50,6 +50,9 @@ ifeq ($(CONFIG_MTK_STK3X1X_DRIVER),y)
 obj-y	+=  alsps/stk3x1x_driver/
 endif
 
+ifeq ($(CONFIG_MTK_EPL2182_NEW),y)
+obj-y	+=  alsps/epl2182/
+endif
 ifeq ($(CONFIG_MTK_MMC3416X),y)
 obj-y   +=  magnetometer/mmc3416x/
 endif
