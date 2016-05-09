@@ -680,8 +680,8 @@ static unsigned int lcm_compare_id(void)
 
 		#if defined(BUILD_LK)
 		printf("rm68200a %s id1 = 0x%04x, id2 = 0x%04x\n", __func__, id1,id2);
-		#else
-		printk("rm68200a %s id1 = 0x%04x, id2 = 0x%04x\n", __func__, id1,id2);
+
+	//	printk("rm68200a %s id1 = 0x%04x, id2 = 0x%04x\n", __func__, id1,id2);
 		#endif
 		return (LCM_RM68200_ID == id1)?1:0;
 
@@ -693,7 +693,7 @@ static unsigned int lcm_esd_recover(void)
 	unsigned int data_array1[16];
 
 #ifndef BUILD_LK
-    printk("RM68190 lcm_esd_recover enter\n");
+   // printk("RM68190 lcm_esd_recover enter\n");
 #endif
     
 
@@ -727,22 +727,18 @@ static unsigned int lcm_esd_check(void)
    read_reg_v2(0x0a, buffer, 1);
    
 #ifndef BUILD_LK
-    printk("RM68190 lcm_esd_check enter %x\n",buffer[0]);
+  //  printk("RM68190 lcm_esd_check enter %x\n",buffer[0]);
 #endif
 #ifndef BUILD_LK
         if(buffer[0] == 0x9C)
         {
-          #ifndef BUILD_LK
-          printk("RM68190 lcm_esd_check false \n");
-          #endif
+
 
             return false;
         }
         else
         {      
-           #ifndef BUILD_LK
-          printk("RM68190 lcm_esd_check true \n");
-          #endif
+          
            //lcm_esd_recover();
             return true;
         }
