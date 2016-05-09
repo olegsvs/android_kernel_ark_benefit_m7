@@ -67,20 +67,27 @@
 *  THE RULES OF THE INTERNATIONAL CHAMBER OF COMMERCE (ICC).
 *
 *****************************************************************************/
-#ifndef BUILD_LK
-#include <linux/string.h>
-#endif
 
-#include "lcm_drv.h"
 
 #ifdef BUILD_LK
-	#include <platform/mt_gpio.h>
-	#include <string.h>
-#elif defined(BUILD_UBOOT)
-	#include <asm/arch/mt_gpio.h>
 #else
-//	#include <mach/mt_gpio.h>
+#include <linux/string.h>
+#if defined(BUILD_UBOOT)
+#include <asm/arch/mt_gpio.h>
+#else
+#include <mach/mt_gpio.h>
 #endif
+#endif
+#include "lcm_drv.h"
+
+#define test "rm68200 ver0.3"
+
+#if defined(BUILD_LK)
+#else
+
+#include <linux/proc_fs.h>   //proc file use 
+#endif
+
 
 // ---------------------------------------------------------------------------
 //  Local Constants
@@ -90,8 +97,8 @@
 #define FRAME_HEIGHT 										(1280)
 #define LCM_ID                       						(0x1284)
 
-#define REGFLAG_DELAY             							(0XFFFE)
-#define REGFLAG_END_OF_TABLE      							(0xFFFF)	// END OF REGISTERS MARKER
+#define REGFLAG_DELAY             							(0XEE)
+#define REGFLAG_END_OF_TABLE      							(0xDD00)	// END OF REGISTERS MARKER
 
 
 #define LCM_DSI_CMD_MODE									0
