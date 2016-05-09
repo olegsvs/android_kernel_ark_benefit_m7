@@ -80,6 +80,8 @@
 #endif
 #include "lcm_drv.h"
 
+#define test "0.1"
+
 #if defined(BUILD_LK)
 #else
 
