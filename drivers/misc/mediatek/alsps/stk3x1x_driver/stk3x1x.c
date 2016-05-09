@@ -2714,7 +2714,7 @@ int stk3x1x_pocket_detection_check(void)
 	}
 	else
 	{
-		stk3x1x_enable_ps(obj->client, 1);
+		stk3x1x_enable_ps(obj->client, 1,1);
 
 		msleep(50);
 
@@ -2723,7 +2723,7 @@ int stk3x1x_pocket_detection_check(void)
 
 		APS_DBG("[stk3x1x] %s als_val = %d, ps_val = %d\n", __func__, als_val, ps_val);
 
-		stk3x1x_enable_ps(obj->client, 0);
+		stk3x1x_enable_ps(obj->client, 0,1);
 
 		return (ps_val);
 	}
