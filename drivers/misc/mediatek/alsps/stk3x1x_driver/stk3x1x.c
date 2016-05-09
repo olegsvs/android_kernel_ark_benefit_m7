@@ -2699,13 +2699,33 @@ static ssize_t stk3x1x_show_config(struct device_driver *ddri, char *buf)
 	return res;    
 }
 /*----------------------------------------------------------------------------*/
+
+#ifdef CONFIG_TOUCHSCREEN_WAKE_FIX
+int stk3x1x_ps_check(void)
+{
+	int ps_val;
+
+	struct stk3x1x_priv *obj = stk3x1x_obj;
+	
+	if(obj == NULL)
+	{
+		return 0;
+	}
+	else
+	{
+		ps_val = stk3x1x_get_ps_value(obj, obj->ps);
+			return (ps_val);
+	}
+}
+#endif
+
 #ifdef CONFIG_POCKETMOD
 int stk3x1x_pocket_detection_check(void)
 {
 	int ps_val;
 	int als_val;
 
-	struct  stk3x1x_priv *obj = stk3x1x_obj;
+	struct stk3x1x_priv *obj = stk3x1x_obj;
 	
 	if(obj == NULL)
 	{
@@ -2714,7 +2734,7 @@ int stk3x1x_pocket_detection_check(void)
 	}
 	else
 	{
-		stk3x1x_enable_ps(obj->client, 1,1);
+		stk3x1x_enable_ps(obj->client, 1, 1);
 
 		msleep(50);
 
@@ -2723,12 +2743,14 @@ int stk3x1x_pocket_detection_check(void)
 
 		APS_DBG("[stk3x1x] %s als_val = %d, ps_val = %d\n", __func__, als_val, ps_val);
 
-		stk3x1x_enable_ps(obj->client, 0,1);
+		stk3x1x_enable_ps(obj->client, 0, 1);
 
 		return (ps_val);
 	}
 }
 #endif
+
+
 static ssize_t stk3x1x_store_config(struct device_driver *ddri, const char *buf, size_t count)
 {
 	int retry, als_deb, ps_deb, mask, hthres, lthres, err;

@@ -32,24 +32,27 @@
 #include <asm-generic/cputime.h>
 #include <linux/pocket_mod.h>
 
-int is_screen_on = 1;
-char alsps_dev;
+int is_screen_on;
 
+#ifdef CONFIG_POCKETMOD
+unsigned pocket_mod_switch = 1;
+#else
 unsigned pocket_mod_switch = 0;
+#endif
 
 int device_is_pocketed(void) {
 
 	if (!(pocket_mod_switch))
 		return 0;
 
-//	if (!(is_screen_on)) {
-	//	if (pocket_mod_switch){
-	//			if (1)
-	//				return 0;
-	//			else
-	//				return 1;
-	//	}
-	//}
+	if (!(is_screen_on)) {
+		if (pocket_mod_switch) {
+			if (stk3x1x_pocket_detection_check() == 1)
+				return 0;
+			else
+				return 1;
+			}
+		}
 
 	return 0;
 }
@@ -73,12 +76,12 @@ static ssize_t pocket_mod_set(struct device *dev,
 	return size;
 }
 
-static DEVICE_ATTR(pocket_mod_enable, (S_IWUSR|S_IRUGO),
+static DEVICE_ATTR(enable, (S_IWUGO|S_IRUGO),
 		pocket_mod_show, pocket_mod_set);
 
 static struct attribute *pocket_mod_attributes[] =
 {
-	&dev_attr_pocket_mod_enable.attr,
+	&dev_attr_enable.attr,
 	NULL
 };
 
@@ -102,8 +105,6 @@ static int pocket_mod_init_sysfs(void) {
 	struct kobject *pocket_mod_kobj;
 	pocket_mod_kobj = kobject_create_and_add("pocket_mod", NULL);
 
-	dev_attr_pocket_mod_enable.attr.name = "enable";
-
 	rc = sysfs_create_group(pocket_mod_kobj,
 			&pocket_mod_group);
 
@@ -114,5 +115,15 @@ static int pocket_mod_init_sysfs(void) {
 
 }
 
-module_init(pocket_mod_init_sysfs);
+static int pocket_mod_init(void) {
+
+	int rc = 0;
+
+	rc = pocket_mod_init_sysfs();
+
+	return rc;
+
+}
+
+late_initcall(pocket_mod_init);
 

@@ -1,10 +1,10 @@
+
 #ifndef _LINUX_POCKET_MOD_H
 #define _LINUX_POCKET_MOD_H
 
 extern int is_screen_on;
-extern char alsps_dev;
 
-int AP3xx6_pocket_detection_check(void);
+int stk3x1x_pocket_detection_check(void);
 
 int device_is_pocketed(void);
 
