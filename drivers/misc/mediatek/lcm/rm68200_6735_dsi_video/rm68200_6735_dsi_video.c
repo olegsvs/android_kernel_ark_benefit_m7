@@ -80,7 +80,7 @@
 #endif
 #include "lcm_drv.h"
 
-#define test "0.1"
+#define test "rm68200 ver0.2"
 
 #if defined(BUILD_LK)
 #else
@@ -784,7 +784,7 @@ static void lcm_set_util_funcs(const LCM_UTIL_FUNCS * util)
 
 static void lcm_get_params(LCM_PARAMS * params)
 {
-	memset(params, 0, sizeof(LCM_PARAMS));
+		memset(params, 0, sizeof(LCM_PARAMS));
 
 	params->type = LCM_TYPE_DSI;
 
@@ -795,28 +795,26 @@ static void lcm_get_params(LCM_PARAMS * params)
 	params->dbi.te_mode = LCM_DBI_TE_MODE_DISABLED;
 	params->dbi.te_edge_polarity = LCM_POLARITY_RISING;
 
-#if (LCM_DSI_CMD_MODE)
-	params->dsi.mode = CMD_MODE;
-#else
-	params->dsi.mode   = SYNC_PULSE_VDO_MODE;//SYNC_EVENT_VDO_MODE;//BURST_VDO_MODE;////
-#endif
+
+	params->dsi.mode   = 1
+
 
 	// DSI
 	/* Command mode setting */
 		params->dsi.LANE_NUM				= LCM_FOUR_LANE;
 	
 	//The following defined the fomat for data coming from LCD engine.
-	params->dsi.data_format.color_order = LCM_COLOR_ORDER_RGB;
-	params->dsi.data_format.trans_seq   = LCM_DSI_TRANS_SEQ_MSB_FIRST;
-	params->dsi.data_format.padding     = LCM_DSI_PADDING_ON_LSB;
-	params->dsi.data_format.format      = LCM_DSI_FORMAT_RGB888;
+	params->dsi.data_format.color_order = 0;
+	params->dsi.data_format.trans_seq   = 0;
+	params->dsi.data_format.padding     = 0;
+	params->dsi.data_format.format      = 2;
 	
 	
-	params->dsi.PS=LCM_PACKED_PS_24BIT_RGB888;
+	params->dsi.PS=2;
 	
 #if (LCM_DSI_CMD_MODE)
 	params->dsi.intermediat_buffer_num = 0;//because DSI/DPI HW design change, this parameters should be 0 when video mode in MT658X; or memory leakage
-	params->dsi.word_count=FRAME_WIDTH*3;	//DSI CMD mode need set these two bellow params, different to 6577
+	params->dsi.word_count=2160;	//DSI CMD mode need set these two bellow params, different to 6577
 #else
 	params->dsi.intermediat_buffer_num = 0;	//because DSI/DPI HW design change, this parameters should be 0 when video mode in MT658X; or memory leakage
 #endif
@@ -825,18 +823,18 @@ static void lcm_get_params(LCM_PARAMS * params)
 	params->dsi.packet_size=256;
 
 	params->dsi.vertical_sync_active				=  4;//2
-	params->dsi.vertical_backporch					= 14;//50;
+	params->dsi.vertical_backporch					= 16;//50;
 	params->dsi.vertical_frontporch					= 16;//50;
 	params->dsi.vertical_active_line				= FRAME_HEIGHT; 
 
 	params->dsi.horizontal_sync_active				= 10;//10
-	params->dsi.horizontal_backporch				= 34;//34; 
-	params->dsi.horizontal_frontporch				= 24;//24;
+	params->dsi.horizontal_backporch				= 50;//34; 
+	params->dsi.horizontal_frontporch				= 50;//24;
 	params->dsi.horizontal_active_pixel				= FRAME_WIDTH;
 
 	// Bit rate calculation
 	//1 Every lane speed
-params->dsi.PLL_CLOCK=225;
+params->dsi.PLL_CLOCK=208;
 }
 
 static void lcm_init(void)
