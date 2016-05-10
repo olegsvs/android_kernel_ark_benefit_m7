@@ -2718,7 +2718,7 @@ static int touch_event_handler(void *unused)
 				{
 				tpd_down( input_x, input_y, 0, 0);
 				}
-				else if(input_y<1280) {
+				else if(touch_key_point_maping_array[i].point_y<1280) {
 					tpd_down( input_x, input_y, 0, 0);
 				}
 			#else
