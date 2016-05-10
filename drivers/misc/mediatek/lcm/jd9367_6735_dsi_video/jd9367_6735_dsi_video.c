@@ -188,7 +188,7 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 	{0x26,1,{0xF1}},	//VDDD from IOVCC
 
 	//SetPanel
-	{0x37,1,{0x05}},	//05 REVERSE /SS=0,BGR=1,GS=1
+	{0x37,1,{0x09}},	//05 REVERSE /SS=0,BGR=1,GS=1
 
 	//SET RGBCYC
 	{0x38,1,{0x04}},	//JDT=100 column inversion
