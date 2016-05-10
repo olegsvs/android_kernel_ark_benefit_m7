@@ -79,14 +79,6 @@
 #include <linux/sensors_io.h>
 #endif
 
-#ifdef CONFIG_POCKETMOD
-#include <linux/pocket_mod.h>
-#endif
-
-#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
-#include <linux/input/doubletap2wake.h>
-#endif
-
 #if GTP_SUPPORT_I2C_DMA
     #include <linux/dma-mapping.h>
 #endif
@@ -2677,7 +2669,46 @@ static int touch_event_handler(void *unused)
 
         if (key_value || pre_key)
         {
-      
+        #if GTP_PEN_HAVE_BUTTON
+            if (key_value == 0x40)
+            {
+                GTP_DEBUG("BTN_STYLUS & BTN_STYLUS2 Down.");
+                input_report_key(pen_dev, BTN_STYLUS, 1);
+                input_report_key(pen_dev, BTN_STYLUS2, 1);
+                pen_active = 1;
+            }
+            else if (key_value == 0x10)
+            {
+                GTP_DEBUG("BTN_STYLUS Down, BTN_STYLUS2 Up.");
+                input_report_key(pen_dev, BTN_STYLUS, 1);
+                input_report_key(pen_dev, BTN_STYLUS2, 0);
+                pen_active = 1;
+            }
+            else if (key_value == 0x20)
+            {
+                GTP_DEBUG("BTN_STYLUS Up, BTN_STYLUS2 Down.");
+                input_report_key(pen_dev, BTN_STYLUS, 0);
+                input_report_key(pen_dev, BTN_STYLUS2, 1);
+                pen_active = 1;
+            }
+            else
+            {
+                GTP_DEBUG("BTN_STYLUS & BTN_STYLUS2 Up.");
+                input_report_key(pen_dev, BTN_STYLUS, 0);
+                input_report_key(pen_dev, BTN_STYLUS2, 0);
+                if ( (pre_key == 0x40) || (pre_key == 0x20) ||
+                     (pre_key == 0x10) 
+                   )
+                {
+                    pen_active = 1;
+                }
+            }
+            if (pen_active)
+            {
+                touch_num = 0;      // shield pen point
+                //pre_touch = 0;    // clear last pen status
+            }
+        #endif
         #if GTP_HAVE_TOUCH_KEY
             if (!pre_touch)
             {
@@ -2709,22 +2740,23 @@ static int touch_event_handler(void *unused)
                 input_x = TPD_WARP_X(abs_x_max, input_x);
                 input_y = TPD_WARP_Y(abs_y_max, input_y);
 
-
+            #if GTP_WITH_PEN
+                id = coor_data[0];
+                if ((id & 0x80))      // pen/stylus is activated
                 {
-
-#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
-			// fix for lower button wakeup
-			if(dt2w_scr_suspended == false) 
-				{
-				tpd_down( input_x, input_y, 0, 0);
-				}
-				else if(touch_key_point_maping_array[i].point_y<1280) {
-					tpd_down( input_x, input_y, 0, 0);
-				}
-			#else
-				tpd_down( input_x, input_y, 0, 0);
-				GTP_DEBUG("button =%d %d",input_x,input_y);
-			#endif
+                    GTP_DEBUG("Pen touch DOWN!");
+                    pre_pen = 1;
+                    //id &= 0x7F;
+                    id = 0;
+                    GTP_DEBUG("(%d)(%d, %d)[%d]", id, input_x, input_y, input_w);
+                    gtp_pen_down(input_x, input_y, input_w, id);
+                    pen_active = 1;
+                }
+                else
+            #endif
+                {
+                    GTP_DEBUG(" (%d)(%d, %d)[%d]", id, input_x, input_y, input_w);
+                    tpd_down(input_x, input_y, input_w, id);
                 }
             }
         }
