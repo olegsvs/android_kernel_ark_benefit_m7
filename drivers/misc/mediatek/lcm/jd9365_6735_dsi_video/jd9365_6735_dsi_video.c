@@ -155,7 +155,7 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 {0xE3,1,{0xF8}},
 
 //--- Sequence Ctrl ----//
-//{0x80,1,{0x02}},
+{0x80,1,{0x01}},
 
 //--- Page1  ----//
 {0xE0,1,{0x01}},
