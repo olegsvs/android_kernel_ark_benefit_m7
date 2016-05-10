@@ -53,12 +53,12 @@ int device_is_pocketed(void) {
 			else
 				return 1;
 #endif
-#ifdef CONFIG_MTK_EPL2182_NEW
+/*#ifdef CONFIG_MTK_EPL2182_NEW
 			if (epl2182_pocket_detection_check() == 1)
 				return 0;
 			else
 				return 1;
-#endif
+#endif */
 			}
 		}
 
