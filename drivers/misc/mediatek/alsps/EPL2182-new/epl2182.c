@@ -523,6 +523,24 @@ static int epl2182_get_als_value(struct epl2182_priv *obj, u16 als)
 }
 
 
+static int epl2182_get_ps_value(struct epl2182_priv *obj, u16 ps)
+{
+
+	int mask = atomic_read(&obj->ps_mask);
+	int  val;
+
+	u8 flag;
+
+	
+	
+	val = -1;
+
+return val;
+
+	
+
+}
+
 static int set_psensor_intr_threshold(uint16_t low_thd, uint16_t high_thd)
 {
     int ret = 0;
