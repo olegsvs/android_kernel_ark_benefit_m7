@@ -161,11 +161,7 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 {0xE0,1,{0x01}},
 
 //Set VCOM
-{0x00,1,{0x00}},
-{0x01,1,{0xB0}},
-{0x03,1,{0x00}},
-{0x04,1,{0xB0}},
-{0x0C,1,{0x74}},
+
 
 //Set Gamma Power,1,{ VGMP,1,{VGMN,1,{VGSP,1,{VGSN
 {0x17,1,{0x00}},
@@ -184,8 +180,8 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 
 //SET RGBCYC
-{0x37,1,{0x05}},	//SS=1,1,{ BGR=1
-{0x38,1,{0x08}},	//JDT=100 column inversion
+{0x37,1,{0x01}},	//SS=1,1,{ BGR=1
+{0x38,1,{0x04}},	//JDT=100 column inversion //color? 
 {0x3D,1,{0xFF}},
 {0x3E,1,{0xFF}},
 {0x3F,1,{0x7F}},
