@@ -76,6 +76,10 @@
 #include <mach/mt_pm_ldo.h>
 #endif
 
+#ifdef CONFIG_DOUBLETAP2WAKE
+#include <linux/input/doubletap2wake.h>
+#endif
+
 #ifdef CONFIG_POCKETMOD
 #include <linux/pocket_mod.h>
 #endif
