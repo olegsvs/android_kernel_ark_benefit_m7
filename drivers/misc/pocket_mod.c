@@ -47,10 +47,18 @@ int device_is_pocketed(void) {
 
 	if (!(is_screen_on)) {
 		if (pocket_mod_switch) {
+#ifdef CONFIG_MTK_STK3X1X_DRIVER
 			if (stk3x1x_pocket_detection_check() == 1)
 				return 0;
 			else
 				return 1;
+#endif
+#ifdef CONFIG_MTK_EPL2182_NEW
+			if (epl2182_pocket_detection_check() == 1)
+				return 0;
+			else
+				return 1;
+#endif
 			}
 		}
 
