@@ -146,7 +146,6 @@ static unsigned int lcm_esd_test = FALSE;      ///only for ESD test
 static struct LCM_setting_table lcm_initialization_setting[] = {
 //------------------JD9365 initial code------------------------//
 
-
 //Page0
 {0xE0,1,{0x00}},
 
@@ -156,10 +155,6 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 {0xE3,1,{0xF8}},
 
 //--- Sequence Ctrl ----//
-{0x70,1,{0x20}},
-{0x71,1,{0x13}},
-{0x72,1,{0x06}},
-{0x75,1,{0x03}},
 {0x80,1,{0x02}},
 
 //--- Page1  ----//
@@ -189,7 +184,7 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 
 //SET RGBCYC
-{0x37,1,{0x09}},	//SS=1,1,{ BGR=1
+{0x37,1,{0x05}},	//SS=1,1,{ BGR=1
 {0x38,1,{0x04}},	//JDT=100 column inversion
 {0x3D,1,{0xFF}},
 {0x3E,1,{0xFF}},
@@ -230,7 +225,11 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 {0x6F,1,{0x0F}},
 
 {0x70,1,{0x78}},
-
+{0x71,1,{0x44}},
+{0x72,1,{0x35}},
+{0x73,1,{0x2A}},
+{0x74,1,{0x27}},
+{0x75,1,{0x19}},
 {0x76,1,{0x20}},
 {0x77,1,{0x0D}},
 {0x78,1,{0x27}},
@@ -241,6 +240,7 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 {0x7D,1,{0x45}},
 {0x7E,1,{0x3B}},
 {0x7F,1,{0x3C}},
+{0x80,1,{0x2A}},
 {0x81,1,{0x25}},
 {0x82,1,{0x0F}},
 
