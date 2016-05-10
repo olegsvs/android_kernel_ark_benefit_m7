@@ -43,6 +43,10 @@
 #include <linux/wakelock.h>
 #include <linux/sched.h>
 
+#ifdef CONFIG_POCKETMOD
+#include <linux/pocket_mod.h>
+#endif
+
 #include <alsps.h>
 #include <linux/batch.h>
 #ifdef CUSTOM_KERNEL_SENSORHUB
@@ -2137,7 +2141,36 @@ static int epl2182_i2c_remove(struct i2c_client *client)
 }
 
 
+#ifdef CONFIG_POCKETMOD
+int epl2182_pocket_detection_check(void)
+{
+	int ps_val;
+	int als_val;
 
+	struct epl2182_priv *obj = epl2182_obj;
+	
+	if(obj == NULL)
+	{
+		APS_DBG("[epl2182] epl2182_obj is NULL!");
+		return 0;
+	}
+	else
+	{
+		elan_epl2182_psensor_enable(obj->client, 1);
+
+		msleep(50);
+
+		ps_val = epl2182_get_ps_value(obj, obj->ps);
+		als_val = epl2182_get_als_value(obj, obj->ps);
+
+		APS_DBG("[epl2182] %s als_val = %d, ps_val = %d\n", __func__, als_val, ps_val);
+
+		elan_epl2182_psensor_enable(obj->client, 0);
+
+		return (ps_val);
+	}
+}
+#endif
 /*----------------------------------------------------------------------------*/
 static int alsps_local_init(void)
 {
