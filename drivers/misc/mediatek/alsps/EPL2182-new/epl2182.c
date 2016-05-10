@@ -2160,10 +2160,10 @@ int epl2182_pocket_detection_check(void)
 
 		msleep(50);
 
-		ps_val = epl2182_get_ps_value(obj, obj->ps);
+		//ps_val = epl2182_get_ps_value(obj, obj->ps);
 		als_val = epl2182_get_als_value(obj, obj->ps);
 
-		APS_DBG("[epl2182] %s als_val = %d, ps_val = %d\n", __func__, als_val, ps_val);
+		APS_DBG("[epl2182] %s als_val = %d, ps_val = %d\n", __func__, als_val, als_val);
 
 		elan_epl2182_psensor_enable(obj->client, 0);
 
