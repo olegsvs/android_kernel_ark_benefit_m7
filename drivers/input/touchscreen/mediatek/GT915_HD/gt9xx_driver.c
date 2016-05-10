@@ -97,7 +97,7 @@ static DECLARE_WAIT_QUEUE_HEAD(waiter);
 
 #ifdef TPD_HAVE_BUTTON
 static int tpd_keys_local[TPD_KEY_COUNT] = TPD_KEYS;
-static int tpd_keys_dim_local[TPD_KEY_COUNT][4] = TPD_KEYS_DIM;
+static int tpd_keys_dim_local[TPD_KEY_COUNT][3] = TPD_KEYS_DIM;
 #endif
 
 #if GTP_GESTURE_WAKEUP
@@ -2715,6 +2715,7 @@ static int touch_event_handler(void *unused)
                 for (i = 0; i < GTP_MAX_KEY_NUM; i++)
                 {
                     input_report_key(tpd->dev, touch_key_array[i], key_value & (0x01 << i));
+
                 }
                 touch_num = 0;  // shiled fingers
             }

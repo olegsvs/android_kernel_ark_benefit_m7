@@ -126,7 +126,7 @@ extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf
 #define GTP_COMPATIBLE_MODE   0       // compatible with GT9XXF
 
 #define GTP_CREATE_WR_NODE    1
-#define GTP_ESD_PROTECT       0       // esd protection with a cycle of 2 seconds
+#define GTP_ESD_PROTECT       1       // esd protection with a cycle of 2 seconds
 #define GTP_CHARGER_SWITCH    0       // charger plugin & plugout detect
 
 #define GTP_WITH_PEN          0      
@@ -134,11 +134,11 @@ extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf
 
 #define GTP_GESTURE_WAKEUP    0 
 
-#define TPD_PROXIMITY
-//#define TPD_HAVE_BUTTON       1      // report key as coordinate,Vibration feedback
+//#define TPD_PROXIMITY
+#define TPD_HAVE_BUTTON            // report key as coordinate,Vibration feedback
 //#define TPD_WARP_X                  // mirrored x coordinate
 //#define TPD_WARP_Y                  // mirrored y coordinate
-#define GTP_DEBUG_ON          1
+#define GTP_DEBUG_ON          0
 #define GTP_DEBUG_ARRAY_ON    0
 #define GTP_DEBUG_FUNC_ON     0
 
@@ -279,7 +279,7 @@ extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf
 
 //STEP_4(optional):If this project have touch key,Set touch key config.                                    
 #if GTP_HAVE_TOUCH_KEY
-    #define GTP_KEY_TAB  {KEY_MENU, KEY_HOMEPAGE, KEY_BACK,}
+    #define GTP_KEY_TAB  {KEY_MENU, KEY_HOMEPAGE, KEY_BACK}
 #endif
 
 //***************************PART3:OTHER define*********************************
