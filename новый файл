@@ -10,7 +10,7 @@ export PATH=/home/olegsvs/5/aarch64-linux-gnu-5.3/bin:$PATH
 
 export CROSS_COMPILE=/home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-
 export ARCH=arm64 export ARCH_MTK_PLATFORM=mt6735m 
-make benefit_m7_defconfig_B
+make benefit_m7_A_defconfig
 make -j5
 
 export CROSS_COMPILE=/home/olegsvs/Android/aarch64-linux-android-4.9/bin/aarch64-linux-android-
