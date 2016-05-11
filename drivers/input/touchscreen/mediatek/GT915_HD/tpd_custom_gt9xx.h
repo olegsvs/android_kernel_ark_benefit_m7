@@ -91,8 +91,8 @@
 #define key_2           360,1500 //1320
 #define key_3           600,1500 //1320
 
-#define TPD_KEYS        {KEY_MENU, KEY_HOMEPAGE, KEY_BACK}
-#define TPD_KEYS_DIM    {{key_1,60,40},{key_2,60,30},{key_3,60,40}}
+#define TPD_KEYS         {KEY_MENU, KEY_HOMEPAGE, KEY_BACK}
+#define TPD_KEYS_DIM    {{KEY_MENU,60,40},{KEY_HOMEPAGE,60,40},{KEY_BACK,60,40}}
 extern u16 show_len;
 extern u16 total_len;
 extern u8 gtp_rawdiff_mode;
