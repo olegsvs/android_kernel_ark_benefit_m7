@@ -180,7 +180,7 @@ static struct LCM_setting_table lcm_initialization_setting[] = {
 
 
 //SET RGBCYC
-{0x37,1,{0x08}},	//SS=1,1,{ BGR=1 0.8
+{0x37,1,{0x10}},	//SS=1,1,{ BGR=1 10
 {0x38,1,{0x04}},	//JDT=100 column inversion //color? 
 {0x3D,1,{0xFF}},
 {0x3E,1,{0xFF}},
