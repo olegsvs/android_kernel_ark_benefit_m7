@@ -2338,9 +2338,15 @@ static void tpd_down(s32 x, s32 y, s32 size, s32 id)
 
 static void tpd_up(s32 x, s32 y, s32 id)
 {
+   //input_report_abs(tpd->dev, ABS_MT_PRESSURE, 0);
     input_report_key(tpd->dev, BTN_TOUCH, 0);
+    //input_report_abs(tpd->dev, ABS_MT_TOUCH_MAJOR, 0);
     input_mt_sync(tpd->dev);
-    TPD_EM_PRINT(x, y, x, y, id, 0);
+    TPD_DEBUG_SET_TIME;
+ TPD_EM_PRINT(x, y, x, y, id, 0);
+x=0;
+y=0;
+
 
 #if (defined(MT6575) || defined(MT6577))
 
