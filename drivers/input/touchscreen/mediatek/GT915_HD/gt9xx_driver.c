@@ -69,11 +69,6 @@
 
 #include "tpd.h"
 #include "tpd_custom_gt9xx.h"
-#ifdef TPD_HAVE_BUTTON
-    u8 key1 = 0;
-    unsigned int  count = 0;
-    int wrap_x,wrap_y=0;
-#endif
 
 #ifndef TPD_NO_GPIO
 #include "cust_gpio_usage.h" 
@@ -541,40 +536,6 @@ static ssize_t gt91xx_config_read_proc(struct file *file, char __user *page, siz
     *ppos += ptr - page;
     return (ptr - page);
 }
-
-static  void tpd_down2(int x, int y) 
-{
-	 input_report_abs(tpd->dev, ABS_PRESSURE, 8);
-	 input_report_key(tpd->dev, BTN_TOUCH, 1);
-	 input_report_abs(tpd->dev, ABS_MT_TOUCH_MAJOR, 8);
-	 input_report_abs(tpd->dev, ABS_MT_POSITION_X, x);
-	 input_report_abs(tpd->dev, ABS_MT_POSITION_Y, y);
-	 input_mt_sync(tpd->dev);
-	 printk( "mycat## tpd_down2 x=%d y=%d \n",x,y);
-	 if (FACTORY_BOOT == get_boot_mode()|| RECOVERY_BOOT == get_boot_mode())
-       {   
-            //TPD_DMESG( "tpd_down2 button  \n");
-            tpd_button(x, y, 1); 
-       } 
-	 input_sync(tpd->dev);
-      
- }
- 
-static void  tpd_up2(int x, int y)
-{
-		// input_report_abs(tpd->dev, ABS_PRESSURE, 0);
-		 input_report_key(tpd->dev, BTN_TOUCH, 0);
-		 //input_report_abs(tpd->dev, ABS_MT_TOUCH_MAJOR, 0);
-		 input_mt_sync(tpd->dev);
-	//TPD_DMESG( "tpd_up2  \n");
-	   printk( "mycat## tpd_up2 x=%d y=%d \n",x,y);
-       if (FACTORY_BOOT == get_boot_mode()|| RECOVERY_BOOT == get_boot_mode())
-       {   
-           //TPD_DMESG( "tpd_up2 button\n");
-           tpd_button(x, y, 0); 
-       }
-       input_sync(tpd->dev);
-        }
 
 static ssize_t gt91xx_config_write_proc(struct file *filp, const char __user *buffer, size_t count, loff_t *off)
 {
@@ -2708,7 +2669,46 @@ static int touch_event_handler(void *unused)
 
         if (key_value || pre_key)
         {
-        
+        #if GTP_PEN_HAVE_BUTTON
+            if (key_value == 0x40)
+            {
+                GTP_DEBUG("BTN_STYLUS & BTN_STYLUS2 Down.");
+                input_report_key(pen_dev, BTN_STYLUS, 1);
+                input_report_key(pen_dev, BTN_STYLUS2, 1);
+                pen_active = 1;
+            }
+            else if (key_value == 0x10)
+            {
+                GTP_DEBUG("BTN_STYLUS Down, BTN_STYLUS2 Up.");
+                input_report_key(pen_dev, BTN_STYLUS, 1);
+                input_report_key(pen_dev, BTN_STYLUS2, 0);
+                pen_active = 1;
+            }
+            else if (key_value == 0x20)
+            {
+                GTP_DEBUG("BTN_STYLUS Up, BTN_STYLUS2 Down.");
+                input_report_key(pen_dev, BTN_STYLUS, 0);
+                input_report_key(pen_dev, BTN_STYLUS2, 1);
+                pen_active = 1;
+            }
+            else
+            {
+                GTP_DEBUG("BTN_STYLUS & BTN_STYLUS2 Up.");
+                input_report_key(pen_dev, BTN_STYLUS, 0);
+                input_report_key(pen_dev, BTN_STYLUS2, 0);
+                if ( (pre_key == 0x40) || (pre_key == 0x20) ||
+                     (pre_key == 0x10) 
+                   )
+                {
+                    pen_active = 1;
+                }
+            }
+            if (pen_active)
+            {
+                touch_num = 0;      // shield pen point
+                //pre_touch = 0;    // clear last pen status
+            }
+        #endif
         #if GTP_HAVE_TOUCH_KEY
             if (!pre_touch)
             {
@@ -2722,32 +2722,6 @@ static int touch_event_handler(void *unused)
         #endif
         }
     #endif
-
- #ifdef TPD_HAVE_BUTTON	//add for touch vibration by wangqiang 20140408
-    	if (tpd_halt==0){
-    			key_value = point_data[3 + 8 * touch_num];
-			    if ((key_value == 0) && key1 != 0)
-			    {
-			        tpd_up2(0, 0);
-			        key1 = 0;
-			    }
-			    else if (key_value != 0)
-			    {
-			        key1 = key_value;
-			        for(count = 0; count < 4; count++)
-			        {
-			            if(key_value&(0x01<<count)) 
-			            {
-			                wrap_x =tpd_keys_dim_local[count][0];
-			                wrap_y = tpd_keys_dim_local[count][1];
-			                tpd_down2(wrap_x, wrap_y);
-			            }
-			        touch_num = 0;
-			        pre_touch = 0;
-			        }
-			    }
-			}
-		#endif
         pre_key = key_value;
 
         GTP_DEBUG("pre_touch:%02x, finger:%02x.", pre_touch, finger);
