@@ -1574,6 +1574,15 @@ sound/usb/misc/modules.order
 sound/usb/modules.order
 sound/usb/usx2y/modules.order
 usr/modules.order
+include/config/auto.conf
+include/config/kernel.release
+include/generated/autoconf.h
+include/generated/compile.h
+include/generated/utsrelease.h
+
+
+
+
 
 
 
