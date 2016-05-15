@@ -113,14 +113,14 @@ extern s32 i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf, in
 extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf, int len);
 
 //***************************PART1:ON/OFF define*******************************
-#define GTP_CUSTOM_CFG        1
-#define GTP_DRIVER_SEND_CFG   1       // driver send config to TP in intilization
+#define GTP_CUSTOM_CFG        0
+#define GTP_DRIVER_SEND_CFG   0       // driver send config to TP in intilization
 #define GTP_HAVE_TOUCH_KEY    1
 #define GTP_POWER_CTRL_SLEEP  0       // turn off/on power on suspend/resume
 
-#define GTP_AUTO_UPDATE       1       // auto updated fw by .bin file
-#define GTP_HEADER_FW_UPDATE  1       // auto updated fw by gtp_default_FW in gt9xx_firmware.h, function together with GTP_AUTO_UDPATE
-#define GTP_AUTO_UPDATE_CFG   1       // auto update config by .cfg file, function together with GTP_AUTO_UPDATE
+#define GTP_AUTO_UPDATE       0       // auto updated fw by .bin file
+#define GTP_HEADER_FW_UPDATE  0       // auto updated fw by gtp_default_FW in gt9xx_firmware.h, function together with GTP_AUTO_UDPATE
+#define GTP_AUTO_UPDATE_CFG   0       // auto update config by .cfg file, function together with GTP_AUTO_UPDATE
 
 #define GTP_SUPPORT_I2C_DMA   0       // if gt9xxf, better enable it if hardware platform supported
 #define GTP_COMPATIBLE_MODE   0       // compatible with GT9XXF
@@ -154,10 +154,16 @@ extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf
 #define TPD_HAVE_BUTTON            // report key as coordinate,Vibration feedback
 //#define TPD_WARP_X                  // mirrored x coordinate
 //#define TPD_WARP_Y                  // mirrored y coordinate
+<<<<<<< HEAD
 >>>>>>> parent of 6fc0f08... write cfg to touchscreen
 #define GTP_DEBUG_ON          1
 #define GTP_DEBUG_ARRAY_ON    1
 #define GTP_DEBUG_FUNC_ON     1
+=======
+#define GTP_DEBUG_ON          0
+#define GTP_DEBUG_ARRAY_ON    0
+#define GTP_DEBUG_FUNC_ON     0
+>>>>>>> parent of db4f851... write cfg to touchscreen
 
 
 #define TPD_FILTER_PARA {1, 146} //{enable, pixel density}
