@@ -114,14 +114,14 @@ extern s32 i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf, in
 extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf, int len);
 
 //***************************PART1:ON/OFF define*******************************
-#define GTP_CUSTOM_CFG        1
+#define GTP_CUSTOM_CFG        0
 #define GTP_DRIVER_SEND_CFG   1       // driver send config to TP in intilization
 #define GTP_HAVE_TOUCH_KEY    1
 #define GTP_POWER_CTRL_SLEEP  0       // turn off/on power on suspend/resume
 
-#define GTP_AUTO_UPDATE       1       // auto updated fw by .bin file
-#define GTP_HEADER_FW_UPDATE  1       // auto updated fw by gtp_default_FW in gt9xx_firmware.h, function together with GTP_AUTO_UDPATE
-#define GTP_AUTO_UPDATE_CFG   1       // auto update config by .cfg file, function together with GTP_AUTO_UPDATE
+#define GTP_AUTO_UPDATE       0       // auto updated fw by .bin file
+#define GTP_HEADER_FW_UPDATE  0       // auto updated fw by gtp_default_FW in gt9xx_firmware.h, function together with GTP_AUTO_UDPATE
+#define GTP_AUTO_UPDATE_CFG   0       // auto update config by .cfg file, function together with GTP_AUTO_UPDATE
 
 #define GTP_SUPPORT_I2C_DMA   0       // if gt9xxf, better enable it if hardware platform supported
 #define GTP_COMPATIBLE_MODE   0       // compatible with GT9XXF
@@ -303,7 +303,7 @@ typedef enum
     CHIP_TYPE_GT9F = 1,
 } CHIP_TYPE_T;
 #endif
-#define TPD_FILTER_PARA {1,160}
+
 #define GTP_REG_MATRIX_DRVNUM           0x8069
 #define GTP_REG_MATRIX_SENNUM           0x806A
 #define GTP_REG_RQST                    0x8043
