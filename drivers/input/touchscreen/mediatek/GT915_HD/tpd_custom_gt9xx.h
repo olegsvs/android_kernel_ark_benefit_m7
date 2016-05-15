@@ -136,13 +136,8 @@ extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf
 
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define TPD_PROXIMITY
 //#define TPD_HAVE_BUTTON             // report key as coordinate,Vibration feedback
-=======
-//#define TPD_PROXIMITY
-#define TPD_HAVE_BUTTON            // report key as coordinate,Vibration feedback
->>>>>>> parent of 6eeab97... write cfg to touchscreen
 =======
 //#define TPD_PROXIMITY
 #define TPD_HAVE_BUTTON            // report key as coordinate,Vibration feedback
