@@ -237,8 +237,28 @@ extern LCM_DRIVER nt35510_dsi_cmd_lcm_drv;
 extern LCM_DRIVER rm69032_dsi_cmd_lcm_drv;
 extern LCM_DRIVER st7789h2_dbi_lcm_drv;
 
+extern LCM_DRIVER hct_rm68200_dsi_vdo_hd_cpt;
+extern LCM_DRIVER hct_otm1282a_dsi_vdo_hd_auo;
+extern LCM_DRIVER hct_ili9881_dsi_vdo_hd_cpt;
+extern LCM_DRIVER hct_hx8394f_dsi_vdo_hd_cmi;
+
 LCM_DRIVER* lcm_driver_list[] =
 {
+#if defined(HCT_OTM1282A_DSI_VDO_HD_AUO)
+	&hct_otm1282a_dsi_vdo_hd_auo,
+#endif
+
+#if defined(HCT_HX8394F_DSI_VDO_HD_CMI)
+	&hct_hx8394f_dsi_vdo_hd_cmi,
+#endif
+
+#if defined(HCT_RM68200_DSI_VDO_HD_CPT)
+	&hct_rm68200_dsi_vdo_hd_cpt,
+#endif
+#if defined(HCT_ILI9881_DSI_VDO_HD_CPT)
+	&hct_ili9881_dsi_vdo_hd_cpt,
+#endif
+
 #if defined(OTM1284A_HD720_DSI_VDO_TM)
 	&otm1284a_hd720_dsi_vdo_tm_lcm_drv,
 #endif

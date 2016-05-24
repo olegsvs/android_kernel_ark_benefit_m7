@@ -26,7 +26,7 @@
 #include <linux/uaccess.h>
 #include <linux/fs.h>
 #include <asm/atomic.h>
-#include <asm/system.h>
+//#include <asm/system.h>
 #include <linux/xlog.h>
 
 #include "kd_camera_hw.h"
