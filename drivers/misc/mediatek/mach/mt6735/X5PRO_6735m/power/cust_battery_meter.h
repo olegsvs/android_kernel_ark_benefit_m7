@@ -7,8 +7,8 @@
 // define
 // ============================================================
 //#define SOC_BY_AUXADC
-//#define SOC_BY_HW_FG //100%
-#define SOC_BY_SW_FG
+#define SOC_BY_HW_FG
+//#define SOC_BY_SW_FG
 
 //#define CONFIG_DIS_CHECK_BATTERY
 //#define FIXED_TBAT_25
@@ -28,15 +28,15 @@
 #define FG_METER_RESISTANCE 	0
 
 /* Qmax for battery  */
-#define Q_MAX_POS_50	1952
-#define Q_MAX_POS_25	1906
-#define Q_MAX_POS_0	1952
-#define Q_MAX_NEG_10	1975
+#define Q_MAX_POS_50	((1872+1812)/2)	// 1872
+#define Q_MAX_POS_25	((1860+1800)/2)	// 1860
+#define Q_MAX_POS_0	((1736+1680)/2)	// 1736
+#define Q_MAX_NEG_10	((1653+1600)/2)	// 1653
 
-#define Q_MAX_POS_50_H_CURRENT	1837
-#define Q_MAX_POS_25_H_CURRENT	1889
-#define Q_MAX_POS_0_H_CURRENT	1837
-#define Q_MAX_NEG_10_H_CURRENT	1603
+#define Q_MAX_POS_50_H_CURRENT	((1842+1783)/2)	// 1842
+#define Q_MAX_POS_25_H_CURRENT	((1807+1749)/2)	// 1807
+#define Q_MAX_POS_0_H_CURRENT	((1568+1518)/2)	// 1568
+#define Q_MAX_NEG_10_H_CURRENT	((852+825)/2)	// 852
 
 
 /* Discharge Percentage */
@@ -58,7 +58,7 @@
 #define OCV_BOARD_COMPESATE	0 //mV 
 #define R_FG_BOARD_BASE		1000
 #define R_FG_BOARD_SLOPE	1000 //slope
-#define CAR_TUNE_VALUE		100 //1.00
+#define CAR_TUNE_VALUE		84 //1.00
 
 
 /* HW Fuel gague  */
