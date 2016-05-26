@@ -127,7 +127,7 @@ FHD   1920x1080  2key ( (160,2100);(920,2100) )           3key  ( (160,2100);(54
 #define TPD_DELAY                		(2*HZ/100)
 #define TPD_RES_X                		720
 #define TPD_RES_Y                		1280
-#define TPD_CALIBRATION_MATRIX  		{962,0,0,0,1600,0,0,0};
+//#define TPD_CALIBRATION_MATRIX  		{962,0,0,0,1600,0,0,0};
 
 //#define TPD_HAVE_CALIBRATION
 //#define TPD_HAVE_TREMBLE_ELIMINATION
