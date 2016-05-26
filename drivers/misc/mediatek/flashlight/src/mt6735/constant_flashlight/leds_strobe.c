@@ -105,22 +105,34 @@ extern void sgm3785_FL_Enable(int duty);
 #endif
 //=========================
 
-//#define GPIO_CAMERA_FLASH_EN_PIN GPIO44
-//#define GPIO_CAMERA_FLASH_MODE_PIN GPIO43
+
 int FL_Enable(void)
 {
-
-#define FLASH_GPIO (43)
-mt_set_gpio_mode(FLASH_GPIO, 0);
-mt_set_gpio_dir(FLASH_GPIO, GPIO_DIR_OUT);
-mt_set_gpio_out(FLASH_GPIO, GPIO_OUT_ONE);
-/*
+	int i;
+#if defined(CONFIG_HCT_LED_SGM3785)
+	sgm3785_FL_Enable(g_duty);		
+#else
 #if defined(GPIO_CAMERA_FLASH_EN_PIN)
 	if(mt_set_gpio_mode(GPIO_CAMERA_FLASH_EN_PIN,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set enf gpio mode failed!! \n");}
 	if(mt_set_gpio_mode(GPIO_CAMERA_FLASH_MODE_PIN,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set enf gpio mode failed!! \n");}
 	if(mt_set_gpio_dir(GPIO_CAMERA_FLASH_EN_PIN,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set  enf gpio dir failed!! \n");}
 	if(mt_set_gpio_dir(GPIO_CAMERA_FLASH_MODE_PIN,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set  enf gpio dir failed!! \n");}
+	#if defined(CONFIG_AW_FLASH_LED_LONGTIME_SUPPORT)
+        mt_set_gpio_out(GPIO_CAMERA_FLASH_EN_PIN,GPIO_OUT_ZERO);
+	mdelay(1);
+
+	
+	for(i=1;i<=9;i++)
+	{	
+		mt_set_gpio_out(GPIO_CAMERA_FLASH_EN_PIN,GPIO_OUT_ZERO);
+		udelay(2);
+		mt_set_gpio_out(GPIO_CAMERA_FLASH_EN_PIN,GPIO_OUT_ONE);
+		udelay(2);
+
+	}
+	#else
 	mt_set_gpio_out(GPIO_CAMERA_FLASH_EN_PIN,GPIO_OUT_ONE);
+	#endif
 
 	if(g_duty > 0)//flashlight mode
 		mt_set_gpio_out(GPIO_CAMERA_FLASH_MODE_PIN,GPIO_OUT_ONE);
@@ -134,7 +146,7 @@ mt_set_gpio_out(FLASH_GPIO, GPIO_OUT_ONE);
 	if(mt_set_gpio_dir(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set  enf gpio dir failed!! \n");}
 	mt_set_gpio_out(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_OUT_ONE);
 #endif
-*/
+
     PK_DBG(" FL_Enable line=%d\n",__LINE__);
     return 0;
 }
@@ -143,8 +155,6 @@ mt_set_gpio_out(FLASH_GPIO, GPIO_OUT_ONE);
 
 int FL_Disable(void)
 {
-mt_set_gpio_out(FLASH_GPIO, GPIO_OUT_ZERO);
-/*
 #if defined(CONFIG_HCT_LED_SGM3785)
 	sgm3785_FL_Disable();
 #else
@@ -163,7 +173,7 @@ mt_set_gpio_out(FLASH_GPIO, GPIO_OUT_ZERO);
 	if(mt_set_gpio_dir(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set  enf gpio dir failed!! \n");}
 	mt_set_gpio_out(GPIO_CAMERA_FLASH_EXT1_PIN,GPIO_OUT_ZERO);
 #endif
-*/
+
 	PK_DBG(" FL_Disable line=%d\n",__LINE__);
     return 0;
 }
@@ -221,13 +231,14 @@ static struct hrtimer g_timeOutTimer;
 void timerInit(void)
 {
 	static int init_flag;
-	if (init_flag==0){
+	if (init_flag==0)
+	{
 		init_flag=1;
-  INIT_WORK(&workTimeOut, work_timeOutFunc);
-	g_timeOutTimeMs=1000; //1s
-	hrtimer_init( &g_timeOutTimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL );
-	g_timeOutTimer.function=ledTimeOutCallback;
-}
+	 	INIT_WORK(&workTimeOut, work_timeOutFunc);
+		g_timeOutTimeMs=1000; //1s
+		hrtimer_init( &g_timeOutTimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL );
+		g_timeOutTimer.function=ledTimeOutCallback;
+	}
 }
 
 
@@ -266,7 +277,6 @@ static int constant_flashlight_ioctl(unsigned int cmd, unsigned long arg)
     		PK_DBG("FLASHLIGHT_ONOFF: %d\n",(int)arg);
     		if(arg==1)
     		{
-
     		    int s;
     		    int ms;
     		    if(g_timeOutTimeMs>1000)

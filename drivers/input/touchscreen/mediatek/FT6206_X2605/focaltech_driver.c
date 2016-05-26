@@ -750,7 +750,7 @@ static  void tpd_down(int x, int y, int p) {
 	if(x > TPD_RES_X)
 	{
 		TPD_DEBUG("warning: IC have sampled wrong value.\n");;
-		return;
+//		return;
 	}
 	 input_report_key(tpd->dev, BTN_TOUCH, 1);
 	 input_report_abs(tpd->dev, ABS_MT_TOUCH_MAJOR, 20);
