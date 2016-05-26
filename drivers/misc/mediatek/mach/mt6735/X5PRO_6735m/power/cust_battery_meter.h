@@ -7,8 +7,8 @@
 // define
 // ============================================================
 //#define SOC_BY_AUXADC
-#define SOC_BY_HW_FG
-//#define SOC_BY_SW_FG
+//#define SOC_BY_HW_FG
+#define SOC_BY_SW_FG
 
 //#define CONFIG_DIS_CHECK_BATTERY
 //#define FIXED_TBAT_25
