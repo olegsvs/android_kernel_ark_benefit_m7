@@ -25,7 +25,7 @@
 *                C O M P I L E R      F L A G S
 ******************************************************************************
 */
-#define CONFIG_DEBUG_MSG
+//#define CONFIG_DEBUG_MSG
 #ifdef CONFIG_DEBUG_MSG
 #define PRINTK(format, args...) printk( KERN_EMERG format,##args )
 #else
@@ -71,12 +71,7 @@ bool Speaker_Init(void)
 #elif defined(AMP_CLASS_D)
 
 #endif
-   //by zhu
-   mt_set_gpio_mode(GPIO_EXT_SPKAMP_EN_PIN,GPIO_MODE_00);  // gpio mode
-   mt_set_gpio_pull_enable(GPIO_EXT_SPKAMP_EN_PIN,GPIO_PULL_ENABLE);
-   mt_set_gpio_dir(GPIO_EXT_SPKAMP_EN_PIN,GPIO_DIR_OUT); // output
-   mt_set_gpio_out(GPIO_EXT_SPKAMP_EN_PIN,GPIO_OUT_ZERO); // high
-//by zhu end
+   
    PRINTK("-Speaker_Init Success");
    return true;
 }
@@ -109,12 +104,8 @@ void Sound_SpeakerR_SetVolLevel(int level)
 void Sound_Speaker_Turnon(int channel)
 {
     PRINTK("Sound_Speaker_Turnon channel = %d\n",channel);
-//by zhu
     if(gsk_on)
-		return;
-    mt_set_gpio_dir(GPIO_EXT_SPKAMP_EN_PIN,GPIO_DIR_OUT); // output
-    mt_set_gpio_out(GPIO_EXT_SPKAMP_EN_PIN,GPIO_OUT_ONE); // high
-    msleep(SPK_WARM_UP_TIME);//by zhu
+        return;
 #if defined(ENABLE_2_IN_1_SPK)
 #if defined(AMP_CLASS_D)
 
@@ -139,11 +130,6 @@ void Sound_Speaker_Turnoff(int channel)
 #elif defined(AMP_CLASS_D)
 
 #endif
-//by zhu
-    mt_set_gpio_dir(GPIO_EXT_SPKAMP_EN_PIN,GPIO_DIR_OUT); // output
-    mt_set_gpio_out(GPIO_EXT_SPKAMP_EN_PIN,GPIO_OUT_ZERO); // low
-    msleep(500);
-//by zhu
 	gsk_on = false;
 }
 

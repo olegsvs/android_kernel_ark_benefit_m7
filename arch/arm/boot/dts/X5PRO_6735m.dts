@@ -6,7 +6,7 @@
 / {
   memory@00000000 {
 		device_type = "memory";
-		reg = <0 0x40000000 0 0x1F000000>;
+		reg = <0 0x40000000 0 0x3F000000>;
 	};
 
 	bus {
@@ -21,4 +21,7 @@
 		};
 
   };
+	mt-extmem@0 {
+		compatible = "mediatek,mt-extmem";
+	};	
 };

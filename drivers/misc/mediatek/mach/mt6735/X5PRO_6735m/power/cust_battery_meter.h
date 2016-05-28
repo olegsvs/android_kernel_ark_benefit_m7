@@ -7,7 +7,8 @@
 // define
 // ============================================================
 //#define SOC_BY_AUXADC
-//#define SOC_BY_HW_FG
+#define SOC_BY_HW_FG
+//#define HW_FG_FORCE_USE_SW_OCV
 #define SOC_BY_SW_FG
 
 //#define CONFIG_DIS_CHECK_BATTERY
@@ -27,6 +28,19 @@
 
 #define FG_METER_RESISTANCE 	0
 
+#if defined(CONFIG_NCP1854_DUAL_SUPPORT)
+/* Qmax for battery  */
+#define Q_MAX_POS_50   5700 //5743
+#define Q_MAX_POS_25   5700 //5734
+#define Q_MAX_POS_0    5564
+#define Q_MAX_NEG_10   5564 //5439
+
+#define Q_MAX_POS_50_H_CURRENT 5700 //5720
+#define Q_MAX_POS_25_H_CURRENT 5700 //5720
+#define Q_MAX_POS_0_H_CURRENT  5439 //5564
+#define Q_MAX_NEG_10_H_CURRENT 5439
+
+#else
 /* Qmax for battery  */
 #define Q_MAX_POS_50	((1872+1812)/2)	// 1872
 #define Q_MAX_POS_25	((1860+1800)/2)	// 1860
@@ -37,7 +51,7 @@
 #define Q_MAX_POS_25_H_CURRENT	((1807+1749)/2)	// 1807
 #define Q_MAX_POS_0_H_CURRENT	((1568+1518)/2)	// 1568
 #define Q_MAX_NEG_10_H_CURRENT	((852+825)/2)	// 852
-
+#endif
 
 /* Discharge Percentage */
 #define OAM_D5		 1		//  1 : D5,   0: D2
@@ -50,7 +64,13 @@
 #else
 #define CUST_TRACKING_POINT  1
 #endif
-#define CUST_R_SENSE         10//20//20mO for k05ss
+#if defined(CONFIG_T93_PROJ)
+#define CUST_R_SENSE         56
+#elif defined(CONFIG_T875_PROJ)
+#define CUST_R_SENSE         30
+#else
+#define CUST_R_SENSE         68
+#endif
 #define CUST_HW_CC 		    0
 #define AGING_TUNING_VALUE   103
 #define CUST_R_FG_OFFSET    0
@@ -58,7 +78,13 @@
 #define OCV_BOARD_COMPESATE	0 //mV 
 #define R_FG_BOARD_BASE		1000
 #define R_FG_BOARD_SLOPE	1000 //slope
-#define CAR_TUNE_VALUE		84 //1.00
+#if defined(CONFIG_T93_PROJ)
+#define CAR_TUNE_VALUE		84	//100 //1.00
+#elif defined(CONFIG_T875_PROJ)
+#define CAR_TUNE_VALUE		86
+#else
+#define CAR_TUNE_VALUE		100 //1.00
+#endif
 
 
 /* HW Fuel gague  */
@@ -95,8 +121,8 @@
 #define DIFFERENCE_HWOCV_VBAT		30
 
 /* fg 1.0 */
-#define CUST_POWERON_DELTA_CAPACITY_TOLRANCE	5//30
-#define CUST_POWERON_LOW_CAPACITY_TOLRANCE		5
+#define CUST_POWERON_DELTA_CAPACITY_TOLRANCE	15
+#define CUST_POWERON_LOW_CAPACITY_TOLRANCE		10
 #define CUST_POWERON_MAX_VBAT_TOLRANCE			90
 #define CUST_POWERON_DELTA_VBAT_TOLRANCE		30
 #define CUST_POWERON_DELTA_HW_SW_OCV_CAPACITY_TOLRANCE	10
