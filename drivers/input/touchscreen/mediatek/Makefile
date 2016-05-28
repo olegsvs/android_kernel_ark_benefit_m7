@@ -144,6 +144,11 @@ endif
 ifeq ($(CONFIG_MTK_GT911),y)
 obj-y	+=  GT911/
 endif
+
+ifeq ($(CONFIG_TOUCHSCREEN_MTK_FT_ALLINONE_GESTURE),y)
+obj-y	+=  ft_allinone_gesture/
+endif
+
 ifeq ($(CONFIG_MTK_GT915_HD),y)
 obj-y	+=  GT915_HD/
 endif

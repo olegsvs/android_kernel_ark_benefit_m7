@@ -25,23 +25,40 @@
 #include <linux/hwmsen_dev.h>
 #include <linux/sensors_io.h>
 #endif
-#include <mach/eint.h>
+
 #include "cust_gpio_usage.h"
+#ifdef CONFIG_OF_TOUCH
+#include <linux/of.h>
+#include <linux/of_irq.h>
+#endif
+#include <mach/battery_common.h>
 
+#include <linux/dma-mapping.h>
 
-  struct Upgrade_Info fts_updateinfo[] =
+#if defined(CONFIG_HCT_TP_GESTRUE)
+#define GTP_GESTURE_WAKEUP    1
+#else
+#define GTP_GESTURE_WAKEUP    0
+#endif
+
+#if GTP_GESTURE_WAKEUP
+static char tpgesture_value[10]={};
+static char tpgesture_status_value[5] = {};
+static char tpgesture_status = 1;
+#endif
+
+struct Upgrade_Info fts_updateinfo[] =
 {
-        {0x55,"FT5x06",TPD_MAX_POINTS_5,AUTO_CLB_NEED,50, 30, 0x79, 0x03, 1, 2000},
-        {0x08,"FT5606",TPD_MAX_POINTS_5,AUTO_CLB_NEED,50, 30, 0x79, 0x06, 100, 2000},
+	{0x55,"FT5x06",TPD_MAX_POINTS_5,AUTO_CLB_NEED,50, 30, 0x79, 0x03, 1, 2000},
+	{0x08,"FT5606",TPD_MAX_POINTS_5,AUTO_CLB_NEED,50, 30, 0x79, 0x06, 100, 2000},
 	{0x0a,"FT5x16",TPD_MAX_POINTS_5,AUTO_CLB_NEED,50, 30, 0x79, 0x07, 1, 1500},
 	{0x05,"FT6208",TPD_MAX_POINTS_2,AUTO_CLB_NONEED,60, 30, 0x79, 0x05, 10, 2000},
 	{0x06,"FT6x06",TPD_MAX_POINTS_2,AUTO_CLB_NONEED,100, 30, 0x79, 0x08, 10, 2000},
-	{0x36,"FT6x36",TPD_MAX_POINTS_2,AUTO_CLB_NONEED,100, 30, 0x79, 0x18, 10, 2000},//CHIP ID error
 	{0x55,"FT5x06i",TPD_MAX_POINTS_5,AUTO_CLB_NEED,50, 30, 0x79, 0x03, 1, 2000},
-	{0x14,"FT5336",TPD_MAX_POINTS_5,AUTO_CLB_NONEED,30, 30, 0x79, 0x11, 10, 2000},
-	{0x13,"FT3316",TPD_MAX_POINTS_5,AUTO_CLB_NONEED,30, 30, 0x79, 0x11, 10, 2000},
-	{0x12,"FT5436i",TPD_MAX_POINTS_5,AUTO_CLB_NONEED,30, 30, 0x79, 0x11, 10, 2000},
-	{0x11,"FT5336i",TPD_MAX_POINTS_5,AUTO_CLB_NONEED,30, 30, 0x79, 0x11, 10, 2000},
+	{0x14,"FT5336",TPD_MAX_POINTS_5,AUTO_CLB_NEED,30, 30, 0x79, 0x11, 10, 2000},
+	{0x13,"FT3316",TPD_MAX_POINTS_5,AUTO_CLB_NEED,30, 30, 0x79, 0x11, 10, 2000},
+	{0x12,"FT5436i",TPD_MAX_POINTS_5,AUTO_CLB_NEED,30, 30, 0x79, 0x11, 10, 2000},
+	{0x11,"FT5336i",TPD_MAX_POINTS_5,AUTO_CLB_NEED,30, 30, 0x79, 0x11, 10, 2000},
 };
 				
 struct Upgrade_Info fts_updateinfo_curr;
@@ -57,11 +74,11 @@ static u8 tpd_proximity_detect 		= 1;//0-->close ; 1--> far away
 #endif
 
 #ifdef FTS_GESTRUE
-#define GESTURE_LEFT		0x20
-#define GESTURE_RIGHT		0x21
-#define GESTURE_UP		    0x22
-#define GESTURE_DOWN		0x23
-#define GESTURE_DOUBLECLICK	0x24
+#define GESTURE_LEFT			0x20
+#define GESTURE_RIGHT			0x21
+#define GESTURE_UP		    	0x22
+#define GESTURE_DOWN			0x23
+#define GESTURE_DOUBLECLICK		0x24
 #define GESTURE_O		    0x30
 #define GESTURE_W		    0x31
 #define GESTURE_M		    0x32
@@ -87,25 +104,24 @@ unsigned short coordinate_y[150] = {0};
 extern struct tpd_device *tpd;
  
 static struct i2c_client *i2c_client = NULL;
-struct task_struct *thread = NULL;
+static struct task_struct *thread = NULL;
  
 static DECLARE_WAIT_QUEUE_HEAD(waiter);
 static DEFINE_MUTEX(i2c_access);
+ #ifdef CONFIG_OF_TOUCH
+unsigned int touch_irq = 0;
+u8 int_type = 0;
+#endif
  
- 
+#ifdef CONFIG_OF_TOUCH
+static irqreturn_t tpd_eint_interrupt_handler(unsigned irq, struct irq_desc *desc);
+#else
 static void tpd_eint_interrupt_handler(void);
-// start:Here maybe need port to different platform,like MT6575/MT6577
-extern void mt_eint_unmask(unsigned int line);
-extern void mt_eint_mask(unsigned int line);
-extern void mt_eint_set_hw_debounce(unsigned int eint_num, unsigned int ms);
-//extern unsigned int mt65xx_eint_set_sens(unsigned int eint_num, unsigned int sens);
-//extern void mt65xx_eint_registration(unsigned int eint_num, unsigned int is_deb_en, unsigned int pol, void (EINT_FUNC_PTR)(void), unsigned int is_auto_umask);
-extern void mt_eint_registration(unsigned int eint_num, unsigned int flow, void (EINT_FUNC_PTR)(void), unsigned int is_auto_umask);
-// End:Here maybe need port to different platform,like MT6575/MT6577
+#endif
  
 static int tpd_probe(struct i2c_client *client, const struct i2c_device_id *id);
 static int tpd_detect (struct i2c_client *client, struct i2c_board_info *info);
-static int tpd_remove(struct i2c_client *client);
+static int  tpd_remove(struct i2c_client *client);
 static int touch_event_handler(void *unused);
 
 static int tpd_flag 					= 0;
@@ -113,7 +129,9 @@ static int tpd_halt						= 0;
 static int point_num 					= 0;
 static int p_point_num 					= 0;
 
-
+u8 *I2CDMABuf_va = NULL;
+//volatile u32 I2CDMABuf_pa = NULL;
+dma_addr_t I2CDMABuf_pa = 0;
 
 //#define TPD_CLOSE_POWER_IN_SLEEP
 #define TPD_OK 							0
@@ -135,7 +153,8 @@ static int p_point_num 					= 0;
 
 #ifdef TPD_HAVE_BUTTON 
 static int tpd_keys_local[TPD_KEY_COUNT] = TPD_KEYS;
-static int tpd_keys_dim_local[TPD_KEY_COUNT][4] = TPD_KEYS_DIM;
+static int tpd_keys_dim_local_fwvga[TPD_KEY_COUNT][4] = TPD_KEYS_DIM_FWVGA;
+static int tpd_keys_dim_local_qhd[TPD_KEY_COUNT][4] = TPD_KEYS_DIM_QHD;
 #endif
 #if (defined(TPD_WARP_START) && defined(TPD_WARP_END))
 static int tpd_wb_start_local[TPD_WARP_CNT] = TPD_WARP_START;
@@ -306,13 +325,26 @@ static  void tpd_down(int x, int y, int p) {
 	// input_report_abs(tpd->dev, ABS_PRESSURE, p);
 	input_report_key(tpd->dev, BTN_TOUCH, 1);
 	input_report_abs(tpd->dev, ABS_MT_TOUCH_MAJOR, 20);
+#if defined(HCT_TPD_ROTATION)
+	if(y<TPD_RES_Y)
+	{
+		input_report_abs(tpd->dev, ABS_MT_POSITION_X, TPD_RES_X-x);
+		input_report_abs(tpd->dev, ABS_MT_POSITION_Y, TPD_RES_Y-y);
+	}
+	else
+	{
+	    input_report_abs(tpd->dev, ABS_MT_POSITION_X, x);
+    	input_report_abs(tpd->dev, ABS_MT_POSITION_Y, y);
+	}
+#else	
 	input_report_abs(tpd->dev, ABS_MT_POSITION_X, x);
 	input_report_abs(tpd->dev, ABS_MT_POSITION_Y, y);
-	printk("D[%4d %4d %4d] ", x, y, p);
+#endif
+	//printk("D[%4d %4d %4d] ", x, y, p);
 	/* track id Start 0 */
 	input_report_abs(tpd->dev, ABS_MT_TRACKING_ID, p); 
 	input_mt_sync(tpd->dev);
-#ifndef MT6572
+#if 1//ndef MT6572
     if (FACTORY_BOOT == get_boot_mode()|| RECOVERY_BOOT == get_boot_mode())
 #endif	
     {   
@@ -327,10 +359,10 @@ static  void tpd_up(int x, int y) {
 	//input_report_abs(tpd->dev, ABS_MT_TOUCH_MAJOR, 0);
 	//input_report_abs(tpd->dev, ABS_MT_POSITION_X, x);
 	//input_report_abs(tpd->dev, ABS_MT_POSITION_Y, y);
-	printk("U[%4d %4d %4d] ", x, y, 0);
+	//printk("U[%4d %4d %4d] ", x, y, 0);
 	input_mt_sync(tpd->dev);
 	TPD_EM_PRINT(x, y, x, y, 0, 0);
-#ifndef MT6572
+#if 1//ndef MT6572
     if (FACTORY_BOOT == get_boot_mode()|| RECOVERY_BOOT == get_boot_mode())
 #endif
     {   
@@ -346,7 +378,7 @@ static int tpd_touchinfo(struct touch_info *cinfo, struct touch_info *pinfo)
 //#else
 //	char data[16] = {0};
 //#endif	
-char data[128] = {0};
+    char data[128] = {0};
     u16 high_byte,low_byte,reg;
 	u8 report_rate =0;
 
@@ -382,7 +414,7 @@ char data[128] = {0};
 		high_byte &= 0x0f00;
 		low_byte = data[3+6*i + 1];
 		cinfo->x[i] = high_byte |low_byte;
-		
+
 		//cinfo->x[i] =  cinfo->x[i] * 480 >> 11; //calibra
 	
 		/*get the Y coordinate, 2 bytes*/
@@ -392,12 +424,6 @@ char data[128] = {0};
 		high_byte &= 0x0f00;
 		low_byte = data[3+6*i+3];
 		cinfo->y[i] = high_byte |low_byte;
-
-		if (cinfo->y[i] <= TPD_Y_RES) 	//jeff add 20140820
-		{	
-			cinfo->x[i] = TPD_WARP_X(cinfo->x[i]);
-			cinfo->y[i] = TPD_WARP_Y(cinfo->y[i]);
-		}
 
 		 //cinfo->y[i]=  cinfo->y[i] * 800 >> 11;
 	}
@@ -525,6 +551,7 @@ int tpd_ps_operate(void* self, uint32_t command, void* buff_in, int size_in,
 #endif
 
 #ifdef FTS_GESTRUE
+/*
 static void check_gesture(int gesture_id)
 {
 	
@@ -532,89 +559,141 @@ static void check_gesture(int gesture_id)
     
 	switch(gesture_id)
 	{
-		case GESTURE_LEFT:
-		      input_report_key(tpd->dev, KEY_LEFT, 1);
+		case GESTURE_LEFT:		     
+			input_report_key(tpd->dev, KEY_POWER, 1);
+			    input_sync(tpd->dev);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
+			    input_sync(tpd->dev);
+		     	    input_report_key(tpd->dev, KEY_LEFT, 1);
 			    input_sync(tpd->dev);
 			     input_report_key(tpd->dev, KEY_LEFT, 0);
 			    input_sync(tpd->dev);
 			break;
-		case GESTURE_RIGHT:
-		       input_report_key(tpd->dev, KEY_RIGHT, 1);
+		case GESTURE_RIGHT:	
+			input_report_key(tpd->dev, KEY_POWER, 1);
+			    input_sync(tpd->dev);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
+			    input_sync(tpd->dev);
+  			input_report_key(tpd->dev, KEY_RIGHT, 1);
 			    input_sync(tpd->dev);
 			     input_report_key(tpd->dev, KEY_RIGHT, 0);
 			    input_sync(tpd->dev);
-			    
+ 
 			break;
-		case GESTURE_UP:
+		case GESTURE_UP:	
+			input_report_key(tpd->dev, KEY_POWER, 1);
+			    input_sync(tpd->dev);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
+			    input_sync(tpd->dev);
 			input_report_key(tpd->dev, KEY_UP, 1);
 			    input_sync(tpd->dev);
 			     input_report_key(tpd->dev, KEY_UP, 0);
 			    input_sync(tpd->dev);
 			    
 			break;
-		case GESTURE_DOWN:
-			input_report_key(tpd->dev, KEY_DOWN, 1);
+		case GESTURE_DOWN:	
+			input_report_key(tpd->dev, KEY_POWER, 1);
+			    input_sync(tpd->dev);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
+			    input_sync(tpd->dev);		
+				input_report_key(tpd->dev, KEY_DOWN, 1);
 			    input_sync(tpd->dev);
 			     input_report_key(tpd->dev, KEY_DOWN, 0);
 			    input_sync(tpd->dev);
+		    
+			break;
+		case GESTURE_DOUBLECLICK:	
+				input_report_key(tpd->dev, KEY_POWER, 1);
+			    input_sync(tpd->dev);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
+			    input_sync(tpd->dev);
+	//		input_report_key(tpd->dev, KEY_U, 1);
+	//		    input_sync(tpd->dev);
+	//		     input_report_key(tpd->dev, KEY_U, 0);
+	//		    input_sync(tpd->dev);
 			    
 			break;
-		case GESTURE_DOUBLECLICK:
-			input_report_key(tpd->dev, KEY_U, 1);
+		case GESTURE_O:	
+			input_report_key(tpd->dev, KEY_POWER, 1);
 			    input_sync(tpd->dev);
-			     input_report_key(tpd->dev, KEY_U, 0);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
 			    input_sync(tpd->dev);
-			    
-			break;
-		case GESTURE_O:
-			input_report_key(tpd->dev, KEY_O, 1);
+					input_report_key(tpd->dev, KEY_O, 1);
 			    input_sync(tpd->dev);
-			     input_report_key(tpd->dev, KEY_O, 0);
+			    input_report_key(tpd->dev, KEY_O, 0);
 			    input_sync(tpd->dev);
 			break;
-		case GESTURE_W:
-			input_report_key(tpd->dev, KEY_W, 1);
+		case GESTURE_W:			
+			input_report_key(tpd->dev, KEY_POWER, 1);
+			    input_sync(tpd->dev);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
+			    input_sync(tpd->dev);
+				input_report_key(tpd->dev, KEY_W, 1);
 			    input_sync(tpd->dev);
 			     input_report_key(tpd->dev, KEY_W, 0);
 			    input_sync(tpd->dev);
 			    
 			break;
-		case GESTURE_M:
-		input_report_key(tpd->dev, KEY_M, 1);
+		case GESTURE_M:		
+			input_report_key(tpd->dev, KEY_POWER, 1);
+			    input_sync(tpd->dev);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
+			    input_sync(tpd->dev);
+				input_report_key(tpd->dev, KEY_M, 1);
 			    input_sync(tpd->dev);
 			     input_report_key(tpd->dev, KEY_M, 0);
 			    input_sync(tpd->dev);
 			    
 			break;
-		case GESTURE_E:
-			input_report_key(tpd->dev, KEY_E, 1);
+		case GESTURE_E:		
+				input_report_key(tpd->dev, KEY_POWER, 1);
+			    input_sync(tpd->dev);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
+			    input_sync(tpd->dev);
+				input_report_key(tpd->dev, KEY_E, 1);
 			    input_sync(tpd->dev);
 			     input_report_key(tpd->dev, KEY_E, 0);
 			    input_sync(tpd->dev);
 			    
 			break;
-		case GESTURE_C:
-			input_report_key(tpd->dev, KEY_C, 1);
+		case GESTURE_C:		
+			input_report_key(tpd->dev, KEY_POWER, 1);
+			    input_sync(tpd->dev);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
+			    input_sync(tpd->dev);
+				input_report_key(tpd->dev, KEY_C, 1);
 			 input_sync(tpd->dev);
 			 input_report_key(tpd->dev, KEY_C, 0);
 			 input_sync(tpd->dev);
 			break;
 
-		case GESTURE_S:
-		input_report_key(tpd->dev, KEY_S, 1);
+		case GESTURE_S:		
+			input_report_key(tpd->dev, KEY_POWER, 1);
+			    input_sync(tpd->dev);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
+			    input_sync(tpd->dev);
+			input_report_key(tpd->dev, KEY_S, 1);
 		 input_sync(tpd->dev);
 		 input_report_key(tpd->dev, KEY_S, 0);
 		 input_sync(tpd->dev);
 		break;
 
 		case GESTURE_V:
-		input_report_key(tpd->dev, KEY_V, 1);
+			input_report_key(tpd->dev, KEY_POWER, 1);
+			    input_sync(tpd->dev);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
+			    input_sync(tpd->dev);
+				input_report_key(tpd->dev, KEY_V, 1);
 		 input_sync(tpd->dev);
 		 input_report_key(tpd->dev, KEY_V, 0);
 		 input_sync(tpd->dev);
 		break;
 
-		case GESTURE_Z:
+		case GESTURE_Z:	
+			input_report_key(tpd->dev, KEY_POWER, 1);
+			    input_sync(tpd->dev);
+			     input_report_key(tpd->dev, KEY_POWER, 0);
+			    input_sync(tpd->dev);
 		input_report_key(tpd->dev, KEY_Z, 1);
 		 input_sync(tpd->dev);
 		 input_report_key(tpd->dev, KEY_Z, 0);
@@ -624,7 +703,81 @@ static void check_gesture(int gesture_id)
 		
 			break;
 	}
+}
+*/
+extern void tpgesture_hander();
+static void check_gesture(int gesture_id)
+{	
+    printk("kaka gesture_id==0x%x\n ",gesture_id);
+    
+	switch(gesture_id)
+	{
+		case GESTURE_DOUBLECLICK:
+            		sprintf(tpgesture_value,"DOUBCLICK");
+			tpgesture_hander();
+			break;
 
+		case GESTURE_UP:
+            		sprintf(tpgesture_value,"UP");
+			tpgesture_hander();
+			break;
+
+		case GESTURE_DOWN:
+			sprintf(tpgesture_value,"DOWN");
+			tpgesture_hander();
+			break;
+
+		case GESTURE_LEFT:
+			sprintf(tpgesture_value,"LEFT");
+			tpgesture_hander();
+			break;
+
+		case GESTURE_RIGHT:
+			sprintf(tpgesture_value,"RIGHT");
+			tpgesture_hander();
+			break;
+
+		case GESTURE_C:
+			sprintf(tpgesture_value,"c");
+			tpgesture_hander();
+			break;
+
+		case GESTURE_O:
+			sprintf(tpgesture_value,"o");
+			tpgesture_hander();
+			break;
+
+		case GESTURE_W:
+			sprintf(tpgesture_value,"w");
+			tpgesture_hander();
+			break;
+
+		case GESTURE_E:
+			sprintf(tpgesture_value,"e");
+			tpgesture_hander();
+			break;
+
+		case GESTURE_V:
+			sprintf(tpgesture_value,"v");
+			tpgesture_hander();
+			break;
+
+		case GESTURE_M:
+			sprintf(tpgesture_value,"m");
+			tpgesture_hander();
+			break;
+
+		case GESTURE_Z:
+			sprintf(tpgesture_value,"z");
+			tpgesture_hander();
+			break;
+		case GESTURE_S:
+			sprintf(tpgesture_value,"s");
+			tpgesture_hander();
+			break;
+		default:		
+			break;
+	}
 }
 
 static int ft5x0x_read_Touchdata(void)
@@ -641,26 +794,34 @@ static int ft5x0x_read_Touchdata(void)
         printk( "%s read touchdata failed.\n", __func__);
         return ret;
     }
-    /* FW ?¡À?¨®??3?¨º?¨º? */
-    if (0x24 == buf[0])
+    /* FW ?Â±?Ã³??3?Ãª?Ãª? */
+  //  if (0x24 == buf[0] || 0x20 == buf[0] || 0x21 == buf[0] || 0x22 == buf[0] || 0x23 == buf[0])
+     printk("%s lsm--buf[0]=%x .\n",__func__,buf[0]);
+    if(buf[0]!=0xfe)
     {
-        gestrue_id = 0x24;
+        gestrue_id =  buf[0];
         check_gesture(gestrue_id);
         return -1;
     }
 
     pointnum = (short)(buf[1]) & 0xff;
     buf[0] = 0xd3;
+    if((pointnum * 4 + 2+6)<255)
+    {
+    ret = fts_i2c_Read(i2c_client, buf, 1, buf, (pointnum * 4 + 2 + 6));
+    }
+    else
+    {
+         ret = fts_i2c_Read(i2c_client, buf, 1, buf, 255);
+          ret = fts_i2c_Read(i2c_client, buf, 0, buf+255, (pointnum * 4 + 2 +6)-255);
 
-    ret = fts_i2c_Read(i2c_client, buf, 1, buf, (pointnum * 4 + 2));
+    }
     if (ret < 0)
     {
         printk( "%s read touchdata failed.\n", __func__);
         return ret;
     }
-
-   gestrue_id = fetch_object_sample(buf, pointnum);
-   
+    gestrue_id = fetch_object_sample(buf, pointnum);
     for(i = 0;i < pointnum;i++)
     {
         coordinate_x[i] =  (((s16) buf[0 + (4 * i)]) & 0x0F) <<
@@ -684,13 +845,16 @@ static int ft5x0x_read_Touchdata(void)
 	int err;
 	hwm_sensor_data sensor_data;
 	u8 proximity_status;
-	
+
 #endif
-   u8 state;
-   
+ 	u8 state;
 	do
 	{
-		mt_eint_unmask(CUST_EINT_TOUCH_PANEL_NUM); 
+#ifdef CONFIG_OF_TOUCH
+	enable_irq(touch_irq);
+#else
+	  mt_eint_unmask(CUST_EINT_TOUCH_PANEL_NUM);
+#endif 
 		set_current_state(TASK_INTERRUPTIBLE); 
 		wait_event_interruptible(waiter,tpd_flag!=0);
 						 
@@ -698,15 +862,15 @@ static int ft5x0x_read_Touchdata(void)
 			 
 		set_current_state(TASK_RUNNING);
 #ifdef FTS_GESTRUE
-i2c_smbus_read_i2c_block_data(i2c_client, 0xd0, 1, &state);
-// if((get_suspend_state() == PM_SUSPEND_MEM) && (state ==1))
- if(state ==1)
-     {
-        ft5x0x_read_Touchdata();
-        continue;
-    }
+		i2c_smbus_read_i2c_block_data(i2c_client, 0xd0, 1, &state);
+	  printk("%s lsm--state=%x .\n",__func__,state);
+//		if((get_suspend_state() == PM_SUSPEND_MEM) && (state ==1))
+		if(state ==1)
+		{
+			ft5x0x_read_Touchdata();
+			continue;
+		}
 #endif
-
 #ifdef TPD_PROXIMITY
 		if (tpd_proximity_flag == 1)
 		{
@@ -792,6 +956,19 @@ static int tpd_detect (struct i2c_client *client, struct i2c_board_info *info)
 	return 0;
 }
  
+#ifdef CONFIG_OF_TOUCH
+static irqreturn_t tpd_eint_interrupt_handler(unsigned irq, struct irq_desc *desc)
+{
+	TPD_DEBUG_PRINT_INT;
+		
+	tpd_flag = 1;
+	/* enter EINT handler disable INT, make sure INT is disable when handle touch event including top/bottom half */
+	/* use _nosync to avoid deadlock */
+	disable_irq_nosync(touch_irq);
+	wake_up_interruptible(&waiter);
+    return IRQ_HANDLED;
+}
+#else
 static void tpd_eint_interrupt_handler(void)
 {
 	//TPD_DEBUG("TPD interrupt has been triggered\n");
@@ -799,6 +976,7 @@ static void tpd_eint_interrupt_handler(void)
 	tpd_flag = 1;
 	wake_up_interruptible(&waiter);
 }
+#endif
 
 void focaltech_get_upgrade_array(void)
 {
@@ -825,6 +1003,48 @@ void focaltech_get_upgrade_array(void)
 	}
 }
 
+#ifdef CONFIG_OF_TOUCH 
+static int tpd_irq_registration(void)
+{
+	struct device_node *node = NULL;
+	int ret = 0;
+	u32 ints[2] = {0,0};
+	GTP_INFO("Device Tree Tpd_irq_registration!");
+	
+	node = of_find_compatible_node(NULL, NULL, "mediatek, TOUCH_PANEL-eint");
+	if(node){
+		of_property_read_u32_array(node , "debounce", ints, ARRAY_SIZE(ints));
+		gpio_set_debounce(ints[0], ints[1]);
+
+		touch_irq = irq_of_parse_and_map(node, 0);
+		
+		if (!int_type)	//EINTF_TRIGGER
+		{
+			ret = request_irq(touch_irq, (irq_handler_t)tpd_eint_interrupt_handler, EINTF_TRIGGER_RISING, "TOUCH_PANEL-eint", NULL);
+            //gtp_eint_trigger_type = EINTF_TRIGGER_RISING;
+			if(ret > 0){
+			    ret = -1;
+			    GTP_ERROR("tpd request_irq IRQ LINE NOT AVAILABLE!.");
+			}
+		}
+		else
+		{
+			ret = request_irq(touch_irq, (irq_handler_t)tpd_eint_interrupt_handler, EINTF_TRIGGER_FALLING, "TOUCH_PANEL-eint", NULL);
+            //gtp_eint_trigger_type = EINTF_TRIGGER_FALLING;
+			if(ret > 0){
+			    ret = -1;
+			    GTP_ERROR("tpd request_irq IRQ LINE NOT AVAILABLE!.");
+			}
+		}
+	}else{
+		GTP_ERROR("tpd request_irq can not find touch eint device node!.");
+		ret = -1;
+	}
+	GTP_INFO("[%s]irq:%d, debounce:%d-%d:", __FUNCTION__, touch_irq, ints[0], ints[1]);
+	return ret;
+}
+#endif
+
 static int tpd_probe(struct i2c_client *client, const struct i2c_device_id *id)
 {	 
 	int retval = TPD_OK;
@@ -836,17 +1056,11 @@ static int tpd_probe(struct i2c_client *client, const struct i2c_device_id *id)
 
 reset_proc:   
 	i2c_client = client;
-//add at 20150330 by zhu
-#if 1//def MAIERXUN_TP_COM
-    if(touchpanel_flag){
-	return 0;
-     }
-#endif
-//add at 20150330 by zhu end   
+   
 	//power on, need confirm with SA
-       mt_set_gpio_mode(GPIO_CTP_RST_PIN, GPIO_CTP_RST_PIN_M_GPIO);
-       mt_set_gpio_dir(GPIO_CTP_RST_PIN, GPIO_DIR_OUT);
-       mt_set_gpio_out(GPIO_CTP_RST_PIN, GPIO_OUT_ZERO);  
+	mt_set_gpio_mode(GPIO_CTP_RST_PIN, GPIO_CTP_RST_PIN_M_GPIO);
+	mt_set_gpio_dir(GPIO_CTP_RST_PIN, GPIO_DIR_OUT);
+	mt_set_gpio_out(GPIO_CTP_RST_PIN, GPIO_OUT_ZERO);  
 	msleep(5);
 	TPD_DMESG(" fts ic reset\n");
 	
@@ -860,8 +1074,8 @@ reset_proc:
 	hwPowerOn(TPD_POWER_SOURCE_1800, VOL_1800, "TP");
 #endif 
 	mt_set_gpio_mode(GPIO_CTP_RST_PIN, GPIO_CTP_RST_PIN_M_GPIO);
-       mt_set_gpio_dir(GPIO_CTP_RST_PIN, GPIO_DIR_OUT);
-       mt_set_gpio_out(GPIO_CTP_RST_PIN, GPIO_OUT_ONE);
+	mt_set_gpio_dir(GPIO_CTP_RST_PIN, GPIO_DIR_OUT);
+	mt_set_gpio_out(GPIO_CTP_RST_PIN, GPIO_OUT_ONE);
     
 #ifdef TPD_CLOSE_POWER_IN_SLEEP	 
 	hwPowerDown(TPD_POWER_SOURCE,"TP");
@@ -884,20 +1098,18 @@ reset_proc:
        mt_set_gpio_pull_enable(GPIO_CTP_EINT_PIN, GPIO_PULL_ENABLE);
        mt_set_gpio_pull_select(GPIO_CTP_EINT_PIN, GPIO_PULL_UP);
  
-//	mt65xx_eint_set_sens(CUST_EINT_TOUCH_PANEL_NUM, CUST_EINT_TOUCH_PANEL_SENSITIVE);
-	mt_eint_set_hw_debounce(CUST_EINT_TOUCH_PANEL_NUM, CUST_EINT_TOUCH_PANEL_DEBOUNCE_CN);
-//	mt65xx_eint_registration(CUST_EINT_TOUCH_PANEL_NUM, CUST_EINT_TOUCH_PANEL_DEBOUNCE_EN, CUST_EINT_TOUCH_PANEL_POLARITY, tpd_eint_interrupt_handler, 1); 
-	mt_eint_registration(CUST_EINT_TOUCH_PANEL_NUM, CUST_EINT_TOUCH_PANEL_TYPE, tpd_eint_interrupt_handler, 1); 
-	mt_eint_unmask(CUST_EINT_TOUCH_PANEL_NUM);
- 
+#ifdef CONFIG_OF_TOUCH
+	/* EINT device tree, default EINT enable */
+	tpd_irq_registration();
+	enable_irq(touch_irq);
+#else
+	  mt_eint_set_hw_debounce(CUST_EINT_TOUCH_PANEL_NUM, CUST_EINT_TOUCH_PANEL_DEBOUNCE_CN);
+	  mt_eint_registration(CUST_EINT_TOUCH_PANEL_NUM, CUST_EINTF_TRIGGER_FALLING, tpd_eint_interrupt_handler, 1);
+	  mt_eint_unmask(CUST_EINT_TOUCH_PANEL_NUM);
+#endif 
 	msleep(400);
  
-	//if((i2c_smbus_read_i2c_block_data(i2c_client, 0x00, 1, &data))< 0)
- ///////////////////////////////////////////////
-	err=i2c_smbus_read_i2c_block_data(i2c_client, 0x00, 1, &data);
-
-	TPD_DMESG("gao_i2c:err %d,data:%d\n", err,data);
-	if(err< 0 || data!=0)// reg0 data running state is 0; other state is not 0
+	if((i2c_smbus_read_i2c_block_data(i2c_client, 0x00, 1, &data))< 0)
 	{
 		TPD_DMESG("I2C transfer error, line: %d\n", __LINE__);
 #ifdef TPD_RESET_ISSUE_WORKAROUND
@@ -907,11 +1119,6 @@ reset_proc:
             goto reset_proc;
         }
 #endif
-//add at 20150330 by zhu
-#if 1//def MAIERXUN_TP_COM
-	    touchpanel_flag=false;
-#endif
-//add at 20150330 by zhu end
 		   return -1; 
 	}
 
@@ -927,17 +1134,16 @@ reset_proc:
 	fts_create_sysfs(i2c_client);
 	#endif
 
+/*
 	#ifdef FTS_CTL_IIC
 	if (ft_rw_iic_drv_init(i2c_client) < 0)
-		printk("eroor\n");
-		//TPD_DMESG(TPD_DEVICE, "%s:[FTS] create fts control iic driver failed\n",__func__);
+		TPD_DMESG(TPD_DEVICE, "%s:[FTS] create fts control iic driver failed\n",__func__);
 	#endif
-
-	#ifdef FTS_GESTRUE
-	init_para(1080,1920,60,0,0);
-    //fts_write_reg(i2c_client, 0xd0, 0x01);
-        #endif
-	
+#ifdef FTS_GESTRUE
+	init_para(480,854,60,0,0);
+	//fts_write_reg(i2c_client, 0xd0, 0x01);
+#endif
+*/	
 	#ifdef VELOCITY_CUSTOM_FT5206
 	if((err = misc_register(&tpd_misc_device)))
 	{
@@ -954,7 +1160,7 @@ reset_proc:
 	if (IS_ERR(thread))
 	{ 
 		retval = PTR_ERR(thread);
-		TPD_DMESG(" failed to create kernel thread: %d\n", retval);
+		TPD_DMESG(TPD_DEVICE " failed to create kernel thread: %d\n", retval);
 	}
 
 	TPD_DMESG("FTS Touch Panel Device Probe %s\n", (retval < TPD_OK) ? "FAIL" : "PASS");
@@ -973,11 +1179,6 @@ reset_proc:
 		APS_ERR("proxi_fts attach ok = %d\n", err);
 	}		
 #endif
-//add at 20150330 by zhu
-#if 1//def MAIERXUN_TP_COM
-    touchpanel_flag=true;
-#endif
-//add at 20150330 by zhu end
    return 0;
    
  }
@@ -1001,10 +1202,20 @@ reset_proc:
    	return 0;
 }
  
+ #define IIC_DMA_MAX_TRANSFER_SIZE     250
 static int tpd_local_init(void)
 {
   	TPD_DMESG("FTS I2C Touchscreen Driver (Built %s @ %s)\n", __DATE__, __TIME__);
- 
+ #if 1//TPD_SUPPORT_I2C_DMA
+	//mutex_init(&dma_mutex);
+	tpd->dev->dev.coherent_dma_mask = DMA_BIT_MASK(32);
+	I2CDMABuf_va = (u8 *) dma_alloc_coherent(&tpd->dev->dev, IIC_DMA_MAX_TRANSFER_SIZE, &I2CDMABuf_pa, GFP_KERNEL);
+	if (!I2CDMABuf_va) {
+		TPD_DMESG("Allocate DMA I2C Buffer failed!");
+		return -1;
+	}
+	memset(I2CDMABuf_va, 0, IIC_DMA_MAX_TRANSFER_SIZE);
+#endif
    	if(i2c_add_driver(&tpd_i2c_driver)!=0)
    	{
   		TPD_DMESG("FTS unable to add i2c driver.\n");
@@ -1018,13 +1229,13 @@ static int tpd_local_init(void)
     }
 	
 #ifdef TPD_HAVE_BUTTON     
-	//if(TPD_RES_Y > 854)
+	if(TPD_RES_Y > 854)
 	{
-	    tpd_button_setting(TPD_KEY_COUNT, tpd_keys_local, tpd_keys_dim_local);// initialize tpd button data
+	    tpd_button_setting(TPD_KEY_COUNT, tpd_keys_local, tpd_keys_dim_local_qhd);// initialize tpd button data
 	}
-	//else
+	else
 	{
-	    //tpd_button_setting(TPD_KEY_COUNT, tpd_keys_local, tpd_keys_dim_local_fwvga);// initialize tpd button data
+	    tpd_button_setting(TPD_KEY_COUNT, tpd_keys_local, tpd_keys_dim_local_fwvga);// initialize tpd button data
 	}
 #endif   
   
@@ -1053,22 +1264,25 @@ static int tpd_local_init(void)
 		if(tpd_proximity_flag_one == 1)
 		{
 			tpd_proximity_flag_one = 0;	
-			TPD_DMESG(" tpd_proximity_flag_one \n"); 
+			TPD_DMESG(TPD_DEVICE " tpd_proximity_flag_one \n"); 
 			return;
 		}
 	}
 #endif	
  
    	TPD_DMESG("TPD wake up\n");
-
- #ifdef FTS_GESTRUE
+#ifdef FTS_GESTRUE
+	if((g_call_state != CALL_ACTIVE)&&(tpgesture_status))
+	{
             fts_write_reg(i2c_client,0xD0,0x00);
-	    fts_write_reg(i2c_client,0xD1,0x00);
-	    fts_write_reg(i2c_client,0xD2,0x00);
+	    //fts_write_reg(i2c_client,0xD1,0x00);
+	    //fts_write_reg(i2c_client,0xD2,0x00);
+	    tpd_halt = 0;
 	   // return;
+	}
 #endif
-            #ifdef TPD_CLOSE_POWER_IN_SLEEP	
-        	hwPowerOn(TPD_POWER_SOURCE,VOL_3300,"TP");
+#ifdef TPD_CLOSE_POWER_IN_SLEEP	
+	hwPowerOn(TPD_POWER_SOURCE,VOL_3300,"TP");
 
 #else
 
@@ -1076,11 +1290,21 @@ static int tpd_local_init(void)
     mt_set_gpio_dir(GPIO_CTP_RST_PIN, GPIO_DIR_OUT);
     mt_set_gpio_out(GPIO_CTP_RST_PIN, GPIO_OUT_ZERO);  
     msleep(2);  
+
+#ifdef TPD_POWER_SOURCE_CUSTOM
+	hwPowerOn(TPD_POWER_SOURCE_CUSTOM, VOL_2800, "TP");
+#else
+	hwPowerOn(MT65XX_POWER_LDO_VGP2, VOL_2800, "TP");
+#endif
    // mt_set_gpio_mode(GPIO_CTP_RST_PIN, GPIO_CTP_RST_PIN_M_GPIO);
    // mt_set_gpio_dir(GPIO_CTP_RST_PIN, GPIO_DIR_OUT);
     mt_set_gpio_out(GPIO_CTP_RST_PIN, GPIO_OUT_ONE);
 #endif
-	mt_eint_unmask(CUST_EINT_TOUCH_PANEL_NUM);  
+#ifdef CONFIG_OF_TOUCH
+	enable_irq(touch_irq);
+#else
+	  mt_eint_unmask(CUST_EINT_TOUCH_PANEL_NUM);
+#endif 
 	msleep(30);
 	tpd_halt = 0;
 	/* for resume debug
@@ -1107,16 +1331,39 @@ static int tpd_local_init(void)
 		return;
 	}
 #endif
-#ifdef FTS_GESTRUE
-         fts_write_reg(i2c_client, 0xd0, 0x01);
-        fts_write_reg(i2c_client, 0xd1, 0x1f);
-        fts_write_reg(i2c_client, 0xd2, 0x1f);
-        return;
-#endif
-     	 tpd_halt = 1;
 
+#if GTP_GESTURE_WAKEUP
+	printk("[xy-tp]%d\n", tpgesture_status);
+
+	if((g_call_state != CALL_ACTIVE)&&(tpgesture_status)) 
+	{
+	printk("[xy-tp]:gesture mode\n");
+		msleep(200);
+		mutex_lock(&i2c_access);
+		fts_write_reg(i2c_client, 0xd0, 0x01);
+	//	if (fts_updateinfo_curr.CHIP_ID==0x54) 
+	//	{
+			fts_write_reg(i2c_client, 0xd1, 0xff);
+			fts_write_reg(i2c_client, 0xd2, 0xff);
+			fts_write_reg(i2c_client, 0xd5, 0xff);
+			fts_write_reg(i2c_client, 0xd6, 0xff);
+			fts_write_reg(i2c_client, 0xd7, 0xff);
+			fts_write_reg(i2c_client, 0xd8, 0xff);
+	//	}
+		 mutex_unlock(&i2c_access);
+		tpd_halt = 1;
+		return;
+	} 
+	else 
+	{
+#endif
+	tpd_halt = 1;
 	 TPD_DMESG("TPD enter sleep\n");
-	 mt_eint_mask(CUST_EINT_TOUCH_PANEL_NUM);
+#ifdef CONFIG_OF_TOUCH
+		disable_irq(touch_irq);
+#else
+		mt_eint_mask(CUST_EINT_TOUCH_PANEL_NUM);
+#endif
 #ifdef TPD_CLOSE_POWER_IN_SLEEP	
 	hwPowerDown(TPD_POWER_SOURCE,"TP");
 #else
@@ -1124,9 +1371,53 @@ static int tpd_local_init(void)
 	i2c_smbus_write_i2c_block_data(i2c_client, 0xA5, 1, &data);  //TP enter sleep mode
 	mutex_unlock(&i2c_access);
 #endif
+  #ifdef TPD_POWER_SOURCE_CUSTOM
+        hwPowerDown(TPD_POWER_SOURCE_CUSTOM, "TP");
+    #else
+        hwPowerDown(MT65XX_POWER_LDO_VGP2, "TP");
+    #endif
 	TPD_DMESG("TPD enter sleep done\n");
 	//return retval;
+	#if GTP_GESTURE_WAKEUP
+	}
+	#endif
  } 
+#if GTP_GESTURE_WAKEUP
+static ssize_t show_tpgesture_value(struct device* dev, struct device_attribute *attr, char *buf)
+{
+	 printk("show tp gesture value is %s \n",tpgesture_value);
+	 return scnprintf(buf, PAGE_SIZE, "%s\n", tpgesture_value);
+}
+ 
+static ssize_t show_tpgesture_status_value(struct device* dev, struct device_attribute *attr, char *buf)
+{
+	 printk("show tp gesture status is %s \n",tpgesture_status_value);
+	 return scnprintf(buf, PAGE_SIZE, "%s\n", tpgesture_status_value);
+}
+ 
+static ssize_t store_tpgesture_status_value(struct device* dev, struct device_attribute *attr, const char *buf, size_t count)
+{
+	 if(!strncmp(buf, "on", 2))
+	 {
+		 sprintf(tpgesture_status_value,"on");
+		 tpgesture_status = 1;//status --- on
+	 }
+	 else
+	 {
+		 sprintf(tpgesture_status_value,"off");
+		 tpgesture_status = 0;//status --- off
+	 }
+ 
+	 return count;
+}
+ 
+static DEVICE_ATTR(tpgesture,	0664, show_tpgesture_value, NULL);
+static DEVICE_ATTR(tpgesture_status,  0666, show_tpgesture_status_value, store_tpgesture_status_value);
+static struct device_attribute *tpd_attr_list[] = {
+	 &dev_attr_tpgesture,
+	 &dev_attr_tpgesture_status,
+};
+#endif
 
 
  static struct tpd_driver_t tpd_device_driver = {
@@ -1139,6 +1430,12 @@ static int tpd_local_init(void)
 #else
 	.tpd_have_button = 0,
 #endif		
+#if GTP_GESTURE_WAKEUP
+	.attrs = {
+		.attr = &tpd_attr_list,
+		.num = (int)(sizeof(tpd_attr_list)/sizeof(tpd_attr_list[0])),
+	},
+#endif
  };
  /* called when loaded into kernel */
 static int __init tpd_driver_init(void) {

@@ -33,12 +33,14 @@
 #include <mach/mt_typedefs.h>
 #include <mach/mt_boot.h>
 
-#include <linux/rtpm_prio.h>
-//#include "tpd.h"
-#include "cust_gpio_usage.h"
-#include <pmic_drv.h>
 #include <cust_eint.h>
 #include <linux/jiffies.h>
+
+#include <mach/mt_gpio.h>
+#include <pmic_drv.h>
+//#include <cust_i2c.h>
+
+#define MTK_Driver_Version 0x11
 
 struct Upgrade_Info {
         u8 CHIP_ID;
@@ -55,34 +57,31 @@ struct Upgrade_Info {
 //extern Upgrade_Info fts_updateinfo_curr;
 
 /**********************Custom define begin**********************************************/
+#if defined(CONFIG_HCT_TP_GESTRUE)
+#define FTS_GESTRUE
+#endif
+
+//#define TPD_PROXIMITY
+#define TPD_POWER_SOURCE_CUSTOM         	PMIC_APP_CAP_TOUCH_VDD
+#define IIC_PORT                        1
+#define TPD_HAVE_BUTTON									// if have virtual key,need define the MACRO
+#define TPD_BUTTON_HEIGH        				(40)  			//100
+#define TPD_KEY_COUNT           4    //  4
+#define TPD_KEYS                { KEY_MENU, KEY_BACK, KEY_SEARCH,KEY_HOMEPAGE}
+
+#if defined(CONFIG_TPD_PROXIMITY)
+	#define TPD_PROXIMITY					// if need the PS funtion,enable this MACRO
+#endif
 
 
-#define TPD_POWER_SOURCE_CUSTOM         PMIC_APP_CAP_TOUCH_VDD//MT6323_POWER_LDO_VGP1
-#define IIC_PORT                                            1//0  // 1   modify by jeff 20141112  //MT6572: 1  MT6589:0 , Based on the I2C index you choose for TPM
+//QHD
 
-//#define FTS_GESTRUE                                  // if need the gesture funtion,enable this MACRO
-#define TPD_PROXIMITY					// if need the PS funtion,enable this MACRO
+#define TPD_KEYS_DIM_QHD               {{160,2000,60,TPD_BUTTON_HEIGH}, {950,2000,60,TPD_BUTTON_HEIGH}, {200,2000,60,TPD_BUTTON_HEIGH}, {540,2000,60,TPD_BUTTON_HEIGH}}
+#define TPD_KEYS_DIM_FWVGA             {{66,880,60,TPD_BUTTON_HEIGH},  {418,880,60,TPD_BUTTON_HEIGH},  {200,880,60,TPD_BUTTON_HEIGH},  {300,880,60,TPD_BUTTON_HEIGH}}
 
-/*
-///// ***** virtual key  definition  ***** /////
 
-Below are the recommend  virtual key definition for different resolution TPM. 
-
-HVGA  320x480    2key ( (80,530);(240,530) )           3key  ( (80,530);(160;530);(240,530) )          4key   ( (40,530);(120;530);(200,530);(280,530)  ) 
-WVGA  480x800   2key ( (80,900);(400,900) )           3key  ( (80,900);(240,900);(400,900) )          4key   ( (60,900);(180;900);(300,900);(420,900)  ) 
-FWVGA 480x854  2key ( (80,900);(400,900) )           3key  ( (80,900);(240,900);(400,900) )          4key   ( (60,900);(180;900);(300,900);(420,900)  ) 
-QHD  540x960     2key ( (90,1080);(450,1080) )           3key  ( (90,1080);(270,1080);(450,1080) )          4key   ( (90,1080);(180;1080);(360,1080);(450,1080)  ) 
-HD    1280x720    2key ( (120,1350);(600,1350) )           3key  ( (120,1350);(360,1350);(600,1350) )          4key   ( (120,1080);(240;1080);(480,1080);(600,1080)  )
-FHD   1920x1080  2key ( (160,2100);(920,2100) )           3key  ( (160,2100);(540,2100);(920,2100) )          4key   ( (160,2100);(320;1080);(600,1080);(920,2100)  )
-*/
-#define TPD_HAVE_BUTTON	// if have virtual key,need define the MACRO
-#define TPD_BUTTON_WIDTH        (200)  //100
-#define TPD_BUTTON_HEIGH	(200)
-#define TPD_KEY_COUNT           1    //  4
-//#define TPD_KEYS                { KEY_FAKE_FINGERPRINT_UNLOCK/*KEY_MENU*/, KEY_HOMEPAGE, KEY_BACK}
-#define TPD_KEYS                {KEY_FINGER}
-//#define TPD_KEYS_DIM            	{{80,900,20,TPD_BUTTON_HEIGH}, {240,900,20,TPD_BUTTON_HEIGH}, {400,900,20,TPD_BUTTON_HEIGH}}
-#define TPD_KEYS_DIM            	{{60,1035,TPD_BUTTON_WIDTH,TPD_BUTTON_HEIGH}}
+//#define TPD_RES_X                					540 //480
+//#define TPD_RES_Y                					960 //800
 /*********************Custom Define end*************************************************/
 
 #define TPD_NAME    "FT"
@@ -91,7 +90,7 @@ FHD   1920x1080  2key ( (160,2100);(920,2100) )           3key  ( (160,2100);(54
 #define TPD_TYPE_CAPACITIVE
 #define TPD_TYPE_RESISTIVE
 #define TPD_POWER_SOURCE         
-#define TPD_I2C_NUMBER           		1//0
+#define TPD_I2C_NUMBER           		1
 #define TPD_WAKEUP_TRIAL         		60
 #define TPD_WAKEUP_DELAY         		100
 
@@ -106,16 +105,6 @@ FHD   1920x1080  2key ( (160,2100);(920,2100) )           3key  ( (160,2100);(54
 //#define TPD_RES_Y                		800
 #define TPD_CALIBRATION_MATRIX  		{962,0,0,0,1600,0,0,0};
 
-#define TPD_X_RES 	(540)
-#define TPD_Y_RES 	(960)
-#if 0
-#define TPD_WARP_Y(y) 	(TPD_RES_Y - y)
-#define TPD_WARP_X(x) 	(TPD_RES_X - x)
-#else
-#define TPD_WARP_Y(y) 	(y)
-#define TPD_WARP_X(x) 	(x)
-#endif
-
 //#define TPD_HAVE_CALIBRATION
 //#define TPD_HAVE_TREMBLE_ELIMINATION
 
@@ -124,6 +113,7 @@ FHD   1920x1080  2key ( (160,2100);(920,2100) )           3key  ( (160,2100);(54
 #define FTS_APK_DEBUG
 #ifdef TPD_SYSFS_DEBUG
 //#define TPD_AUTO_UPGRADE				// if need upgrade CTP FW when POWER ON,pls enable this MACRO
+//#define FT6x36_DOWNLOAD
 #endif
 
 
@@ -141,7 +131,6 @@ FHD   1920x1080  2key ( (160,2100);(920,2100) )           3key  ( (160,2100);(54
 /*register address*/
 #define FT_REG_CHIP_ID				0xA3    //chip ID 
 #define FT_REG_FW_VER				0xA6   //FW  version 
-// TP未写固件的时候，读A6寄存器，读出来就是A6。
 #define FT_REG_VENDOR_ID			0xA8   // TP vendor ID 
 
 
