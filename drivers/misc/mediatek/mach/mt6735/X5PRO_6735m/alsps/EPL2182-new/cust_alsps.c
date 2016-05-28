@@ -16,13 +16,13 @@
 #endif
 
 #if defined(CONFIG_T89P_YX_PROJ)
- #define PS_HIGH 2400
- #define PS_LOW  2300
+ #define PS_HIGH 2500
+ #define PS_LOW  2400
 #endif
 
-#if defined(CONFIG_T985B_DWS_PROJ)
- #define PS_HIGH 3000
- #define PS_LOW  2000
+#if defined(CONFIG_T985D_HD_PROJ)
+ #define PS_HIGH 550
+ #define PS_LOW  450
 #endif
 
 #if defined(CONFIG_T99G_DH_PROJ)
@@ -30,19 +30,44 @@
  #define PS_LOW  700
 #endif
 
-#if defined(CONFIG_T99F_LF_PROJ)
- #define PS_HIGH 3000
- #define PS_LOW  2000
-#endif
-
 #if defined(CONFIG_T99L_DWS_PROJ)
  #define PS_HIGH 3000
  #define PS_LOW  2000
 #endif
 
-#if defined(CONFIG_T991_PROJ)
- #define PS_HIGH 2800
- #define PS_LOW  2500
+#if defined(CONFIG_T925_PROJ)
+	#if defined(CONFIG_T925C_LG)
+		#define PS_HIGH 2500		//lg
+		#define PS_LOW  2000		//lg
+	#elif defined(CONFIG_T925J_YX)
+		//3~5cm
+		//#define PS_HIGH 2000
+		//#define PS_LOW  1500
+		//5~7cm yuxin
+		#define PS_HIGH 1200
+		#define PS_LOW  950
+	#elif defined(CONFIG_T925H_KW_PROJ)
+		#define PS_HIGH 1500
+		#define PS_LOW  1000
+	#elif defined(CONFIG_T925M_DH_PROJ)
+		#define PS_HIGH 2000
+		#define PS_LOW  1500
+	#elif defined(CONFIG_T925U_YS_T925)
+		#define PS_HIGH 1300
+		#define PS_LOW  900
+	#elif defined(CONFIG_T925X_YS_T925)
+		#define PS_HIGH 1800
+		#define PS_LOW  1400
+	#elif defined(CONFIG_T925F_AZYP_PROJ)
+		#define PS_HIGH 2500
+		#define PS_LOW  2000
+	#elif defined(CONFIG_T925R_HAIDI_P700)
+		#define PS_HIGH 3500
+		#define PS_LOW  3000
+	#else
+		#define PS_HIGH 3000
+		#define PS_LOW  2400
+	#endif
 #endif
 
 #ifndef PS_HIGH

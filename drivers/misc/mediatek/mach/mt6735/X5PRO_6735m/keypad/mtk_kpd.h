@@ -71,11 +71,20 @@ static inline void kpd_pwrkey_pmic_handler(unsigned long data){}
 
 void kpd_pmic_rstkey_handler(unsigned long pressed);
 
-//#define ONEKEY_REBOOT_NORMAL_MODE
-#define TWOKEY_REBOOT_NORMAL_MODE
-//#define ONEKEY_REBOOT_OTHER_MODE
-#define TWOKEY_REBOOT_OTHER_MODE
+#if defined(CONFIG_T925AB_QZ_PROJ)||defined(CONFIG_HCT_SUPPORT_ONEKEY_RST_8SEC)
+#define ONEKEY_REBOOT_NORMAL_MODE
+//#define TWOKEY_REBOOT_NORMAL_MODE
+#define ONEKEY_REBOOT_OTHER_MODE
+//#define TWOKEY_REBOOT_OTHER_MODE
+/* KPD_PMIC_RSTKEY_MAP is defined in cust_kpd.h */
+#define KPD_PMIC_LPRST_TD 0 /* timeout period. 0: 8sec; 1: 11sec; 2: 14sec; 3: 5sec */
+#else
+#define ONEKEY_REBOOT_NORMAL_MODE
+//#define TWOKEY_REBOOT_NORMAL_MODE
+#define ONEKEY_REBOOT_OTHER_MODE
+//#define TWOKEY_REBOOT_OTHER_MODE
 /* KPD_PMIC_RSTKEY_MAP is defined in cust_kpd.h */
 #define KPD_PMIC_LPRST_TD 1 /* timeout period. 0: 8sec; 1: 11sec; 2: 14sec; 3: 5sec */
+#endif
 
 #endif

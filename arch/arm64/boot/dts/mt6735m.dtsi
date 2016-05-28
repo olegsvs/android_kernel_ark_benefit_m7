@@ -640,17 +640,6 @@
 			interrupts = <0 77 0x8>;
 		};
 
-        G3D_CONFIG@0x13000000 {
-            compatible = "mediatek,G3D_CONFIG";
-            reg = <0x13000000 0x1000>;
-        };
-
-
-        IMGSYS@0x15000000 {
-            compatible = "mediatek,IMGSYS";
-            reg = <0x15000000 0x1000>;
-        };
-
 		I2C0@0x11007000 {
 			compatible = "mediatek,I2C0";
 			cell-index = <0>;
@@ -682,6 +671,17 @@
 			interrupts = <0 87 0x8>,
 			             <0 102 0x8>;
 		};
+
+        G3D_CONFIG@0x13000000 {
+            compatible = "mediatek,G3D_CONFIG";
+            reg = <0x13000000 0x1000>;
+        };
+
+
+        IMGSYS@0x15000000 {
+            compatible = "mediatek,IMGSYS";
+            reg = <0x15000000 0x1000>;
+        };
 
 		SPI1@0x1100A000 {
 			cell-index = <0>;
@@ -1200,6 +1200,13 @@
 			interrupts = <0 182 0x8>, /* SENINF */
                                      <0 183 0x8>; /* CAM0 */
 		};
+                /*for sysram dev and pipemgr dev*/
+                ISP_SYSR@0x15000000 {
+			compatible = "mediatek,ISP_SYSR";
+		};
+                ISP_PIPEM@0x15000000 {
+			compatible = "mediatek,ISP_PIPEM";
+		};
 		KD_CAMERA_HW1@0x15008000 {
                         compatible = "mediatek,CAMERA_HW";
                         reg = <0x15008000 0x1000>;  /* SENINF_ADDR */
@@ -1209,13 +1216,6 @@
                         reg = <0x15008000 0x1000>;  /* SENINF_ADDR */
                 };
 
-                /*for sysram dev and pipemgr dev*/
-                ISP_SYSR@0x15000000 {
-			compatible = "mediatek,ISP_SYSR";
-		};
-                ISP_PIPEM@0x15000000 {
-			compatible = "mediatek,ISP_PIPEM";
-		};
 		SENINF_TOP@0x15008000 {
 			compatible = "mediatek,SENINF_TOP";
 			reg = <0x15008000 0x1000>;

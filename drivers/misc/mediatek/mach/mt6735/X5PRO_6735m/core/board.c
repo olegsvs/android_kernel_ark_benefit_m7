@@ -143,6 +143,7 @@ void mt_power_off(void)
 		printk("EVB without charger\n");
 #else	
 		//Phone	
+		mdelay(100);
 		printk("Phone with charger\n");
 		if (pmic_chrdet_status() == KAL_TRUE)
 			arch_reset(0, "power_off_with_charger");
@@ -1049,9 +1050,15 @@ EXPORT_SYMBOL(mt_wifi_power_off);
         .cmd_edge             = MSDC_SMPL_FALLING,
         .rdata_edge           = MSDC_SMPL_FALLING,
         .wdata_edge           = MSDC_SMPL_FALLING,
+#if defined(CONFIG_T925_PROJ)
+        .clk_drv              = 6,
+        .cmd_drv              = 6,
+        .dat_drv              = 6,
+#else
         .clk_drv              = 3,
         .cmd_drv              = 3,
         .dat_drv              = 3,
+#endif
         .clk_drv_sd_18        = 3,         /* sdr104 mode */
         .cmd_drv_sd_18        = 2,
         .dat_drv_sd_18        = 2,
@@ -1063,7 +1070,7 @@ EXPORT_SYMBOL(mt_wifi_power_off);
         .dat_drv_sd_18_ddr50	= 2,
         .data_pins            = 4,
         .data_offset          = 0,
-    #ifdef CUST_EINT_MSDC1_INS_NUM
+    #if defined(CUST_EINT_MSDC1_INS_NUM) && !defined(CONFIG_HCT_REMOVE_SD_HOT_PLUG)
         .flags                = MSDC_SYS_SUSPEND | MSDC_CD_PIN_EN | MSDC_REMOVABLE | MSDC_HIGHSPEED | MSDC_UHS1 |MSDC_DDR,    
     #else
         .flags                = MSDC_SYS_SUSPEND | MSDC_HIGHSPEED | MSDC_UHS1 |MSDC_DDR,   
@@ -1160,45 +1167,41 @@ EXPORT_SYMBOL(mt_wifi_power_off);
 #endif
 
 #if defined(CFG_DEV_MSDC3)
-#if defined(CONFIG_MTK_WCN_CMB_SDIO_SLOT) && (CONFIG_MTK_WCN_CMB_SDIO_SLOT == 3)
-    /* MSDC3 settings for MT66xx combo connectivity chip */
+#if defined(CONFIG_EVDO_DT_SUPPORT)
     struct msdc_hw msdc3_hw = {
-        .clk_src        = MSDC30_CLKSRC_200MHZ,
-        .cmd_edge       = MSDC_SMPL_FALLING,
-        .rdata_edge     = MSDC_SMPL_FALLING,
-        .wdata_edge     = MSDC_SMPL_FALLING,
-        .clk_drv        = 1,
-        .cmd_drv        = 1,
-        .dat_drv        = 1,
-        .data_pins      = 4,
-        .data_offset    = 0,
-        //MT6620 use External IRQ, wifi uses high speed. here wifi manage his own suspend and resume, does not support hot plug
-        .flags          = MSDC_SDIO_FLAG,//MSDC_SYS_SUSPEND | MSDC_WP_PIN_EN | MSDC_CD_PIN_EN | MSDC_REMOVABLE,
-        .dat0rddly      = 0,
-        .dat1rddly      = 0,
-        .dat2rddly      = 0,
-        .dat3rddly      = 0,
-        .dat4rddly      = 0,
-        .dat5rddly      = 0,
-        .dat6rddly      = 0,
-        .dat7rddly      = 0,
-        .datwrddly      = 0,
-        .cmdrrddly      = 0,
-        .cmdrddly       = 0,
-        .cmdrtactr_sdr50        = 0x1,
-        .wdatcrctactr_sdr50     = 0x1,
+        .clk_src              = MSDC30_CLKSRC_200MHZ,
+        .cmd_edge             = MSDC_SMPL_RISING,
+        .rdata_edge           = MSDC_SMPL_RISING,
+        .wdata_edge           = MSDC_SMPL_RISING,
+        .clk_drv              = 0,
+        .cmd_drv              = 0,
+        .dat_drv              = 0,
+        .data_pins            = 4,
+        .data_offset          = 0,
+        .flags                = MSDC_SDIO_IRQ | MSDC_HIGHSPEED,  
+        .dat0rddly	          = 0,
+        .dat1rddly	          = 0,
+        .dat2rddly	          = 0,
+        .dat3rddly	          = 0,
+        .dat4rddly	          = 0,
+        .dat5rddly	          = 0,
+        .dat6rddly	          = 0,
+        .dat7rddly	          = 0,
+        .datwrddly	          = 0,
+        .cmdrrddly	          = 0,
+        .cmdrddly                 = 0,
+        .cmdrtactr_sdr50        = 0x0,
+        .wdatcrctactr_sdr50     = 0x0,
         .intdatlatcksel_sdr50   = 0x0,
-        .cmdrtactr_sdr200       = 0x3,
-        .wdatcrctactr_sdr200    = 0x3,
+        .cmdrtactr_sdr200       = 0x0,
+        .wdatcrctactr_sdr200    = 0x0,
         .intdatlatcksel_sdr200  = 0x0,
         .ett_count              = 0, //should be same with ett_settings array size
-        .host_function	= MSDC_SDIO,
-        .boot      	    = 0,
-        .request_sdio_eirq = mtk_wcn_cmb_sdio_request_eirq,
-        .enable_sdio_eirq  = mtk_wcn_cmb_sdio_enable_eirq,
-        .disable_sdio_eirq = mtk_wcn_cmb_sdio_disable_eirq,
-        .register_pm       = mtk_wcn_cmb_sdio_register_pm,
-	};
+        .host_function          = MSDC_SDIO,
+        .boot	                = 0,
+        //FIXME: Please C2K owner specify register_pm
+        //.register_pm            = FIXME,
+};
 #endif
 #endif
 

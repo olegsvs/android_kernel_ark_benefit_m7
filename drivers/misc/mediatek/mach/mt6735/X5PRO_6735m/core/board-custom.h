@@ -16,7 +16,9 @@
 #endif
 //#define CFG_DEV_MSDC1
 //#define CFG_DEV_MSDC2
-//#define CFG_DEV_MSDC3
+#if defined(CONFIG_EVDO_DT_SUPPORT)
+#define CFG_DEV_MSDC3
+#endif
 //#define CFG_DEV_MSDC4
 #if defined(CONFIG_MTK_COMBO) || defined(CONFIG_MTK_COMBO_MODULE)
 /*
