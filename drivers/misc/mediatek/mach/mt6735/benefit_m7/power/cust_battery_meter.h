@@ -122,6 +122,6 @@
 
 #define FG_BAT_INT
 #define IS_BATTERY_REMOVE_BY_PMIC
-
+#define FIXED_TBAT_25
 
 #endif	//#ifndef _CUST_BATTERY_METER_H
