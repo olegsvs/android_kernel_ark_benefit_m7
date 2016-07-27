@@ -220,7 +220,7 @@ static void *m_start(struct seq_file *m, loff_t *pos)
 	if (!priv->task)
 		return ERR_PTR(-ESRCH);
 
-	mm = mm_access(priv->task, PTRACE_MODE_READ_FSCREDS);
+	mm = mm_access(priv->task, PTRACE_MODE_READ);
 	if (!mm || IS_ERR(mm))
 		return mm;
 	down_read(&mm->mmap_sem);
@@ -1155,7 +1155,7 @@ static ssize_t pagemap_read(struct file *file, char __user *buf,
 	if (!pm.buffer)
 		goto out_task;
 
-	mm = mm_access(task, PTRACE_MODE_READ_FSCREDS);
+	mm = mm_access(task, PTRACE_MODE_READ);
 	ret = PTR_ERR(mm);
 	if (!mm || IS_ERR(mm))
 		goto out_free;
@@ -1223,12 +1223,7 @@ out:
 
 static int pagemap_open(struct inode *inode, struct file *file)
 {
-<<<<<<< HEAD
-	/* do not disclose physical addresses to unprivileged
-	   userspace (closes a rowhammer attack vector) */
-=======
 	/* do not disclose physical addresses: attack vector */
->>>>>>> d949246... BACKPORT: pagemap: do not leak physical addresses to non-privileged userspace
 	if (!capable(CAP_SYS_ADMIN))
 		return -EPERM;
 	return 0;
@@ -1535,3 +1530,4 @@ const struct file_operations proc_tid_numa_maps_operations = {
 	.release	= seq_release_private,
 };
 #endif /* CONFIG_NUMA */
+

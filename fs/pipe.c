@@ -118,11 +118,7 @@ void pipe_wait(struct pipe_inode_info *pipe)
 
 static int
 pipe_iov_copy_from_user(void *addr, int *offset, struct iovec *iov,
-<<<<<<< HEAD
-size_t *remaining, int atomic)
-=======
 			size_t *remaining, int atomic)
->>>>>>> 69169bc... pipe: iovec: Fix memory corruption when retrying atomic copy as non-atomic
 {
 	unsigned long copy;
 
@@ -1336,3 +1332,4 @@ static int __init init_pipe_fs(void)
 }
 
 fs_initcall(init_pipe_fs);
+
